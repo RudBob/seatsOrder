@@ -1,11 +1,21 @@
 package com.example.demo.mapper;
 
-/**
- * Description:
- *
- * @author 任耀
- * @ClassName: AdminMapper
- * @date 2018/9/19 19:33
- */
+import com.example.demo.bean.Admin;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
 public interface AdminMapper {
+
+    int deleteByPrimaryKey(Integer aid);
+
+    int insert(Admin record);
+
+    int insertSelective(Admin record);
+
+    Admin selectByPrimaryKey(Integer aid);
+
+    int updateByPrimaryKeySelective(Admin record);
+
+    int updateByPrimaryKey(Admin record);
 }

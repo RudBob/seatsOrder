@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry
+            location="E:\maven\repo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar"/>
+    <context id="context1" targetRuntime="MyBatis3">
+        <!-- 抑制警告 -->
+        <property name="suppressTypeWarnings" value="true"/>
+
+        <!-- generate entity时，生成hashcode和equals方法 -->
+        <!-- <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" /> -->
+        <!-- generate entity时，生成serialVersionUID -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!-- 这个插件只会增加字符串字段映射到一个JDBC字符的方法 -->
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <!-- genenat entity时,生成toString -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库配置文件的url是不能直接拷贝过来用的，需要把&换成'&amp;' -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/seat_order"
+                        userId="root" password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- generate Model -->
+        <javaModelGenerator targetPackage="com.example.demo.bean"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="isMergeable" value="false"/>
+        </javaModelGenerator>
+
+        <!-- generate xml -->
+        <sqlMapGenerator targetPackage="com.example.demo.mappers"
+                         targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- generate Mapper -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.demo.mappers"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--
+          catalog CDATA #IMPLIED
+          schema CDATA #IMPLIED
+          tableName CDATA #REQUIRED
+          alias CDATA #IMPLIED
+          domainObjectName CDATA #IMPLIED
+          enableInsert CDATA #IMPLIED
+          enableSelectByPrimaryKey CDATA #IMPLIED
+          enableUpdateByPrimaryKey CDATA #IMPLIED
+          enableDeleteByPrimaryKey CDATA #IMPLIED
+          enableCountByExample CDATA #IMPLIED
+          enableUpdateByExample CDATA #IMPLIED
+          enableDeleteByExample CDATA #IMPLIED
+          enableSelectByExample CDATA #IMPLIED
+          selectByExampleQueryId CDATA #IMPLIED
+          selectByPrimaryKeyQueryId CDATA #IMPLIED
+          modelType CDATA #IMPLIED
+          escapeWildcards CDATA #IMPLIED
+          delimitIdentifiers CDATA #IMPLIED
+          delimitAllColumns CDATA #IMPLIED
+         -->
+
+        <table tableName="admin"/>
+        <table tableName="black_list"/>
+        <table tableName="building"/>
+        <table tableName="class_room"/>
+        <table tableName="seat"/>
+        <table tableName="student"/>
+
+    </context>
+</generatorConfiguration>

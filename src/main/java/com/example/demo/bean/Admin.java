@@ -1,32 +1,17 @@
 package com.example.demo.bean;
 
-/**
- * Description:
- *
- * @author 任耀
- * @ClassName: Admin
- * @date 2018/9/19 18:43
- */
-public class Admin {
-    /**
-     * 管理员id
-     */
-    private Integer aid;
-    /**
-     * 管理员姓名
-     */
-    private String name;
-    /**
-     * 密码
-     */
-    private String password;
-    /**
-     * 管理员权限(TODO,暂定)
-     */
-    private Integer role;
+import java.io.Serializable;
 
-    public Admin() {
-    }
+public class Admin implements Serializable {
+    private Integer aid;
+
+    private String name;
+
+    private String password;
+
+    private String role;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getAid() {
         return aid;
@@ -41,7 +26,7 @@ public class Admin {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 
     public String getPassword() {
@@ -49,14 +34,29 @@ public class Admin {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
-    public Integer getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setRole(String role) {
+        this.role = role == null ? null : role.trim();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", aid=").append(aid);
+        sb.append(", name=").append(name);
+        sb.append(", password=").append(password);
+        sb.append(", role=").append(role);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

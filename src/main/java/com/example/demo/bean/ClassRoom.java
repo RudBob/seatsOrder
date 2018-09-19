@@ -1,40 +1,21 @@
 package com.example.demo.bean;
 
-/**
- * Description:
- *
- * @author 任耀
- * @ClassName: ClassRoom
- * @date 2018/9/19 18:44
- */
-public class ClassRoom {
-    /**
-     * 教室id
-     */
+import java.io.Serializable;
+
+public class ClassRoom implements Serializable {
     private Integer cid;
-    /**
-     * 教室对应的楼的id
-     */
+
     private Integer bid;
-    /**
-     * 教室所在层数
-     */
+
     private Integer fid;
-    /**
-     * 教室中的座位数量
-     */
+
     private Integer seatNum;
-    /**
-     * 教室中已有学生的数量
-     */
+
     private Integer stuNum;
-    /**
-     * 教室的状态.(可以被禁用)
-     */
+
     private Integer state;
 
-    public ClassRoom() {
-    }
+    private static final long serialVersionUID = 1L;
 
     public Integer getCid() {
         return cid;
@@ -82,5 +63,22 @@ public class ClassRoom {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", cid=").append(cid);
+        sb.append(", bid=").append(bid);
+        sb.append(", fid=").append(fid);
+        sb.append(", seatNum=").append(seatNum);
+        sb.append(", stuNum=").append(stuNum);
+        sb.append(", state=").append(state);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

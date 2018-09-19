@@ -1,47 +1,26 @@
 package com.example.demo.bean;
 
-/**
- * Description:
- *
- * @author 任耀
- * @ClassName: Student
- * @date 2018/9/19 18:44
- */
-public class Student {
-    /**
-     * 学号
-     */
+import java.io.Serializable;
+
+public class Student implements Serializable {
     private String sid;
 
-    /**
-     * 姓名
-     */
     private String name;
 
-    /**
-     * 密码
-     */
     private String password;
 
-    /**
-     * 黑名单
-     */
-    private Integer stuState;
+    private Integer state;
 
-    /**
-     * 座位id
-     */
     private Integer tid;
 
-    public Student() {
-    }
+    private static final long serialVersionUID = 1L;
 
     public String getSid() {
         return sid;
     }
 
     public void setSid(String sid) {
-        this.sid = sid;
+        this.sid = sid == null ? null : sid.trim();
     }
 
     public String getName() {
@@ -49,7 +28,7 @@ public class Student {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 
     public String getPassword() {
@@ -57,22 +36,38 @@ public class Student {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
-    public int getStuState() {
-        return stuState;
+    public Integer getState() {
+        return state;
     }
 
-    public void setStuState(int stuState) {
-        this.stuState = stuState;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
-    public int getTid() {
+    public Integer getTid() {
         return tid;
     }
 
-    public void setTid(int tid) {
+    public void setTid(Integer tid) {
         this.tid = tid;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", sid=").append(sid);
+        sb.append(", name=").append(name);
+        sb.append(", password=").append(password);
+        sb.append(", state=").append(state);
+        sb.append(", tid=").append(tid);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

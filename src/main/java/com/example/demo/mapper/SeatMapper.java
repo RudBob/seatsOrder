@@ -1,11 +1,24 @@
 package com.example.demo.mapper;
 
-/**
- * Description:
- *
- * @author 任耀
- * @ClassName: SeatMapper
- * @date 2018/9/19 19:35
- */
+import com.example.demo.bean.Seat;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
 public interface SeatMapper {
+
+    int deleteByPrimaryKey(Integer tid);
+
+    int insert(Seat record);
+
+    int insertSelective(Seat record);
+
+
+    Seat selectByPrimaryKey(Integer tid);
+
+
+
+    int updateByPrimaryKeySelective(Seat record);
+
+    int updateByPrimaryKey(Seat record);
 }

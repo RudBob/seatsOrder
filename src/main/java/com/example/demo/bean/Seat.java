@@ -1,28 +1,15 @@
 package com.example.demo.bean;
 
-/**
- * Description:
- *
- * @author 任耀
- * @ClassName: Seat
- * @date 2018/9/19 18:44
- */
-public class Seat {
-    /**
-     * 座位id
-     */
-    private Integer tid;
-    /**
-     * 座位对应的教室id
-     */
-    private Integer cid;
-    /**
-     * 该座位的状态.
-     */
-    private Integer state;
+import java.io.Serializable;
 
-    public Seat() {
-    }
+public class Seat implements Serializable {
+    private Integer tid;
+
+    private Integer crid;
+
+    private Byte state;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getTid() {
         return tid;
@@ -32,19 +19,33 @@ public class Seat {
         this.tid = tid;
     }
 
-    public Integer getCid() {
-        return cid;
+    public Integer getCrid() {
+        return crid;
     }
 
-    public void setCid(Integer cid) {
-        this.cid = cid;
+    public void setCrid(Integer crid) {
+        this.crid = crid;
     }
 
-    public Integer getState() {
+    public Byte getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(Byte state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", tid=").append(tid);
+        sb.append(", crid=").append(crid);
+        sb.append(", state=").append(state);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

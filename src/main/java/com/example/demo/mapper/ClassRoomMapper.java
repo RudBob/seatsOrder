@@ -1,11 +1,23 @@
 package com.example.demo.mapper;
 
-/**
- * Description:
- *
- * @author 任耀
- * @ClassName: ClassRoomMapper
- * @date 2018/9/19 19:35
- */
+import com.example.demo.bean.ClassRoom;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
 public interface ClassRoomMapper {
+
+    int deleteByPrimaryKey(Integer cid);
+
+    int insert(ClassRoom record);
+
+    int insertSelective(ClassRoom record);
+
+
+    ClassRoom selectByPrimaryKey(Integer cid);
+
+
+    int updateByPrimaryKeySelective(ClassRoom record);
+
+    int updateByPrimaryKey(ClassRoom record);
 }
