@@ -3,8 +3,10 @@ package com.example.demo.mapper;
 import com.example.demo.bean.Admin;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface AdminMapper {
 
     int deleteByPrimaryKey(Integer aid);

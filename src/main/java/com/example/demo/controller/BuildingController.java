@@ -8,4 +8,5 @@ package com.example.demo.controller;
  * @date 2018/9/19 19:10
  */
 public class BuildingController {
+
 }
