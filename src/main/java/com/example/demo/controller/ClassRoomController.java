@@ -15,5 +15,5 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 @RequestMapping("/classRoom")
 public class ClassRoomController {
-    
+
 }

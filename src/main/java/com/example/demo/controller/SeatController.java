@@ -44,7 +44,7 @@ public class SeatController {
      * @Param tid 座位id
      */
     @ResponseBody
-    @RequestMapping("getSeat")
+    @RequestMapping("outSeat")
     public boolean outSeat(@RequestParam(value = "sid") String sid) {
 
         boolean res = seatService.outSeat(sid);

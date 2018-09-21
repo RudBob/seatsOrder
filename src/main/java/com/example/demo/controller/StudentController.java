@@ -53,6 +53,4 @@ public class StudentController {
         boolean res = studentService.updatePassword(sid, oldPassword, newPassword);
         return res;
     }
-
-
 }
