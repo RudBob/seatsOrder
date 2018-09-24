@@ -15,10 +15,7 @@ public interface StudentMapper {
 
     int insertSelective(Student record);
 
-
     Student selectByPrimaryKey(String sid);
-
-
 
     int updateByPrimaryKeySelective(Student record);
 

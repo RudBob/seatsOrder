@@ -33,11 +33,12 @@ public class Seat implements Serializable {
     public static final int ORTHERS = 5;
 
     /**
-     * 以下为座位的状态改变.
+     *  以下为座位的状态改变.
      */
     public void beginOrder(){
         this.state = ODERING;
     }
+
     public void endOrder(){
         this.state = CAN_USE;
     }
