@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.bean.Seat;
+import com.example.demo.bean.Seats;
 import com.example.demo.bean.Student;
 import com.example.demo.mapper.SeatMapper;
 import com.example.demo.mapper.StudentMapper;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Description:
+ *
  * @author 任耀
  * @ClassName: SeatService
  * @date 2018/9/19 19:17
@@ -53,7 +55,7 @@ public class SeatService {
      */
     private void orderSuccess(Seat seat, Student student) {
         // 更新
-        seat.setState((byte) 1);
+        Seats.seatHasOrder(seat);
         student.setState(1);
         student.setTid(seat.getTid());
         updateSeat_Student(seat, student);
@@ -82,7 +84,7 @@ public class SeatService {
      * @param student
      */
     private void outSuccess(Seat seat, Student student) {
-        seat.setState((byte) 0);
+        Seats.waitingUse(seat);
         student.setTid(0);
         student.setState(0);
         updateSeat_Student(seat, student);
@@ -99,7 +101,7 @@ public class SeatService {
         Seat seat = seatMapper.selectByPrimaryKey(student.getTid());
         // 暂离座位.
         student.setState(2);
-        seat.setState((byte) 2);
+        Seats.tempOut(seat);
         updateSeat_Student(seat, student);
         return false;
     }
