@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.SeatService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @ClassName: SeatController
  * @date 2018/9/19 19:12
  */
+@Api(description = "用户接口")
 @Controller
 @ResponseBody
 @RequestMapping("/seat")
