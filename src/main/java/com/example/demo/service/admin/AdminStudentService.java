@@ -26,6 +26,11 @@ public class AdminStudentService {
 
     }
 
+    /**
+     * 删！
+     * @param sid
+     * @return
+     */
     public int deleteStudent(String sid) {
         return studentMapper.deleteByPrimaryKey(sid);
     }
@@ -35,7 +40,7 @@ public class AdminStudentService {
     }
 
     public int updateStudent(Student student) {
-        return studentMapper.updateByPrimaryKey(student);
+        return studentMapper.updateByPrimaryKeySelective(student);
     }
 
     public Student getStudentById(String sid) {

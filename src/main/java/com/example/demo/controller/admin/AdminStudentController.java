@@ -1,5 +1,6 @@
 package com.example.demo.controller.admin;
 
+import com.example.demo.bean.Student;
 import com.example.demo.service.admin.AdminStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +37,29 @@ public class AdminStudentController {
         adminStudentService.blockStudent(sid, days);
     }
 
+    @RequestMapping("/deleteStudent")
+    public int deleteStudent(@RequestParam(value = "sid") String sid) {
+        //直接传给Service，删除
+        return adminStudentService.deleteStudent(sid);
+    }
 
+    @RequestMapping("/addStudent")
+    public int addStudent(@RequestParam(value = "sid") Student student) {
+        //直接传给Service，删除
+        return adminStudentService.addStudent(student);
+    }
 
+    @RequestMapping("/updateStudent")
+    public int updateStudent(@RequestParam(value = "sid") Student student) {
+        //直接传给Service，删除
+        return adminStudentService.updateStudent(student);
+    }
+
+    @RequestMapping("/getStudentById")
+    public Student getStudentById(@RequestParam(value = "sid") String sid) {
+        //直接传给Service，删除
+        return adminStudentService.getStudentById(sid);
+    }
 
 
 }
