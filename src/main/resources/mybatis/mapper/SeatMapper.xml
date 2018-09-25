@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo.mapper.SeatMapper" >
   <resultMap id="BaseResultMap" type="com.example.demo.bean.Seat" >
     <id column="tid" property="tid" jdbcType="INTEGER" />
-    <result column="crid" property="crid" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -36,8 +36,8 @@
     </where>
   </sql>
 
-  <sql id="Base_Column_List" >
-    tid, crid, state
+  <sql id="Base_Column_List">
+     tid, rid, state, sid
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -52,9 +52,9 @@
   </delete>
 
   <insert id="insert" parameterType="com.example.demo.bean.Seat" >
-    insert into seat (tid, crid, state
+    insert into seat (tid, rid, state
       )
-    values (#{tid,jdbcType=INTEGER}, #{crid,jdbcType=INTEGER}, #{state,jdbcType=TINYINT}
+    values (#{tid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{state,jdbcType=TINYINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.bean.Seat" >
@@ -63,8 +63,8 @@
       <if test="tid != null" >
         tid,
       </if>
-      <if test="crid != null" >
-        crid,
+      <if test="rid != null" >
+        rid,
       </if>
       <if test="state != null" >
         state,
@@ -74,8 +74,8 @@
       <if test="tid != null" >
         #{tid,jdbcType=INTEGER},
       </if>
-      <if test="crid != null" >
-        #{crid,jdbcType=INTEGER},
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
         #{state,jdbcType=TINYINT},
@@ -86,8 +86,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.Seat" >
     update seat
     <set >
-      <if test="crid != null" >
-        crid = #{crid,jdbcType=INTEGER},
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
         state = #{state,jdbcType=TINYINT},
@@ -97,7 +97,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.Seat" >
     update seat
-    set crid = #{crid,jdbcType=INTEGER},
+    set rid = #{rid,jdbcType=INTEGER},
       state = #{state,jdbcType=TINYINT}
     where tid = #{tid,jdbcType=INTEGER}
   </update>

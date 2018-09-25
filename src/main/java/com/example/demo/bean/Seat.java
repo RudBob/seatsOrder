@@ -9,40 +9,25 @@ public class Seat implements Serializable {
      */
     private Integer tid;
     /**
-     * 教室id
+     * 区域id
      */
-    private Integer crid;
+    private Integer rid;
     /**
      * 状态，1表示有人，2表示预约中,3表示检修，0表示可预约.
      */
     private Byte state;
     /**
-     * 座位的各种状态码.
-     * 0代表可以使用
-     * 1代表预约ing
-     * 2代表有人使用
-     * 3代表暂离座位
-     * 4代表维修中.
-     * 5代表其他.
+     * 座位的学生的id
      */
-    public static final int CAN_USE = 0;
-    public static final int ODERING = 1;
-    public static final int HAS_ONE = 2;
-    public static final int TEMP_OUT = 3;
-    public static final int REPAIR = 4;
-    public static final int ORTHERS = 5;
+    private String sid;
 
-    /**
-     *  以下为座位的状态改变.
-     */
-    public void beginOrder(){
-        this.state = ODERING;
+    public String getSid() {
+        return sid;
     }
 
-    public void endOrder(){
-        this.state = CAN_USE;
+    public void setSid(String sid) {
+        this.sid = sid;
     }
-
 
     public Integer getTid() {
         return tid;
@@ -52,19 +37,19 @@ public class Seat implements Serializable {
         this.tid = tid;
     }
 
-    public Integer getCrid() {
-        return crid;
+    public Integer getRid() {
+        return rid;
     }
 
-    public void setCrid(Integer crid) {
-        this.crid = crid;
+    public void setRid(Integer rid) {
+        this.rid = rid;
     }
 
     public Byte getState() {
         return state;
     }
 
-    public void setState(Byte state) {
+    protected void setState(Byte state) {
         this.state = state;
     }
 
@@ -75,7 +60,7 @@ public class Seat implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", tid=").append(tid);
-        sb.append(", crid=").append(crid);
+        sb.append(", rid=").append(rid);
         sb.append(", state=").append(state);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

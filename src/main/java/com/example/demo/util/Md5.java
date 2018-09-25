@@ -18,7 +18,8 @@ public final class Md5 {
     /**
      * 利用MD5进行加密,这是盐值----->今后不可改变。
      */
-    private static final String SALT = "this_is_a_salt_string_for_gadhsidgbdfisbgsdfviugviugiorhn";
+    private static final String SALT = "uiohwt4euhetodhiurhi dsnhuowqe4 8" +
+            "9Y8earfk$%^&^%W#%E$R^T^!()!@#$%^&";
 
     public static String EncoderByMd5(String str){
         //确定计算方法
