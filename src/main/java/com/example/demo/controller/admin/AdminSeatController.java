@@ -23,15 +23,18 @@ public class AdminSeatController {
     /**
      * 更改座位状态修理
      */
-    public boolean seatNeedRepair(Integer tid){
+    @RequestMapping(value = "seatNeedRepair")
+    public boolean seatNeedRepair(Integer tid) {
         //座位需要修理，
-        boolean result =  adminSeatService.seatNeedRepair(tid);
+        boolean result = adminSeatService.seatNeedRepair(tid);
         return result;
     }
+
     /**
      * 更改座位状态修理.
      */
-    public Msg seatHasRepaired(Integer tid){
+    @RequestMapping(value = "seatRepaired")
+    public Msg seatRepaired(Integer tid) {
         //座位已经修理.
         adminSeatService.hasRepaired(tid);
         return Msg.success();
@@ -40,18 +43,19 @@ public class AdminSeatController {
     /**
      * 对座位的增删改查
      */
+    @RequestMapping(value = "deleteSeat")
     public int deleteByPrimaryKey(Integer tid) {
         return adminSeatService.deleteByPrimaryKey(tid);
     }
-
+    @RequestMapping(value ="addSeat")
     public int insertSelective(Seat record) {
         return adminSeatService.insertSelective(record);
     }
-
+    @RequestMapping(value = "getSeatByTid")
     public Seat selectByPrimaryKey(Integer tid) {
         return adminSeatService.selectByPrimaryKey(tid);
     }
-
+    @RequestMapping(value =  "updateSeat")
     public int updateByPrimaryKeySelective(Seat record) {
         return adminSeatService.updateByPrimaryKeySelective(record);
     }

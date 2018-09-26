@@ -32,11 +32,17 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("login")
     public Student login(@Param(value = "username") String username,
-                         @Param(value = "password") String password) {
+                         @Param(value = "pwd") String password) {
        Student student = studentService.login(username, password);
         return student;
     }
 
+    @ResponseBody
+    @RequestMapping("logout")
+    public Student logout(@Param(value = "sid") String sid) {
+        Student student = studentService.logout(sid);
+        return student;
+    }
     /**
      * 学生修改密码
      *
@@ -48,11 +54,9 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("updatePassword")
     public boolean updatePassword(@Param(value = "sid") String sid,
-                                  @Param(value = "oldPassword") String oldPassword,
-                                  @Param(value = "newPassword") String newPassword) {
+                                  @Param(value = "oldPwd") String oldPassword,
+                                  @Param(value = "newPwd") String newPassword) {
         boolean res = studentService.updatePassword(sid, oldPassword, newPassword);
         return res;
     }
-
-
 }

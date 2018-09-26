@@ -52,4 +52,9 @@ public class StudentService {
         studentMapper.updateByPrimaryKey(student);
         return false;
     }
+
+    public Student logout(String sid) {
+
+        return null;
+    }
 }
