@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -32,8 +33,8 @@ public class StudentController {
      */
     @ResponseBody
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public Student login(@Param(value = "username") String username,
-                         @Param(value = "pwd") String password) {
+    public Student login(@RequestParam(value = "username",required = true) String username,
+                         @RequestParam(value = "pwd",required = true) String password) {
        Student student = studentService.login(username, password);
         return student;
     }
