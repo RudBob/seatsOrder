@@ -1,119 +1,125 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8" />
-		<title></title>
-		<link rel="stylesheet" href="bootstraps/css/bootstrap.min.css">
-		<link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css" />
-		<style type="text/css">
-			body {
-				margin: 0;
-				padding: 0;
-				background-image: url(img/bg.jpg);
-			}
-			
-			h1 {
-				font-size: 90px;
-				font-family: "黑体";
-				text-align: center;
-				color: #f8f9ff;
-				margin-top: 300px;
-			}
-			input{
-				width: 750px;
-				height: 70px;
-				font-size: 40px;
-			}
-			#middle{
-				margin-top: 200px;
-				text-align: center; 
-				vertical-align:middle;
-				font-size:;
-			}
-			p{
-				 margin-bottom: 50px;
-			}
-		</style>
-	</head>
+<head>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"/>    <meta charset="utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="bootstraps/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url(img/bg.jpg);
+        }
 
-	<body>
-		<h1>座位预约管理系统</h1>
-		<div id="middle">
-			<!--用户名-->
-			<p>
-				<i class="icon-user icon-4x"></i>
-				<input id="username" type="text" />
-			</p>
-			<!--密码-->
-			<p>
-				<i class="icon-lock icon-4x"></i>
-				<input id="password" type="password" />
-			</p>
-			<!--登录按钮-->
-			<p>
-				<i class="icon-check icon-4x"></i>
-				<input id="login" type="button" value="登录" style="background-color: blue; color: #fff;"/>
-			</p>
-		</div>
-		<script type="text/javascript" src="js/jquery.min.js"></script>
-		<script type="text/javascript" src="layer/layer.js"></script>
-	<script type="text/javascript">
-		var loading;//加载页面的全局变量
-		$(function () {
-		    //点击登录事件
-		    $("#login").click(function () {
-                var username = $("#username").val();
-                var password = $("#password").val();
-                //验证用户名是否输入
-                if(!username || username == ""){
-                    showMsg("请输入用户名");
-				}
-                //验证密码是否输入
-				if(!password || password == ""){
-				    showMsg("请输入密码");
-				}
-				var data = {
-                    user_name : username,
-                    pass_word : password
-                };
-				var url = "";
-				var param = "";
-                loading = layer.load(1, {
-                    shade : [0.2, '#fff']
-                    //0.1透明度的白色背景
-                })
-				//发送ajax
-                //selectPageData(url, param, data);
-                //加载页面
-                layer.close(loading);
-                window.location.href='home_page.html';
+        h1 {
+            font-size: 90px;
+            font-family: "黑体";
+            text-align: center;
+            color: #f8f9ff;
+            margin-top: 300px;
+        }
+
+        input {
+            width: 750px;
+            height: 70px;
+            font-size: 40px;
+        }
+
+        #middle {
+            margin-top: 200px;
+            text-align: center;
+            vertical-align: middle;
+            font-size:;
+        }
+
+        p {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>座位预约管理系统</h1>
+<div id="middle">
+    <!--用户名-->
+    <p>
+        <i class="icon-user icon-4x"></i>
+        <input id="username" type="text"/>
+    </p>
+    <!--密码-->
+    <p>
+        <i class="icon-lock icon-4x"></i>
+        <input id="password" type="password"/>
+    </p>
+    <!--登录按钮-->
+    <p>
+        <i class="icon-check icon-4x"></i>
+        <input id="login" type="button" value="登录" style="background-color: blue; color: #fff;"/>
+    </p>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script type="text/javascript">
+    var loading;//加载页面的全局变量
+    $(function () {
+        //点击登录事件
+        $("#login").click(function () {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            //验证用户名是否输入
+            if (!username || username == "") {
+                showMsg("请输入用户名");
+            }
+            //验证密码是否输入
+            if (!password || password == "") {
+                showMsg("请输入密码");
+            }
+            var data = {
+                user_name: username,
+                pass_word: password
+            };
+            var url = "";
+            var param = "";
+            loading = layer.load(1, {
+                shade: [0.2, '#fff']
+                //0.1透明度的白色背景
             })
-
+            //发送ajax
+            //selectPageData(url, param, data);
+            //加载页面
+            layer.close(loading);
+            window.location.href = 'home_page.html';
         })
-		//页面信息提示函数
-		function showMsg(message) {
-            alert(message);
-        }
-        //调用ajax函数
-        function selectPageData(url, param, data) {
-            $.ajax({
-                type : "get",//请求方式
-                url : url + "?" + param,//发送请求的地址
-                async : true,//请求为异步请求
-				data : {"username":username, "password":password},
-				dataType : "json",
-                success : function(data) {//成功时调用的回调函数
-                    // 返回操作是否成功
 
-                    window.location.href='home_page.html';
-                },
-                error : function(data) {//失败时被调用的函数
-                    showMsg(data.message);
-                }
-            });
-        }
-	</script>
-	</body>
+    })
+
+    //页面信息提示函数
+    function showMsg(message) {
+        alert(message);
+    }
+
+    //调用ajax函数
+    function selectPageData(url, param, data) {
+        $.ajax({
+            type: "get",//请求方式
+            url: url + "?" + param,//发送请求的地址
+            async: true,//请求为异步请求
+            data: {"username": username, "password": password},
+            dataType: "json",
+            success: function (data) {//成功时调用的回调函数
+                // 返回操作是否成功
+
+                window.location.href = 'home_page.html';
+            },
+            error: function (data) {//失败时被调用的函数
+                showMsg(data.message);
+
+            }
+        });
+    }
+</script>
+</body>
 
 </html>

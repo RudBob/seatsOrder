@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="Font-Awesome-3.2.1/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/seat_flat.css"/>
+
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url(img/bg.jpg);
+        }
+
+        h1 {
+            font-size: 70px;
+            font-family: "黑体";
+            text-align: center;
+            vertical-align: middle;
+            color: #fff;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background-color: #000;
+        }
+    </style>
+</head>
+<!--若管理员要将座位改成暂不能坐,只需给<a></a>添加 a.addClass("unavailable") 即可-->
+<body>
+<h1>座位预约管理系统</h1>
+<!--指北针-->
+<i class="icon-arrow-up icon-2x" style="float: right;">北</i>
+<!--座位区
+    available可以选择的
+    unavailable不能被选择的
+    cur刚刚被用户确定为要选的-->
+<div class="box">
+    <dl class="select">
+        <dd>
+            <ul class="seatsshow">
+
+            </ul>
+        </dd>
+        <dt>座位：
+        </dt>
+    </dl>
+    <a name="xzpos" id="xzpos"></a>
+    <input class="btn" value="确定选座" type="button">
+    <ul class="seatCharts-legendList">
+        <li class="seatCharts-legendItem">
+            <div class="seatCharts-seat seatCharts-cell available"></div>
+            <span class="seatCharts-legendDescription">可选座</span></li>
+        <li class="seatCharts-legendItem">
+            <div class="seatCharts-seat seatCharts-cell unavailable"></div>
+            <span class="seatCharts-legendDescription">暂不能选</span></li>
+    </ul>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        show_seat(8, 17);//行row;列col
+        $(".select").each(function () {
+            var s = $(this);
+            var z = parseInt(s.css("z-index"));
+            var dt = $(this).children("dt");
+            var dd = $(this).children("dd");
+            dd.find("a").click(function () {
+                if((!$("a").attr("class"))||(!$("a").attr("class").equals("unavailable"))){
+                    $("li a").removeClass("cur");
+                    $(this).addClass("cur");
+                    dt.html('座位：' + $(this).attr('row') + '排' + $(this).html() + '座');
+                    alert('座位：' + $(this).attr('row') + '排' + $(this).html() + '座');
+                }
+
+
+            });
+
+            //选择效果（如需要传值，可自定义参数，在此处返回对应的“value”值 ）
+            // $("body").click(function (i) {
+            //     !$(i.target).parents(".select").first().is(s) ? _hide() : "";
+            // });
+        })
+        //生成座位列表
+        function show_seat(row, col) {
+            for (var i = 0; i < row; i++) {
+                var p = $("<p></p>");
+                p.html("第" + (i + 1) + "排");
+                p.addClass("seatCharts-title");
+                $(".seatsshow").append(p);
+                for (var j = 0; j < col; j++) {
+                    var li = $("<li></li> ");
+                    li.attr("id", (i + 1) + "_" + (j + 1));
+                    var a = $("<a href=\"#xzpos\"></a>");
+                    a.attr("row", i + 1);
+                    a.html(j + 1);
+                    // a.addClass("unavailable");
+                    li.append(a);
+                    $(".seatsshow").append(li);
+                }
+
+            }
+        }
+    })
+</script>
+</body>
+</html>

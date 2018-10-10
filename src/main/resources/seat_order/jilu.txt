@@ -4,3 +4,7 @@ admin
 管理员界面
 home_page
 用户登录后的首页面
+seat_flat
+一个区域的座位平面展示
+fast-order
+快速选座
