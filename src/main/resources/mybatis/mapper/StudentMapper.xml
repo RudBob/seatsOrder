@@ -50,10 +50,10 @@
         where sid = #{sid,jdbcType=VARCHAR}
     </select>
     <select id="login" resultType="com.example.demo.bean.Student">
-        select
-        <include refid="Base_Column_List"/>
+        select *
         from student
-        where name = #{username} and pwd = #{pwd}
+        where name = #{username,jdbcType=VARCHAR}
+          and pwd = #{password,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
@@ -127,10 +127,10 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.Student">
         update student
-        set name     = #{name,jdbcType=VARCHAR},
-            pwd = #{pwd,jdbcType=VARCHAR},
-            state    = #{state,jdbcType=INTEGER},
-            tid      = #{tid,jdbcType=INTEGER}
+        set name  = #{name,jdbcType=VARCHAR},
+            pwd   = #{pwd,jdbcType=VARCHAR},
+            state = #{state,jdbcType=INTEGER},
+            tid   = #{tid,jdbcType=INTEGER}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

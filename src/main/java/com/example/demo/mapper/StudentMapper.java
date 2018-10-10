@@ -27,5 +27,5 @@ public interface StudentMapper {
      * @param password
      * @return
      */
-    Student login(String username, String password);
+    Student login(@Param("username") String username,@Param("password") String password);
 }
