@@ -7,7 +7,7 @@ public class Admin implements Serializable {
 
     private String name;
 
-    private String password;
+    private String pwd;
 
     private String role;
 
@@ -29,12 +29,12 @@ public class Admin implements Serializable {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getPassword() {
-        return password;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setPwd(String pwd) {
+        this.pwd = pwd == null ? null : pwd.trim();
     }
 
     public String getRole() {
@@ -53,7 +53,7 @@ public class Admin implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", aid=").append(aid);
         sb.append(", name=").append(name);
-        sb.append(", password=").append(password);
+        sb.append(", pwd=").append(pwd);
         sb.append(", role=").append(role);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

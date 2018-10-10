@@ -2,8 +2,8 @@ package com.example.demo.bean;
 
 import java.io.Serializable;
 
-public class ClassRoom implements Serializable {
-    private Integer cid;
+public class Region implements Serializable {
+    private Integer rid;
 
     private Integer bid;
 
@@ -17,12 +17,12 @@ public class ClassRoom implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getCid() {
-        return cid;
+    public Integer getRid() {
+        return rid;
     }
 
-    public void setCid(Integer cid) {
-        this.cid = cid;
+    public void setRid(Integer rid) {
+        this.rid = rid;
     }
 
     public Integer getBid() {
@@ -71,7 +71,7 @@ public class ClassRoom implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", cid=").append(cid);
+        sb.append(", rid=").append(rid);
         sb.append(", bid=").append(bid);
         sb.append(", fid=").append(fid);
         sb.append(", seatNum=").append(seatNum);

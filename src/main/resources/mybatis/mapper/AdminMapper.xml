@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.example.demo.bean.Admin" >
     <id column="aid" property="aid" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
     <result column="role" property="role" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -38,7 +38,7 @@
   </sql>
 
   <sql id="Base_Column_List" >
-    aid, name, password, role
+    aid, name, pwd, role
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -53,9 +53,9 @@
   </delete>
 
   <insert id="insert" parameterType="com.example.demo.bean.Admin" >
-    insert into admin (aid, name, password, 
+    insert into admin (aid, name, pwd,
       role)
-    values (#{aid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{aid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR},
       #{role,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.bean.Admin" >
@@ -67,8 +67,8 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="password != null" >
-        password,
+      <if test="pwd != null" >
+        pwd,
       </if>
       <if test="role != null" >
         role,
@@ -81,8 +81,8 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
       </if>
       <if test="role != null" >
         #{role,jdbcType=VARCHAR},
@@ -96,8 +96,8 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=VARCHAR},
       </if>
       <if test="role != null" >
         role = #{role,jdbcType=VARCHAR},
@@ -108,7 +108,7 @@
   <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.Admin" >
     update admin
     set name = #{name,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
       role = #{role,jdbcType=VARCHAR}
     where aid = #{aid,jdbcType=INTEGER}
   </update>

@@ -4,6 +4,7 @@ import com.example.demo.bean.Student;
 import com.example.demo.service.admin.AdminStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class AdminStudentController {
      *
      * @param sid
      */
-    @RequestMapping("/blockStudent")
+    @RequestMapping(value = "/blockStudent",method = RequestMethod.POST)
     public void blockStu(@RequestParam(value = "sid") String sid,
                          @RequestParam(value = "days", required = false) Integer days) {
         if (days == null) {
@@ -37,25 +38,25 @@ public class AdminStudentController {
         adminStudentService.blockStudent(sid, days);
     }
 
-    @RequestMapping("/deleteStudent")
+    @RequestMapping(value = "/deleteStudent",method = RequestMethod.POST)
     public int deleteStudent(@RequestParam(value = "sid") String sid) {
         //直接传给Service，删除
         return adminStudentService.deleteStudent(sid);
     }
 
-    @RequestMapping("/addStudent")
-    public int addStudent(@RequestParam(value = "sid") Student student) {
+    @RequestMapping(value = "/addStudent",method = RequestMethod.POST)
+    public int addStudent(Student student) {
         //直接传给Service，删除
         return adminStudentService.addStudent(student);
     }
 
-    @RequestMapping("/updateStudent")
+    @RequestMapping(value = "/updateStudent",method = RequestMethod.POST)
     public int updateStudent(@RequestParam(value = "sid") Student student) {
         //直接传给Service，删除
         return adminStudentService.updateStudent(student);
     }
 
-    @RequestMapping("/getStudentById")
+    @RequestMapping(value = "/getStudentById",method = RequestMethod.GET)
     public Student getStudentById(@RequestParam(value = "sid") String sid) {
         //直接传给Service，删除
         return adminStudentService.getStudentById(sid);
