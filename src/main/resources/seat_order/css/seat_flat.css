@@ -1,0 +1,180 @@
+@charset "utf-8";
+{
+    margin: 0  ;
+    padding: 0  ;
+    list-style-type: none  ;/*列表样式:无标记*/
+}
+/*a, img {
+    border: 0;
+}*/
+
+body {
+    font-size: 12px;/*body内字体大小为12px*/
+    color: #666;/*body内字体颜色为#666*/
+}
+
+dl, dt, dd , ul{
+    border: 0 none;
+    font-size: 100%;
+    margin: 0;
+    outline: 0 none;/*轮廓*/
+    padding: 0;
+    vertical-align: baseline;/*元素放在父元素的基线上*/
+}
+
+a {
+    text-decoration: none;/*将<a></a>中字体上的下划线删掉*/
+}
+
+a:hover {
+    text-decoration: none;/*鼠标放到将<a></a>上时,将其中字体上的下划线删掉*/
+    background-color: #007bc4;/*鼠标放到将<a></a>上时,将其背景颜色变为#007bc4*/
+}
+
+ul {
+    list-style: outside none none;/*保持标记位于文本的左侧 无标记 无图形被显示*/
+}
+
+.box {
+    width: 87%;
+    margin: 0px auto 60px;
+}
+.select dt {
+    color: #999;
+    font-size: 16px;
+    line-height: 36px;
+    padding-top: 30px;
+}
+
+.select dt p span {
+    color: #666;
+}
+
+.select dd {
+    display: block;
+    width: 100%
+}
+
+.select dd ul {
+    text-align: center;
+}
+
+.select dd ul li {
+    color: #182c4e;
+    display: inline-block;
+    font-size: 16px;
+    height: 35px;
+    line-height: 35px;
+    margin: 5px;
+    text-align: center;
+    width: 35px;
+    background-color: #386896;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.select dd ul li a, .select dd ul li a:hover {
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+    color: #fff;
+    cursor: pointer;
+}
+/*被选到的当前座位*/
+.select dd ul li a.cur {
+    background-color: #2becfe;
+    color: #386896;
+    border-radius: 5px;
+}
+/*设置有class="unavailable"属性的座位不可选*/
+.select dd ul li a.unavailable {
+    border-radius: 5px;
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/*设置"确定"按钮的效果*/
+.btn {
+    background-color: #386896;
+    border: medium none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    margin: 20px auto;
+    text-align: center;
+    transition: background-color 0.2s linear 0s;
+    width: 100%;
+}
+
+/*设置点击"确定"按钮的效果*/
+.btn:hover {
+    background-color: #2becfe;
+    color: #386896;
+    text-decoration: none;
+}
+
+div.seatCharts-cell {
+    color: #182c4e;
+    display: inline-block;
+    font-size: 16px;
+    height: 35px;
+    line-height: 35px;
+    margin: 1px;
+    outline: medium none;
+    text-align: center;
+    width: 35px;
+}
+
+div.seatCharts-seat {
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+div.seatCharts-row {
+    clear: both;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+/*对标识"可选座"的区域进行设置*/
+div.seatCharts-seat.available {
+    background-color: #386896;
+}
+
+/*对标识"暂不能选"的区域进行设置*/
+div.seatCharts-seat.unavailable {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+ul.seatCharts-legendList {
+    padding-left: 0;
+}
+
+.seatCharts-legendItem {
+    float: left;
+    line-height: 2;
+    margin-top: 10px;
+    width: 110px;
+    position: relative;
+}
+
+span.seatCharts-legendDescription {
+    line-height: 14px;
+    margin-left: 5px;
+    display: inline-block;
+    font-size: 14px;
+    position: relative;
+    top: -6px;
+}
+
+p{
+    float: left;
+    font-size: 18px;
+    margin-bottom: 0;
+}

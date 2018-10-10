@@ -48,7 +48,7 @@
 			<!--密码-->
 			<p>
 				<i class="icon-lock icon-4x"></i>
-				<input id="pwd" type="pwd" />
+				<input id="password" type="password" />
 			</p>
 			<!--登录按钮-->
 			<p>
@@ -64,18 +64,18 @@
 		    //点击登录事件
 		    $("#login").click(function () {
                 var username = $("#username").val();
-                var pwd = $("#pwd").val();
+                var password = $("#password").val();
                 //验证用户名是否输入
                 if(!username || username == ""){
                     showMsg("请输入用户名");
 				}
                 //验证密码是否输入
-				if(!pwd || pwd == ""){
+				if(!password || password == ""){
 				    showMsg("请输入密码");
 				}
 				var data = {
                     user_name : username,
-                    pass_word : pwd
+                    pass_word : password
                 };
 				var url = "";
 				var param = "";
@@ -101,7 +101,7 @@
                 type : "get",//请求方式
                 url : url + "?" + param,//发送请求的地址
                 async : true,//请求为异步请求
-				data : {"username":username, "pwd":pwd},
+				data : {"username":username, "password":password},
 				dataType : "json",
                 success : function(data) {//成功时调用的回调函数
                     // 返回操作是否成功
