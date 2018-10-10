@@ -7,7 +7,7 @@ public class Student implements Serializable {
 
     private String name;
 
-    private String password;
+    private String pwd;
 
     private Integer state;
 
@@ -15,9 +15,12 @@ public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Student(String username, String password) {
+    public Student() {
+    }
+
+    public Student(String username, String pwd) {
         this.name = username;
-        this.password = password;
+        this.pwd = pwd;
     }
 
     public String getSid() {
@@ -36,12 +39,12 @@ public class Student implements Serializable {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getPassword() {
-        return password;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setPwd(String pwd) {
+        this.pwd = pwd == null ? null : pwd.trim();
     }
 
     public Integer getState() {
@@ -68,7 +71,7 @@ public class Student implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", sid=").append(sid);
         sb.append(", name=").append(name);
-        sb.append(", password=").append(password);
+        sb.append(", pwd=").append(pwd);
         sb.append(", state=").append(state);
         sb.append(", tid=").append(tid);
         sb.append(", serialVersionUID=").append(serialVersionUID);

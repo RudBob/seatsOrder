@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `aid` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `pwd` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`aid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
@@ -52,7 +52,7 @@ CREATE TABLE `balck_list` (
 DROP TABLE IF EXISTS `building`;
 CREATE TABLE `building` (
   `bid` int(11) NOT NULL,
-  `bname` varchar(30) DEFAULT NULL,
+  `bName` varchar(30) DEFAULT NULL,
   `max_floor` int(11) DEFAULT NULL,
   PRIMARY KEY (`bid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `sid` varchar(20) NOT NULL,
   `name` varchar(20) DEFAULT NULL,
-  `password` varchar(20) DEFAULT NULL,
+  `pwd` varchar(20) DEFAULT NULL,
   `state` int(6) DEFAULT NULL,
   `tid` int(11) DEFAULT NULL,
   PRIMARY KEY (`sid`)

@@ -1,6 +1,6 @@
 package com.example.demo.mapper;
 
-import com.example.demo.bean.ClassRoom;
+import com.example.demo.bean.Region;
 
 import org.apache.ibatis.annotations.Mapper;
 @Mapper
@@ -8,15 +8,15 @@ public interface ClassRoomMapper {
 
     int deleteByPrimaryKey(Integer cid);
 
-    int insert(ClassRoom record);
+    int insert(Region record);
 
-    int insertSelective(ClassRoom record);
-
-
-    ClassRoom selectByPrimaryKey(Integer cid);
+    int insertSelective(Region record);
 
 
-    int updateByPrimaryKeySelective(ClassRoom record);
+    Region selectByPrimaryKey(Integer cid);
 
-    int updateByPrimaryKey(ClassRoom record);
+
+    int updateByPrimaryKeySelective(Region record);
+
+    int updateByPrimaryKey(Region record);
 }

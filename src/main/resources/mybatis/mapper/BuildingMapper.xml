@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo.mapper.BuildingMapper" >
   <resultMap id="BaseResultMap" type="com.example.demo.bean.Building" >
     <id column="bid" property="bid" jdbcType="INTEGER" />
-    <result column="bname" property="bname" jdbcType="VARCHAR" />
+    <result column="bName" property="bName" jdbcType="VARCHAR" />
     <result column="max_floor" property="maxFloor" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="INTEGER" />
   </resultMap>
@@ -38,7 +38,7 @@
   </sql>
 
   <sql id="Base_Column_List" >
-    bid, bname, max_floor, state
+    bid, bName, max_floor, state
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -53,9 +53,9 @@
   </delete>
 
   <insert id="insert" parameterType="com.example.demo.bean.Building" >
-    insert into building (bid, bname, max_floor, 
+    insert into building (bid, bName, max_floor,
       state)
-    values (#{bid,jdbcType=INTEGER}, #{bname,jdbcType=VARCHAR}, #{maxFloor,jdbcType=INTEGER}, 
+    values (#{bid,jdbcType=INTEGER}, #{bName,jdbcType=VARCHAR}, #{maxFloor,jdbcType=INTEGER},
       #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.bean.Building" >
@@ -64,8 +64,8 @@
       <if test="bid != null" >
         bid,
       </if>
-      <if test="bname != null" >
-        bname,
+      <if test="bName != null" >
+        bName,
       </if>
       <if test="maxFloor != null" >
         max_floor,
@@ -78,8 +78,8 @@
       <if test="bid != null" >
         #{bid,jdbcType=INTEGER},
       </if>
-      <if test="bname != null" >
-        #{bname,jdbcType=VARCHAR},
+      <if test="bName != null" >
+        #{bName,jdbcType=VARCHAR},
       </if>
       <if test="maxFloor != null" >
         #{maxFloor,jdbcType=INTEGER},
@@ -92,8 +92,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.Building" >
     update building
     <set >
-      <if test="bname != null" >
-        bname = #{bname,jdbcType=VARCHAR},
+      <if test="bName != null" >
+        bName = #{bName,jdbcType=VARCHAR},
       </if>
       <if test="maxFloor != null" >
         max_floor = #{maxFloor,jdbcType=INTEGER},
@@ -106,7 +106,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.Building" >
     update building
-    set bname = #{bname,jdbcType=VARCHAR},
+    set bName = #{bName,jdbcType=VARCHAR},
       max_floor = #{maxFloor,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER}
     where bid = #{bid,jdbcType=INTEGER}

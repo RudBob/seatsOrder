@@ -6,9 +6,6 @@ import com.example.demo.util.Md5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * Description:
  *
@@ -43,12 +40,12 @@ public class StudentService {
         String dbOldPassword = Md5.EncoderByMd5(oldPassword);
         //tip: String 之间比较不能使用 ' == '
         //学生密码比对，如果不同，则不更新
-        if (student.getPassword().equals(dbOldPassword)) {
+        if (student.getPwd().equals(dbOldPassword)) {
             return false;
         }
         // 加密新密码并set到密码行.
         String dbNewPassword = Md5.EncoderByMd5(newPassword);
-        student.setPassword(dbNewPassword);
+        student.setPwd(dbNewPassword);
         studentMapper.updateByPrimaryKey(student);
         return false;
     }

@@ -1,7 +1,7 @@
 
 server:
   servlet:
-    context-path: /seatOrder
+    context-path: /seatsOrder
 logging:
   level:
     cn.edu.zzuli: trace
@@ -13,9 +13,9 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    username: root
-    password: 123456
-    url: jdbc:mysql://localhost:3306/seat_order?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: enjoystudy
+    password: lxx123
+    url: jdbc:mysql://202.196.1.132:33166/seat_order?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 

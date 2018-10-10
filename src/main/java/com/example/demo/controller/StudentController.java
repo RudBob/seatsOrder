@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -30,7 +31,7 @@ public class StudentController {
      * @return 成功 or 失败
      */
     @ResponseBody
-    @RequestMapping("login")
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public Student login(@Param(value = "username") String username,
                          @Param(value = "pwd") String password) {
        Student student = studentService.login(username, password);
@@ -38,7 +39,7 @@ public class StudentController {
     }
 
     @ResponseBody
-    @RequestMapping("logout")
+    @RequestMapping(value = "logout",method = RequestMethod.GET)
     public Student logout(@Param(value = "sid") String sid) {
         Student student = studentService.logout(sid);
         return student;
@@ -52,7 +53,7 @@ public class StudentController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("updatePassword")
+    @RequestMapping(value = "updatePassword",method = RequestMethod.POST)
     public boolean updatePassword(@Param(value = "sid") String sid,
                                   @Param(value = "oldPwd") String oldPassword,
                                   @Param(value = "newPwd") String newPassword) {
