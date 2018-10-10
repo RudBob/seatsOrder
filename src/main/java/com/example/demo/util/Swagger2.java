@@ -2,6 +2,8 @@ package com.example.demo.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -12,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class Swagger2 {
+public class Swagger2 extends WebMvcConfigurationSupport {
 
     @Bean
     public Docket createRestApi() {
@@ -23,13 +25,27 @@ public class Swagger2 {
                 .paths(PathSelectors.any())
                 .build();
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("微信占座系统swaggerAPI")
                 .description("使用restful风格")
-                .termsOfServiceUrl("www.baidu.com")
+                .termsOfServiceUrl("https://www.cnblogs.com/guodao/p/9734658.html")
                 .version("1.0")
                 .build();
     }
+
+    /**
+     * 防止@EnableMvc把默认的静态资源路径覆盖了，手动设置的方式
+     *
+     * @param registry
+     */
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").
+                addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
+    }
+
+
 }
 
