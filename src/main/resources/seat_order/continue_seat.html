@@ -56,15 +56,15 @@
 <h1>座位预约管理系统</h1>
 <div id="middle">
     <div>
-        <p style="font-size: 50px">快速选座</p>
-        <span>请选择校区地点：</span>
+        <p style="font-size: 50px">续座</p>
+        <!--<span>请选择校区地点：</span>
         <select>
             <option value="A">A区XX图书馆</option>
             <option value="B">B区XX图书馆</option>
             <option value="C">C区XX图书馆</option>
-        </select>
+        </select>-->
     </div>
-    <p style="float: left;">选择可预约使用时长</p>
+    <p style="float: left;">选择续座时长</p>
     <div style="margin-left: 50px;">
         <input type="submit" value="半个小时"/>
         <input type="submit" value="一个小时"/>
@@ -80,19 +80,29 @@
 <script type="text/javascript" src="layer/layer.js"></script>
 <script type="text/javascript">
     $(function () {
+        //先从ajax获取上次预约结束时间得到本次续座的初始时间
+        //发送ajax
+        var url = "/seatsOrder/adminSeat/seatNeedRepair";
+        var param = "tid=" + tid;
+        //发送ajax
+        get_selectPageData(url, param);
         $("input").click(function () {
             var index = $("input").index(this);
             //获取用座时间区间
-            interval_time(index);
+            interval_time(Stime, index);
+            //发送ajax
+            var url = "/seatsOrder/adminSeat/seatNeedRepair";
+            var param = "tid=" + tid;
+            //发送ajax
+            put_selectPageData(url, param);
         });
     });
 
-    function interval_time(index) {
+    function interval_time(Stime, index) {
         //区间时间单位是分钟
         var inteval = (index + 1) * 30;
         var hour = new Date().getHours();
         var minute = new Date().getMinutes();
-        var Stime = hour + ":" + minute;
         hour += parseInt(inteval / 60);
         minute += (inteval + 60) % 60;
         if (hour > 22) {
@@ -113,8 +123,26 @@
     function showMsg(message) {
         alert(message);
     }
-    //调用ajax函数
-    function selectPageData(url, param) {
+    //调用ajax函数,初始时得到上次预约结束时的时间
+    function get_selectPageData(url, param) {
+        $.ajax({
+            type : "post",//请求方式
+            url : url + "?" + param,//发送请求的地址
+            async : true,//请求为异步请求
+            success : function(data) {//成功时调用的回调函数
+                // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
+                if(data == 500){
+                    showMsg(data.message);
+                }
+                window.location.href='home_page.html';
+            },
+            error : function() {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    //调用ajax函数,本次续座完成,将时间存入
+    function put_selectPageData(url, param) {
         $.ajax({
             type : "post",//请求方式
             url : url + "?" + param,//发送请求的地址

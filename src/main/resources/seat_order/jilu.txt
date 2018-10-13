@@ -1,10 +1,17 @@
-index.html
+index.html(可以了)
 登录首页
-admin
+admin(可以了)
 管理员界面
-home_page
+user_letters(可以了)
+用户来信
+home_page(可以了)
 用户登录后的首页面
-seat_flat
+seat_flat(不写了)
 一个区域的座位平面展示
-fast-order
+fast-order(可以了)
 快速选座
+continue_seat(可以了)
+续座
+
+
+tid 1-9_1-9_1-9_1-999

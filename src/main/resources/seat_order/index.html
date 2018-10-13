@@ -29,7 +29,7 @@
 				margin-top: 200px;
 				text-align: center; 
 				vertical-align:middle;
-				font-size:;
+				/*font-size:;*/
 			}
 			p{
 				 margin-bottom: 50px;
@@ -73,21 +73,17 @@
 				if(!password || password == ""){
 				    showMsg("请输入密码");
 				}
-				var data = {
-                    user_name : username,
-                    pass_word : password
-                };
-				var url = "";
-				var param = "";
+				var url = "/seatsOrder/student/login";
+				var param = "username=" + username + "&pwd=" + password;
                 loading = layer.load(1, {
                     shade : [0.2, '#fff']
                     //0.1透明度的白色背景
                 })
 				//发送ajax
-                //selectPageData(url, param, data);
+                selectPageData(url, param);
                 //加载页面
                 layer.close(loading);
-                window.location.href='home_page.html';
+                // window.location.href='home_page.html';
             })
 
         })
@@ -96,20 +92,19 @@
             alert(message);
         }
         //调用ajax函数
-        function selectPageData(url, param, data) {
+        function selectPageData(url, param) {
             $.ajax({
-                type : "get",//请求方式
+                type : "post",//请求方式
                 url : url + "?" + param,//发送请求的地址
                 async : true,//请求为异步请求
-				data : {"username":username, "password":password},
-				dataType : "json",
                 success : function(data) {//成功时调用的回调函数
-                    // 返回操作是否成功
-
+                    // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
+					if(data == 500){
+                        showMsg(data.message);					}
                     window.location.href='home_page.html';
                 },
-                error : function(data) {//失败时被调用的函数
-                    showMsg(data.message);
+                error : function() {//失败时被调用的函数
+                    alert("网络异常");
                 }
             });
         }

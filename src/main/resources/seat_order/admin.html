@@ -2,76 +2,210 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title></title>
-	<link rel="stylesheet" href="bootstraps/css/bootstrap.min.css">
-	<link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css" />
-	<style type="text/css">
-		body {
-			margin: 0;
-			padding: 0;
-			background-image: url(img/bg.jpg);
-		}
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="bootstraps/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url(img/bg.jpg);
+        }
 
-		h1 {
-			font-size: 70px;
-			font-family: "黑体";
-			text-align: center;
-			vertical-align: middle;
-			color: #fff;
-			padding-top: 50px;
-			padding-bottom: 50px;
-			background-color: #000;
-		}
+        h1 {
+            font-size: 70px;
+            font-family: "黑体";
+            text-align: center;
+            vertical-align: middle;
+            color: #fff;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background-color: #000;
+        }
 
-		span {
-			font-size: 90px;
-			font-family: "黑体";
-			text-align: center;
-			color: #000;
-			/*padding-top: 50px;
-            padding-bottom: 50px;*/
-		}
+        span {
+            font-size: 90px;
+            font-family: "黑体";
+            text-align: center;
+            color: #000;
+        }
 
-		i {
-			line-height: 300px;
-		}
+        i {
+            line-height: 300px;
+        }
 
-		.icon-20x {
-			font-size: 20em;
-		}
+        .icon-20x {
+            font-size: 20em;
+        }
 
-		p {
-			margin-top: 100px;
-		}
+        #admin {
+            margin-top: 100px;
+        }
 
-		li {
-			font-size: 50px;
-			margin-top: 50px;
-		}
+        li {
+            font-size: 50px;
+            margin-top: 50px;
+        }
 
-		#middle{
-			margin-left: 50px;
-		}
-	</style>
+        #middle {
+            margin-left: 50px;
+        }
+
+        .modal-dialog {
+            position: relative;
+            width: 500px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .modal-header > i {
+            font-weight: bold;
+            color: #ADADAD;
+            float: right;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            position: relative;
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+
+        }
+
+        .modal-body input {
+            width: 300px;
+            border-radius: 4px;
+            border: 1px solid #DDDDDD;
+            outline: none;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .modal-footer {
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #e5e5e5;
+        }
+
+    </style>
 </head>
 
 <body>
 <h1>座位预约管理系统</h1>
 <div id="middle">
-	<p>
-		<i class="icon-user icon-20x"></i>
-		<span>admin</span>
-	</p>
-	<ul>
-		<li>用户来信</li>
-		<li>管理座位</li>
-		<li>管理自习室</li>
-		<li>管理楼层</li>
-		<li>管理楼号</li>
-	</ul>
-</div>
+    <p id="admin">
+        <i class="icon-user icon-20x"></i>
+        <span>admin</span>
+    </p>
+    <ul>
+        <li><a href="user_letters.html" style="color: #000;">用户来信</a></li>
+        <li id="manage_seats" data-toggle="modal">管理座位</li>
+        <li id="manage_class" data-toggle="modal">管理自习室</li>
+        <li id="manage_floor" data-toggle="modal">管理楼层</li>
+        <li id="manage_build" data-toggle="modal">管理楼号</li>
+    </ul>
+    <!-- 管理座位模态框 -->
+    <div class="modal fade" id="modal_manage">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">管理</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+                    <p id="build_no">楼号&emsp;<input id="bno" type="text"/></p>
+                    <p id="floor_no">楼层号<input id="fno" type="text"/></p>
+                    <p id="class_no">自习室<input id="cno" type="text"/></p>
+                    <p id="seat_no">座位号<input id="sno" type="text"/></p>
+                    <p>状态&emsp;<input type="text" placeholder="维修or正常"/></p>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //显示管理座位的模态框
+        $("#manage_seats").click(function () {
+            $("#seat_no").show();
+            $("#class_no").show();
+            $("#floor_no").show();
+            $("#manage_seats").attr("data-target", "#modal_manage");
+        });
+        //显示管理自习室的模态框
+        $("#manage_class").click(function () {
+            $("#manage_class").attr("data-target", "#modal_manage");
+            $("#class_no").show();
+            $("#floor_no").show();
+            $("#seat_no").hide();
+        });
+        //显示管理楼层的模态框
+        $("#manage_floor").click(function () {
+            $("#manage_floor").attr("data-target", "#modal_manage");
+            $("#floor_no").show();
+            $("#seat_no").hide();
+            $("#class_no").hide();
+        });
+        //显示管理楼号的模态框
+        $("#manage_build").click(function () {
+            $("#manage_build").attr("data-target", "#modal_manage");
+            $("#floor_no").hide();
+            $("#seat_no").hide();
+            $("#class_no").hide();
+        }); var tid = "";
+        $("button").click(function () {
+            //获取input中的值,拼成一个字符串即座位号tid
+            tid = $("#bno").val() + $("#fno").val() + $("#cno").val() + $("#sno").val();
+        })
+        var url = "/seatsOrder/adminSeat/seatNeedRepair";
+        var param = "tid=" + tid;
+        //发送ajax
+        selectPageData(url, param);
+    })
+    //调用ajax函数
+    function selectPageData(url, param) {
+        $.ajax({
+            type : "post",//请求方式
+            url : url + "?" + param,//发送请求的地址
+            async : true,//请求为异步请求
+            success : function(data) {//成功时调用的回调函数
+                // 返回操作是否成功
+                if(data == 200){
+                    alert("操作成功!");
+                }
+                else if(data == 100){
+                    showMsg(data.message);					}
+            },
+            error : function() {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    function showMsg(message) {
+        alert(message);
+    }
+</script>
 </body>
 
 </html>

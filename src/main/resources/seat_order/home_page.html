@@ -26,7 +26,7 @@
         input{
             width: 750px;
             height: 50px;
-            font-size: 40px;
+            font-size: 30px;
         }
         #middle{
             margin-top: 200px;
@@ -36,7 +36,7 @@
         p{
             margin-bottom: 70px;
         }
-        button{
+        .button{
             width: 550px;
             height: 70px;
             background-color: blue;
@@ -46,6 +46,50 @@
         .icon-5x {
             font-size: 5em;
         }
+
+        .modal-dialog {
+            position: relative;
+            width: 500px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .modal-header > i {
+            font-weight: bold;
+            color: #ADADAD;
+            float: right;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            position: relative;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+
+        }
+
+        .modal-body input {
+            width: 450px;
+            border-radius: 4px;
+            border: 1px solid #DDDDDD;
+            outline: none;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .modal-footer {
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #e5e5e5;
+        }
+
     </style>
 </head>
 
@@ -54,26 +98,108 @@
 <div id="middle">
     <p>
         <i class="icon-pencil icon-5x"></i>
-        <button type="submit">签到</button>
-    </p>
-    <p>
-        <i class="icon-time icon-5x"></i>
-        <button type="submit">暂离</button>
-    </p>
-    <p>
-        <i class="icon-plus icon-5x"></i>
-        <button type="submit">续座</button>
-    </p>
-    <p>
-        <i class="icon-stop icon-5x"></i>
-        <button type="submit">结束使用</button>
+        <button type="submit" id="sign" class="button">签到</button>
+        <button type="submit" id="signed" class="button">已签到</button>
     </p>
     <p>
         <i class="icon-list icon-5x"></i>
-        <button type="submit">我的预约</button>
+        <button type="submit" id="fast_order" class="button">快速选座</button>
     </p>
-</div>
+    <p>
+        <i class="icon-time icon-5x"></i>
+        <button type="submit" id="temp" class="button">暂离</button>
+        <button type="submit" id="return" class="button">返回</button>
+    </p>
+    <p>
+        <i class="icon-plus icon-5x"></i>
+        <button type="submit" id="continue" class="button" >续座</button>
+    </p>
+    <p>
+        <i class="icon-envelope icon-5x"></i>
+        <button type="submit" class="button" data-toggle="modal" data-target="#modal_manage">投诉建议</button>
+    </p>
+    <p>
+        <i class="icon-stop icon-5x"></i>
+        <button type="submit" id="over" class="button">结束使用</button>
+    </p>
+    <!--投诉建议的模态框-->
+    <div class="modal fade" id="modal_manage">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">投诉建议</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+
+                    <p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //签到
+        $("#signed").hide();
+        $("#sign").click(function () {
+            $("#sign").hide();
+            $("#signed").show();
+        });
+        //快速选座
+        $("#fast_order").click(function () {
+            window.location.href = 'fast_order.html';
+        });
+        //暂离
+        $("#return").hide();
+        $("#temp").click(function () {
+            $("#temp").hide();
+            afterthirtym();
+            $("#return").show();
+        })
+        //返回
+        $("#return").click(function () {
+            $("#return").hide();
+            $("#temp").show();
+        })
+        //续座
+        $("#continue").click(function () {
+            window.location.href='continue_seat.html';
+        });
+        //结束使用
+        $("#over").click(function () {
+            alert("已成功结束使用!");
+            //发送ajax账号退出
+            window.location.href='index.html';
+        })
+    })
+    function afterthirtym(){
+        var hour = new Date().getHours();
+        var minute = new Date().getMinutes();
+        if((minute+20) >= 60){
+            hour++;
+        }
+        minute = (minute+20) % 60;
+        if(hour > 22){
+            alert("自习室即将关闭,不再提供暂离服务!");
+        }else{
+            alert("请于" + hour + ":" + minute + "返回");
+        }
+    }
+</script>
 </body>
 
 </html>
