@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="bootstraps/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css"/>
     <style type="text/css">
         body {
             margin: 0;
@@ -23,26 +23,31 @@
             padding-bottom: 50px;
             background-color: #000;
         }
-        input{
+
+        input {
             width: 750px;
             height: 50px;
             font-size: 30px;
         }
-        #middle{
+
+        #middle {
             margin-top: 200px;
             text-align: center;
-            font-size:12px;
+            font-size: 12px;
         }
-        p{
+
+        p {
             margin-bottom: 70px;
         }
-        .button{
+
+        .button {
             width: 550px;
             height: 70px;
             background-color: blue;
             font-size: 45px;
             color: #fff;
         }
+
         .icon-5x {
             font-size: 5em;
         }
@@ -112,7 +117,7 @@
     </p>
     <p>
         <i class="icon-plus icon-5x"></i>
-        <button type="submit" id="continue" class="button" >续座</button>
+        <button type="submit" id="continue" class="button">续座</button>
     </p>
     <p>
         <i class="icon-lock icon-5x"></i>
@@ -140,12 +145,15 @@
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
 
-                    <p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>
+                    <p>
+                        <textarea style="width: 400px; height: 280px;" name="txt" clos=",50" rows="5" warp="virtual"
+                                  placeholder="可对用户和座位进行投诉或建议,字数在6~255之间"></textarea>
+                    </p>
                 </div>
 
                 <!-- 模态框底部 -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                    <button id="suggest_ok" type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
                 </div>
 
             </div>
@@ -182,7 +190,7 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="layer/layer.js"></script>
-<script type="text/javascript" src="js/base.js"></script>
+<!--<script type="text/javascript" src="js/base.js"></script>-->
 <script type="text/javascript">
     $(function () {
         //签到
@@ -209,16 +217,16 @@
         })
         //续座
         $("#continue").click(function () {
-            window.location.href='continue_seat.html';
+            window.location.href = 'continue_seat.html';
         });
         //更新密码
-        $("#change_ok").click(function(){
+        $("#change_ok").click(function () {
             var oldpwd = $("#oldpwd").val();
             var newpwd = $("#newpwd").val();
             var repeatpwd = $("#repeatpwd").val();
-            if(newpwd != repeatpwd){
+            if (newpwd != repeatpwd) {
                 alert("新输入的两次密码不相同,请重新输入!");
-            }else{
+            } else {
                 alert(oldpwd);
                 alert(newpwd);
                 alert(repeatpwd);
@@ -234,41 +242,54 @@
         $("#over").click(function () {
             alert("已成功结束使用!");
             //发送ajax账号退出
-            window.location.href='index.html';
+            window.location.href = 'index.html';
+        })
+        //投诉建议
+        $("#suggest_ok").click(function () {
+            var text = $("textarea").val();
+            if(text.length < 5){
+                alert("您输入的字数小于5,请重新输入!");
+            }else if(text.length > 255){
+                alert("您输入的字数大于255,请重新输入!");
+            }
         })
     })
-    function afterthirtym(){
+
+    function afterthirtym() {
         var hour = new Date().getHours();
         var minute = new Date().getMinutes();
-        if((minute+20) >= 60){
+        if ((minute + 20) >= 60) {
             hour++;
         }
-        minute = (minute+20) % 60;
-        if(hour > 22){
+        minute = (minute + 20) % 60;
+        if (hour > 22) {
             alert("自习室即将关闭,不再提供暂离服务!");
-        }else{
+        } else {
             alert("请于" + hour + ":" + minute + "返回");
         }
     }
+
     //调用ajax函数
     function selectPageData_checkpwd(url, param) {
         $.ajax({
-            type : "post",//请求方式
-            url : url + "?" + param,//发送请求的地址
-            async : true,//请求为异步请求
-            success : function(data) {//成功时调用的回调函数
+            type: "post",//请求方式
+            url: url + "?" + param,//发送请求的地址
+            async: true,//请求为异步请求
+            success: function (data) {//成功时调用的回调函数
                 // 返回操作是否成功
-                if(data == 200){
+                if (data == 200) {
                     alert("操作成功!");
                 }
-                else if(data == 100){
-                    showMsg(data.message);					}
+                else if (data == 100) {
+                    showMsg(data.message);
+                }
             },
-            error : function() {//失败时被调用的函数
+            error: function () {//失败时被调用的函数
                 alert("网络异常");
             }
         });
     }
+
     function showMsg(message) {
         alert(message);
     }

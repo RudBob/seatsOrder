@@ -79,13 +79,11 @@
                     shade : [0.2, '#fff']
                     //0.1透明度的白色背景
                 })
-				//发送ajax
-                selectPageData(url, param);
                 //加载页面
                 layer.close(loading);
-                // window.location.href='home_page.html';
+				//发送ajax
+                selectPageData(url, param);
             })
-
         })
 		//页面信息提示函数
 		function showMsg(message) {
