@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.bean.Student;
 import com.example.demo.service.StudentService;
+import com.example.demo.util.Msg;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,17 +34,23 @@ public class StudentController {
      */
     @ResponseBody
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public Student login(@RequestParam(value = "username",required = true) String username,
-                         @RequestParam(value = "pwd",required = true) String password) {
+    public Msg login(@RequestParam(value = "username",required = true) String username,
+                     @RequestParam(value = "pwd",required = true) String password) {
        Student student = studentService.login(username, password);
-        return student;
+       if(student != null){
+           return Msg.success().add("student",student);
+       }
+       return Msg.fail().setMsg("账号或密码错误");
     }
 
     @ResponseBody
     @RequestMapping(value = "logout",method = RequestMethod.GET)
-    public Student logout(@Param(value = "sid") String sid) {
+    public Msg logout(@Param(value = "sid") String sid) {
         Student student = studentService.logout(sid);
-        return student;
+        if(student != null){
+            return Msg.success().add("student",student);
+        }
+        return Msg.fail().setMsg("账号或密码错误");
     }
     /**
      * 学生修改密码
@@ -55,10 +62,13 @@ public class StudentController {
      */
     @ResponseBody
     @RequestMapping(value = "updatePassword",method = RequestMethod.POST)
-    public boolean updatePassword(@Param(value = "sid") String sid,
+    public Msg updatePassword(@Param(value = "sid") String sid,
                                   @Param(value = "oldPwd") String oldPassword,
                                   @Param(value = "newPwd") String newPassword) {
-        boolean res = studentService.updatePassword(sid, oldPassword, newPassword);
-        return res;
+        if(studentService.updatePassword(sid, oldPassword, newPassword)){
+            return Msg.success();
+        }else {
+            return Msg.fail();
+        }
     }
 }
