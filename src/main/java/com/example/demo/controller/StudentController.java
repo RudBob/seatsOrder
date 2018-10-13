@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.bean.Student;
 import com.example.demo.service.StudentService;
+import com.example.demo.util.Msg;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,10 +34,13 @@ public class StudentController {
      */
     @ResponseBody
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public Student login(@RequestParam(value = "username",required = true) String username,
-                         @RequestParam(value = "pwd",required = true) String password) {
+    public Msg login(@RequestParam(value = "username",required = true) String username,
+                     @RequestParam(value = "pwd",required = true) String password) {
        Student student = studentService.login(username, password);
-        return student;
+       if(student != null){
+           return Msg.success().add("student",student);
+       }
+       return Msg.fail().setMsg("账号或密码错误");
     }
 
     @ResponseBody
