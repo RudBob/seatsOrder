@@ -2,9 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.bean.Student;
 import com.example.demo.mapper.StudentMapper;
-import com.example.demo.util.Md5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Description:
@@ -13,16 +14,23 @@ import org.springframework.stereotype.Service;
  * @ClassName: StudentService
  * @date 2018/9/19 19:17
  */
+
+
 @Service
 public class StudentService {
     @Autowired
     StudentMapper studentMapper;
 
-    public Student login(String username, String password) {
+    public Student login(String username, String password, HttpSession session) {
         // MD5加密
 //        password = Md5.EncoderByMd5(password);
+
         // 使用加密后的密码和用户账号查询用户.
-        Student student = studentMapper.login(username,password);
+        Student student = studentMapper.login(username, password);
+        //判断用户是否被拉黑
+
+        //加到session中
+        session.setAttribute("student", student);
         return student;
     }
 
