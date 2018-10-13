@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class Msg {
     /**
-     * 状态码 0 - 未知   100 -成功 200-失败
+     * 状态码 0 - 未知   100-成功 200-失败
      */
     private int code;
 
@@ -62,7 +62,7 @@ public class Msg {
         return code;
     }
 
-    private Msg setCode(int code) {
+    public Msg setCode(int code) {
         this.code = code;
         return this;
     }
@@ -76,7 +76,7 @@ public class Msg {
         return this;
     }
 
-    private Map<String, Object> getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 

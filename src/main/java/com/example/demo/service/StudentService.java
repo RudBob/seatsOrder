@@ -37,17 +37,17 @@ public class StudentService {
     public boolean updatePassword(String sid, String oldPassword, String newPassword) {
         // sid得到学生，
         Student student = studentMapper.selectByPrimaryKey(sid);
-        String dbOldPassword = Md5.EncoderByMd5(oldPassword);
+//        oldPassword = Md5.EncoderByMd5(oldPassword);
         //tip: String 之间比较不能使用 ' == '
         //学生密码比对，如果不同，则不更新
-        if (student.getPwd().equals(dbOldPassword)) {
+        if (student.getPwd().equals(newPassword)) {
             return false;
         }
         // 加密新密码并set到密码行.
-        String dbNewPassword = Md5.EncoderByMd5(newPassword);
-        student.setPwd(dbNewPassword);
+//        newPassword = Md5.EncoderByMd5(newPassword);
+        student.setPwd(newPassword);
         studentMapper.updateByPrimaryKey(student);
-        return false;
+        return true;
     }
 
     public Student logout(String sid) {

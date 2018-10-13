@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 @Mapper
 public interface StudentMapper {
 
@@ -15,7 +16,7 @@ public interface StudentMapper {
 
     int insertSelective(Student record);
 
-    Student selectByPrimaryKey(String sid);
+    Student selectByPrimaryKey(@Param("sid") String sid);
 
     int updateByPrimaryKeySelective(Student record);
 
@@ -23,9 +24,10 @@ public interface StudentMapper {
 
     /**
      * 登录
+     *
      * @param username
      * @param password
      * @return
      */
-    Student login(@Param("username") String username,@Param("password") String password);
+    Student login(@Param("username") String username, @Param("password") String password);
 }

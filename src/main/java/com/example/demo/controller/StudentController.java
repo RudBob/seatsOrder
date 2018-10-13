@@ -32,7 +32,6 @@ public class StudentController {
      * @param password 密码
      * @return 成功 or 失败
      */
-    @ResponseBody
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public Msg login(@RequestParam(value = "username",required = true) String username,
                      @RequestParam(value = "pwd",required = true) String password) {
@@ -43,9 +42,8 @@ public class StudentController {
        return Msg.fail().setMsg("账号或密码错误");
     }
 
-    @ResponseBody
     @RequestMapping(value = "logout",method = RequestMethod.GET)
-    public Msg logout(@Param(value = "sid") String sid) {
+    public Msg logout(@RequestParam(value = "sid",required = true) String sid) {
         Student student = studentService.logout(sid);
         if(student != null){
             return Msg.success().add("student",student);
@@ -60,11 +58,10 @@ public class StudentController {
      * @param newPassword
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "updatePassword",method = RequestMethod.POST)
-    public Msg updatePassword(@Param(value = "sid") String sid,
-                                  @Param(value = "oldPwd") String oldPassword,
-                                  @Param(value = "newPwd") String newPassword) {
+    public Msg updatePassword(@RequestParam(value = "sid",required = true) String sid,
+                                  @RequestParam(value = "oldPwd",required = true) String oldPassword,
+                                  @RequestParam(value = "newPwd",required = true) String newPassword) {
         if(studentService.updatePassword(sid, oldPassword, newPassword)){
             return Msg.success();
         }else {
