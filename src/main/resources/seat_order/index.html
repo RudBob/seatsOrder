@@ -60,6 +60,7 @@
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     var loading;//加载页面的全局变量
     $(function () {
@@ -75,16 +76,17 @@
             if (!password || password == "") {
                 showMsg("请输入密码");
             }
-            var url = "/seatsOrder/student/login";
-            var param = "username=" + username + "&pwd=" + password;
-            loading = layer.load(1, {
+            //加载按钮
+            var loading = layer.load(1, {
                 shade: [0.2, '#fff']
                 //0.1透明度的白色背景
-            })
-            //加载页面
-            layer.close(loading);
+            });
+            var url = "/seatsOrder/student/login";
+            var param = "username=" + username + "&pwd=" + password;
             //发送ajax
             selectPageData(url, param);
+            //加载页面
+            layer.close(loading);
         })
     })
 
@@ -101,17 +103,38 @@
             async: true,//请求为异步请求
             success: function (data) {//成功时调用的回调函数
                 // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
-                if (data.code == 200) {
-                    showMsg(data.msg);
-                }
-                else if (data.code == 100) {
-                    window.location.href = '/seatsOrder/home_page.html';
-                }
+                var flag = Page.toDo(data);
+                console.info(data);
             },
             error: function () {//失败时被调用的函数
                 alert("网络异常");
             }
         });
+    }
+    var Page = {
+        toDo : function (data) {
+            if (data.code == 200) {
+                showMsg(data.msg);
+                location.href = "/seatsOrder";
+                return false;
+            }else{
+                //存入数据
+                //user对象
+                var user = data.data.user;
+                //user名字
+                var username = data.data.user.userName;
+                /*//用户是否被禁用
+                var status = data.data.user.status;*/
+                //用户权限
+                //var userType = data.data.user.userType;
+                User.login(user);
+                //User.setuserType(userType);
+                //登陆成功
+                layer.alert("登陆成功!");
+                location.href = "/seatsOrder/home_page.html"
+            }
+
+        }
     }
 </script>
 </body>
