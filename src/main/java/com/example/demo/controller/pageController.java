@@ -23,10 +23,30 @@ public class pageController {
 //    public String intoIndex() {
 //        return "/index";
 //    }
-
     @GetMapping(value = "/admin")
     public String intoAdmin() {
         return "/admin";
+    }
+
+    @GetMapping(value = "/continue_seat")
+    public String intoContinueSeat() {
+        return "/continue_seat";
+    }
+
+    @GetMapping(value = "/fast_order")
+    public String intoFastOrder() {
+        return "/fast_order";
+    }
+
+    @GetMapping(value = "/home_page")
+    public String intoHomePage() {
+        return "/home_page";
+    }
+
+
+    @GetMapping(value = "/user_letters")
+    public String intoUserLetters() {
+        return "/user_letters";
     }
 
 
