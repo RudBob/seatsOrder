@@ -50,7 +50,6 @@
         </dependency>
 
         <!-- mysql驱动 -->
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -86,15 +85,13 @@
         </dependency>
 
         <!-- redis缓存 -->
-        <!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-data-redis</artifactId>
+        <!-- <dependency> <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-data-redis</artifactId>
             </dependency> -->
 
-        <!-- gson支持 -->
-        <!-- <dependency> <groupId>com.google.code.gson</groupId> <artifactId>gson</artifactId>
-            </dependency> -->
 
-        <!-- swagger api -->
-        <!-- swagger2核心依赖 -->
+
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -119,8 +116,13 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>

@@ -52,14 +52,15 @@ public class StudentController {
      * @param sid
      * @return
      */
-    @ApiOperation("学生登出(TODO)")
+    @ApiOperation("学生登出")
     @RequestMapping(value = "logout", method = RequestMethod.GET)
-    public Msg logout(@RequestParam(value = "sid", required = true) String sid) {
-        Student student = studentService.logout(sid);
-        if (student != null) {
-            return Msg.success().add("student", student);
+    public Msg logout(@RequestParam(value = "sid", required = true) String sid,
+                      HttpSession session) {
+        Boolean outFlag = studentService.logout(sid,session);
+        if (outFlag) {
+            return Msg.success();
         }
-        return Msg.fail().setMsg("账号或密码错误");
+        return Msg.fail();
     }
 
     /**

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
  * @date 2018/9/19 19:17
  */
 
-
 @Service
 public class StudentService {
     @Autowired
@@ -31,6 +30,7 @@ public class StudentService {
 
         //加到session中
         session.setAttribute("student", student);
+        session.getAttribute("student");
         return student;
     }
 
@@ -58,8 +58,8 @@ public class StudentService {
         return true;
     }
 
-    public Student logout(String sid) {
-
+    public Boolean logout(String sid, HttpSession session) {
+        session.removeAttribute("student");
         return null;
     }
 }
