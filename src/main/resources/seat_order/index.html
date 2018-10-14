@@ -79,13 +79,11 @@
                     shade : [0.2, '#fff']
                     //0.1透明度的白色背景
                 })
-				//发送ajax
-                selectPageData(url, param);
                 //加载页面
                 layer.close(loading);
-                // window.location.href='home_page.html';
+				//发送ajax
+                selectPageData(url, param);
             })
-
         })
 		//页面信息提示函数
 		function showMsg(message) {
@@ -99,8 +97,8 @@
                 async : true,//请求为异步请求
                 success : function(data) {//成功时调用的回调函数
                     // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
-					if(data == 500){
-                        showMsg(data.message);					}
+					if(data.code == 200){
+                        showMsg(data.msg);				}
                     window.location.href='home_page.html';
                 },
                 error : function() {//失败时被调用的函数
