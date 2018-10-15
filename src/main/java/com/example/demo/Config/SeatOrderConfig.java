@@ -1,5 +1,6 @@
 package com.example.demo.Config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.*;
@@ -26,8 +27,14 @@ public class SeatOrderConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 静态资源配置
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-    }
 
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+    }
     /**
      * Description: 页面转向
      *
