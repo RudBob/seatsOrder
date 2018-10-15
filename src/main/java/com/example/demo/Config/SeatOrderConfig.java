@@ -28,6 +28,7 @@ public class SeatOrderConfig extends WebMvcConfigurerAdapter {
         // 静态资源配置
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 
+        // 解决 swagger 无法访问的错误
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
 
@@ -35,6 +36,7 @@ public class SeatOrderConfig extends WebMvcConfigurerAdapter {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
 
     }
+
     /**
      * Description: 页面转向
      *

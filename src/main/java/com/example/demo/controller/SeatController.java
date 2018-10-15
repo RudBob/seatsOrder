@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.SeatService;
+import com.example.demo.util.Msg;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,10 +33,12 @@ public class SeatController {
      */
     @ResponseBody
     @RequestMapping(value = "getSeat",method = RequestMethod.POST)
-    public boolean getSeat(@RequestParam(value = "sid") String sid,
+    public Msg getSeat(@RequestParam(value = "sid") String sid,
                            @RequestParam(value = "tid") Integer tid) {
-        boolean res = seatService.getSeat(sid, tid);
-        return res;
+        if(seatService.getSeat(sid,tid)){
+            return Msg.success();
+        }
+        return Msg.fail();
     }
 
     /**
@@ -47,10 +50,12 @@ public class SeatController {
      */
     @ResponseBody
     @RequestMapping(value = "outSeat",method = RequestMethod.POST)
-    public boolean outSeat(@RequestParam(value = "sid") String sid) {
+    public Msg outSeat(@RequestParam(value = "sid") String sid) {
 
-        boolean res = seatService.outSeat(sid);
-        return res;
+        if(seatService.outSeat(sid)){
+            return Msg.success();
+        }
+        return Msg.fail();
     }
 
     /**
@@ -62,9 +67,11 @@ public class SeatController {
      */
     @ResponseBody
     @RequestMapping(value = "tempOut",method = RequestMethod.POST)
-    public boolean tempOut(@RequestParam(value = "sid") String sid) {
-        boolean res = seatService.tempOut(sid);
-        return res;
+    public Msg tempOut(@RequestParam(value = "sid") String sid) {
+        if(seatService.tempOut(sid)){
+            return Msg.success();
+        }
+        return Msg.fail();
     }
 
 }
