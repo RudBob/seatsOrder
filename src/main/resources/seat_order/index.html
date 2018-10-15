@@ -1,112 +1,142 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8" />
-		<title></title>
-		<link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css" />
-		<style type="text/css">
-			body {
-				margin: 0;
-				padding: 0;
-				background-image: url(/seatsOrder/static/img/bg.jpg);
-			}
-			
-			h1 {
-				font-size: 90px;
-				font-family: "黑体";
-				text-align: center;
-				color: #f8f9ff;
-				margin-top: 300px;
-			}
-			input{
-				width: 750px;
-				height: 70px;
-				font-size: 40px;
-			}
-			#middle{
-				margin-top: 200px;
-				text-align: center; 
-				vertical-align:middle;
-				/*font-size:;*/
-			}
-			p{
-				 margin-bottom: 50px;
-			}
-		</style>
-	</head>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url(/seatsOrder/static/img/bg.jpg);
+        }
 
-	<body>
-		<h1>座位预约管理系统</h1>
-		<div id="middle">
-			<!--用户名-->
-			<p>
-				<i class="icon-user icon-4x"></i>
-				<input id="username" type="text" />
-			</p>
-			<!--密码-->
-			<p>
-				<i class="icon-lock icon-4x"></i>
-				<input id="password" type="password" />
-			</p>
-			<!--登录按钮-->
-			<p>
-				<i class="icon-check icon-4x"></i>
-				<input id="login" type="button" value="登录" style="background-color: blue; color: #fff;"/>
-			</p>
-		</div>
-		<script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
-		<script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
-	<script type="text/javascript">
-		var loading;//加载页面的全局变量
-		$(function () {
-		    //点击登录事件
-		    $("#login").click(function () {
-                var username = $("#username").val();
-                var password = $("#password").val();
-                //验证用户名是否输入
-                if(!username || username == ""){
-                    showMsg("请输入用户名");
-				}
-                //验证密码是否输入
-				if(!password || password == ""){
-				    showMsg("请输入密码");
-				}
-				var url = "/seatsOrder/student/login";
-				var param = "username=" + username + "&pwd=" + password;
-                loading = layer.load(1, {
-                    shade : [0.2, '#fff']
-                    //0.1透明度的白色背景
-                })
-                //加载页面
-                layer.close(loading);
-				//发送ajax
-                selectPageData(url, param);
-            })
-        })
-		//页面信息提示函数
-		function showMsg(message) {
-            alert(message);
+        h1 {
+            font-size: 90px;
+            font-family: "黑体";
+            text-align: center;
+            color: #f8f9ff;
+            margin-top: 300px;
         }
-        //调用ajax函数
-        function selectPageData(url, param) {
-            $.ajax({
-                type : "post",//请求方式
-                url : url + "?" + param,//发送请求的地址
-                async : true,//请求为异步请求
-                success : function(data) {//成功时调用的回调函数
-                    // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
-					if(data.code == 200){
-                        showMsg(data.msg);				}
-                    window.location.href='home_page.html';
-                },
-                error : function() {//失败时被调用的函数
-                    alert("网络异常");
-                }
+
+        input {
+            width: 750px;
+            height: 70px;
+            font-size: 40px;
+        }
+
+        #middle {
+            margin-top: 200px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        p {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>座位预约管理系统</h1>
+<div id="middle">
+    <!--用户名-->
+    <p>
+        <i class="icon-user icon-4x"></i>
+        <input id="username" type="text"/>
+    </p>
+    <!--密码-->
+    <p>
+        <i class="icon-lock icon-4x"></i>
+        <input id="password" type="password"/>
+    </p>
+    <!--登录按钮-->
+    <p>
+        <i class="icon-check icon-4x"></i>
+        <input id="login" type="button" value="登录" style="background-color: blue; color: #fff;"/>
+    </p>
+</div>
+<script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
+<script type="text/javascript">
+    var loading;//加载页面的全局变量
+    $(function () {
+        //点击登录事件
+        $("#login").click(function () {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            //验证用户名是否输入
+            if (!username || username == "") {
+                showMsg("请输入用户名");
+            }
+            //验证密码是否输入
+            if (!password || password == "") {
+                showMsg("请输入密码");
+            }
+            //加载按钮
+            var loading = layer.load(1, {
+                shade: [0.2, '#fff']
+                //0.1透明度的白色背景
             });
+            var url = "/seatsOrder/student/login";
+            var param = "username=" + username + "&pwd=" + password;
+            //发送ajax
+            selectPageData(url, param);
+            //加载页面
+            layer.close(loading);
+        })
+    })
+
+    //页面信息提示函数
+    function showMsg(message) {
+        alert(message);
+    }
+
+    //调用ajax函数
+    function selectPageData(url, param) {
+        $.ajax({
+            type: "post",//请求方式
+            url: url + "?" + param,//发送请求的地址
+            async: true,//请求为异步请求
+            success: function (data) {//成功时调用的回调函数
+                // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
+                var flag = Page.toDo(data);
+                console.info(data);
+            },
+            error: function () {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    var Page = {
+        toDo : function (data) {
+            if (data.code == 200) {
+                showMsg(data.msg);
+                location.href = "/seatsOrder";
+                return false;
+            }else{
+                //存入数据
+                //user对象
+                var user = data.data.user;
+                //user名字
+                var username = data.data.user.userName;
+                /*//用户是否被禁用
+                var status = data.data.user.status;*/
+                //用户权限
+                //var userType = data.data.user.userType;
+                User.login(user);
+                //User.setuserType(userType);
+                //登陆成功
+                layer.alert("登陆成功!");
+                location.href = "/seatsOrder/home_page.html"
+            }
+
         }
-	</script>
-	</body>
+    }
+</script>
+</body>
 
 </html>

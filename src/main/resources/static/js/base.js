@@ -1,7 +1,7 @@
 User = {
     //用于存放用户
     user : null,
-    userTypes : null,
+    /*userTypes : null,*/
     //登录
     login : function(juser){
         user = juser;
@@ -9,10 +9,10 @@ User = {
         sessionStorage.setItem("user", JSON.stringify(juser));
     },
     //存入用户权限
-    setuserType : function(userTypes){
+   /* setuserType : function(userTypes){
         //将用户类型存进去
         sessionStorage.setItem("userType", JSON.stringify(userTypes));
-    },
+    },*/
     //登出
     logout : function () {
         user = null;
