@@ -6,6 +6,8 @@
     <title></title>
     <link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css">
     <link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+    <!--<link rel="stylesheet" href="static/bootstraps/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>-->
     <style type="text/css">
         body {
             margin: 0;
@@ -129,7 +131,7 @@
                     <p id="floor_no">楼层号<input id="fno" type="text"/></p>
                     <p id="class_no">自习室<input id="cno" type="text"/></p>
                     <p id="seat_no">座位号<input id="sno" type="text"/></p>
-                    <p>状态&emsp;<input type="text" placeholder="维修or正常"/></p>
+                    <p>状态&emsp;<input id="status" type="text" placeholder="维修or正常"/></p>
                 </div>
 
                 <!-- 模态框底部 -->
@@ -173,15 +175,24 @@
             $("#floor_no").hide();
             $("#seat_no").hide();
             $("#class_no").hide();
-        }); var tid = "";
+        });
+        var tid = "";
+        var status = "";
         $("button").click(function () {
             //获取input中的值,拼成一个字符串即座位号tid
             tid = $("#bno").val() + $("#fno").val() + $("#cno").val() + $("#sno").val();
+            status = $("#status").val();
+            var url;
+            if(status == "维修"){
+                url = "/seatsOrder/adminSeat/seatNeedRepair";
+            }
+            else if(status == "正常"){
+                url = "/seatsOrder/adminSeat/seatRepaired";
+            }
+            var param = "tid=" + tid;
+            //发送ajax
+            selectPageData(url, param);
         })
-        var url = "/seatsOrder/adminSeat/seatNeedRepair";
-        var param = "tid=" + tid;
-        //发送ajax
-        selectPageData(url, param);
     })
     //调用ajax函数
     function selectPageData(url, param) {
@@ -191,10 +202,11 @@
             async : true,//请求为异步请求
             success : function(data) {//成功时调用的回调函数
                 // 返回操作是否成功
-                if(data == 200){
+                alert(data.code);
+                if(data.code == 200){
                     alert("操作成功!");
                 }
-                else if(data == 100){
+                else if(data.code == 100){
                     showMsg(data.message);					}
             },
             error : function() {//失败时被调用的函数

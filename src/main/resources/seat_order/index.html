@@ -60,7 +60,7 @@
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
+<!--<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>-->
 <script type="text/javascript">
     var loading;//加载页面的全局变量
     $(function () {
@@ -120,14 +120,14 @@
             }else{
                 //存入数据
                 //user对象
-                var user = data.data.user;
-                //user名字
-                var username = data.data.user.userName;
-                /*//用户是否被禁用
-                var status = data.data.user.status;*/
-                //用户权限
-                //var userType = data.data.user.userType;
-                User.login(user);
+                // var user = data.data.student;
+                // //user名字
+                // var username = data.data.student.name;
+                // /*//用户是否被禁用
+                // var status = data.data.user.status;*/
+                // //用户权限
+                // //var userType = data.data.user.userType;
+                // User.login(user);
                 //User.setuserType(userType);
                 //登陆成功
                 layer.alert("登陆成功!");

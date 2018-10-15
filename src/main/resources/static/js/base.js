@@ -37,7 +37,7 @@ User = {
 }
 $(document).ready(function () {
     User.getUser();
-    alert("Hi," + User.user.username);
+    //alert("Hi," + User.user.username);
     $("#over").delegate('#logout', 'click', function () {
         layer.confirm('是否退出?', {
             icon : 3,
