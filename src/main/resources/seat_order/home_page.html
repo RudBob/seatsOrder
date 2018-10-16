@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
     <style type="text/css">
         body {
             margin: 0;
@@ -23,26 +23,30 @@
             padding-bottom: 50px;
             background-color: #000;
         }
-        input{
+
+        /*input{
             width: 750px;
             height: 50px;
             font-size: 30px;
-        }
-        #middle{
+        }*/
+        #middle {
             margin-top: 200px;
             text-align: center;
-            font-size:12px;
+            font-size: 12px;
         }
-        p{
+
+        .p {
             margin-bottom: 70px;
         }
-        .button{
+
+        .button {
             width: 550px;
             height: 70px;
             background-color: blue;
             font-size: 45px;
             color: #fff;
         }
+
         .icon-5x {
             font-size: 5em;
         }
@@ -96,32 +100,63 @@
 <body>
 <h1>座位预约管理系统</h1>
 <div id="middle">
-    <p>
+    <!--<p>
         <i class="icon-pencil icon-5x"></i>
         <button type="submit" id="sign" class="button">签到</button>
         <button type="submit" id="signed" class="button">已签到</button>
-    </p>
-    <p>
+    </p>-->
+    <p class="p">
         <i class="icon-list icon-5x"></i>
         <button type="submit" id="fast_order" class="button">快速选座</button>
     </p>
-    <p>
+    <p class="p">
         <i class="icon-time icon-5x"></i>
         <button type="submit" id="temp" class="button">暂离</button>
         <button type="submit" id="return" class="button">返回</button>
     </p>
-    <p>
+    <p class="p">
         <i class="icon-plus icon-5x"></i>
-        <button type="submit" id="continue" class="button" >续座</button>
+        <button type="submit" id="continue" class="button">续座</button>
     </p>
-    <p>
+    <p class="p">
+        <i class="icon-lock icon-5x"></i>
+        <button type="submit" class="button" data-toggle="modal" data-target="#modal_pwd">修改密码</button>
+    </p>
+    <p class="p">
         <i class="icon-envelope icon-5x"></i>
         <button type="submit" class="button" data-toggle="modal" data-target="#modal_manage">投诉建议</button>
     </p>
-    <p>
+    <p class="p">
         <i class="icon-stop icon-5x"></i>
         <button type="submit" id="over" class="button">结束使用</button>
     </p>
+    <!--修改密码的模态框-->
+    <div class="modal fade" id="modal_pwd">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">修改密码</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+                    <p><input id="sid" type="text" placeholder="请输入您的账号"/></p>
+                    <p><input id="old_pwd" type="password" placeholder="请输入您的原始密码"/></p>
+                    <p><input id="new_pwd" type="password" placeholder="请输入您的新密码"/></p>
+                    <p><input id="re_pwd" type="password" placeholder="请再次输入您的新密码"/></p>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button id="pwd_ok" type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <!--投诉建议的模态框-->
     <div class="modal fade" id="modal_manage">
         <div class="modal-dialog">
@@ -135,13 +170,14 @@
 
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
-
-                    <p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>
+                    <!--<p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>-->
+                    <textarea placeholder="可对用户和座位进行投诉或建议,字数应在5~255之间" cols="30" rows="6">
+</textarea>
                 </div>
 
                 <!-- 模态框底部 -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                    <button type="button" id="msg_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
                 </div>
 
             </div>
@@ -154,11 +190,11 @@
 <script type="text/javascript">
     $(function () {
         //签到
-        $("#signed").hide();
+        /*$("#signed").hide();
         $("#sign").click(function () {
             $("#sign").hide();
             $("#signed").show();
-        });
+        });*/
         //快速选座
         $("#fast_order").click(function () {
             window.location.href = 'fast_order.html';
@@ -177,25 +213,68 @@
         })
         //续座
         $("#continue").click(function () {
-            window.location.href='/seatsOrder/continue_seat.html';
+            window.location.href = '/seatsOrder/continue_seat.html';
         });
+        //修改密码
+        $("#pwd_ok").click(function () {
+            var sid = $("#sid").val();
+            var old_pwd = $("#old_pwd").val();
+            var new_pwd = $("#new_pwd").val();
+            var re_pwd = $("#re_pwd").val()
+            if(new_pwd != re_pwd){
+                alert("两次密码的输入不一致，请重新输入！");}
+            else{
+                var url = "/seatsOrder/student/updatePassword"
+                var param = "sid=" + sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
+                //发送ajax验证
+                selectPageData(url, param)
+            }
+        })
+        //投诉建议
+        $("#msg_ok").click(function () {
+            var msg = $("textarea").val();
+            var msg_length = msg.length;
+            alert(msg_length);
+        })
         //结束使用
         $("#over").click(function () {
             alert("已成功结束使用!");
             //发送ajax账号退出
-            window.location.href='/seatsOrder/index.html';
+            window.location.href = '/seatsOrder/';
         })
     })
-    function afterthirtym(){
+    //调用ajax函数
+    function selectPageData(url, param) {
+        $.ajax({
+            type : "post",//请求方式
+            url : url + "?" + param,//发送请求的地址
+            async : true,//请求为异步请求
+            success : function(data) {//成功时调用的回调函数
+                // 返回操作是否成功
+                if(data.code == 200){
+                    alert("操作成功!");
+                    location.href = "/seatsOrder/home_page.html"
+                } else{
+                    showMsg(data.message);					}
+            },
+            error : function() {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    function showMsg(message) {
+        alert(message);
+    }
+    function afterthirtym() {
         var hour = new Date().getHours();
         var minute = new Date().getMinutes();
-        if((minute+20) >= 60){
+        if ((minute + 20) >= 60) {
             hour++;
         }
-        minute = (minute+20) % 60;
-        if(hour > 22){
+        minute = (minute + 20) % 60;
+        if (hour > 22) {
             alert("自习室即将关闭,不再提供暂离服务!");
-        }else{
+        } else {
             alert("请于" + hour + ":" + minute + "返回");
         }
     }

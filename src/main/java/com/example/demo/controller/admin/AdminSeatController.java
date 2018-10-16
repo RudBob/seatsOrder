@@ -25,10 +25,10 @@ public class AdminSeatController {
      * 更改座位状态修理
      */
     @RequestMapping(value = "seatNeedRepair", method = RequestMethod.POST)
-    public boolean seatNeedRepair(Integer tid) {
+    public Msg seatNeedRepair(Integer tid) {
         //座位需要修理，
-        boolean result = adminSeatService.seatNeedRepair(tid);
-        return result;
+        adminSeatService.seatNeedRepair(tid);
+        return Msg.success();
     }
 
     /**
