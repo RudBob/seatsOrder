@@ -34,10 +34,7 @@ public class AdminStudentControllerTest {
 
     @Test
     public void addStudent() {
-        Student s = new Student("test账号","123456");
-        s.setSid("10001");
-        s.setState(0);
-        s.setName("test账号");
+        Student s = new Student("10003","test账号1","123456",0);
         adminStudentController.addStudent(s);
     }
 

@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
  */
 @Controller
 @ResponseBody
+@Transactional
 @RequestMapping("/seat")
 @Api(description = "座位相关操作-----任耀")
 public class SeatController {
@@ -55,11 +57,12 @@ public class SeatController {
      * @Param tid 座位id
      */
     @ResponseBody
+
     @RequestMapping(value = "getSeat", method = RequestMethod.POST)
     public Msg getSeat(@RequestParam(value = "sid", required = true) String sid,
-                       @RequestParam(value = "tid", required = true) Integer tid,
-                       @RequestParam(value = "startDatetime", required = true) LocalDateTime startDatetime,
-                       @RequestParam(value = "endDatetime", required = true) LocalDateTime endDatetime) {
+                            @RequestParam(value = "tid", required = true) Integer tid,
+                            @RequestParam(value = "startDatetime", required = true) LocalDateTime startDatetime,
+                            @RequestParam(value = "endDatetime", required = true) LocalDateTime endDatetime) {
         boolean res = seatService.getSeat(sid, tid, startDatetime, endDatetime);
         if (res) {
             return Msg.success();
@@ -77,7 +80,7 @@ public class SeatController {
     @ResponseBody
     @RequestMapping(value = "outSeat", method = RequestMethod.POST)
     public Msg outSeat(@RequestParam(value = "sid", required = true) String sid,
-                       @RequestParam(value = "timeOfTempOut", required = true) LocalDateTime timeOfTempOut) {
+                            @RequestParam(value = "timeOfTempOut", required = true) LocalDateTime timeOfTempOut) {
         boolean res = seatService.outSeat(sid, timeOfTempOut);
         if (res) {
             return Msg.success();

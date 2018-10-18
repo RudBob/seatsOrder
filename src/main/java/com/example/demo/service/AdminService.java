@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.bean.Admin;
-import com.example.demo.bean.Student;
-import com.example.demo.service.admin.*;
 import com.example.demo.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +21,6 @@ public class AdminService {
 
 
     public Admin login(String username, String password, HttpSession session) {
-        Admin admin = adminMapper.login(username, password);
-        //判断用户是否被拉黑
-        if(admin!=null){
-            //加到session中
-            session.setAttribute("admin", admin);
-        }
-        return admin;
+        return  adminMapper.login(username, password);
     }
 }

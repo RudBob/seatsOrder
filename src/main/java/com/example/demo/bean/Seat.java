@@ -3,20 +3,15 @@ package com.example.demo.bean;
 import java.io.Serializable;
 
 public class Seat implements Serializable {
-    private static final long serialVersionUID = 1L;
-    /**
-     * 座位id
-     */
     private Integer tid;
-    /**
-     * 区域id
-     */
-    private Integer rid;
-    /**
-     * 状态，1表示有人，2表示预约中,3表示检修，0表示可预约.
-     */
-    private Byte status;
 
+    private Integer rid;
+
+    private Byte statuss;
+
+    private Integer sid;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getTid() {
         return tid;
@@ -34,20 +29,34 @@ public class Seat implements Serializable {
         this.rid = rid;
     }
 
-    public Byte getStatus() {
-        return status;
+    public Byte getStatuss() {
+        return statuss;
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setStatuss(Byte statuss) {
+        this.statuss = statuss;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
     }
 
     @Override
     public String toString() {
-        return "Seat{" +
-                "tid=" + tid +
-                ", rid=" + rid +
-                ", status=" + status +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", tid=").append(tid);
+        sb.append(", rid=").append(rid);
+        sb.append(", statuss=").append(statuss);
+        sb.append(", sid=").append(sid);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

@@ -1,54 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.StudentSeatMapper">
     <resultMap id="BaseResultMap" type="com.example.demo.bean.StudentSeat">
-        <id column="s_tid" property="STid" jdbcType="INTEGER"/>
-        <result column="sid" property="sid" jdbcType="VARCHAR"/>
-        <result column="tid" property="tid" jdbcType="INTEGER"/>
-        <result column="begin_time" property="beginDatetime" jdbcType="TIMESTAMP"/>
-        <result column="end_time" property="endDatetime" jdbcType="TIMESTAMP"/>
-        <result column="statuss" property="status" jdbcType="INTEGER"/>
+        <id column="s_tid" jdbcType="INTEGER" property="sTid"/>
+        <result column="sid" jdbcType="VARCHAR" property="sid"/>
+        <result column="tid" jdbcType="INTEGER" property="tid"/>
+        <result column="begin_time" jdbcType="TIMESTAMP" property="startDatetime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endDatetime"/>
+        <result column="statuss" jdbcType="INTEGER" property="statuss"/>
+        <result column="res" jdbcType="BIT" property="res"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        s_tid, sid, tid, begin_time, end_time, statuss
+        s_tid, sid, tid, begin_time, end_time, statuss, res
     </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from student_seat
-        where s_tid = #{STid,jdbcType=INTEGER}
-    </select>
-    <select id="selectBySidTid" resultType="com.example.demo.bean.StudentSeat">
-        select
-        <include refid="Base_Column_List"/>
-        from student_seat
-        where tid = #{tid,jdbcType=INTEGER} AND sid = #{sid,jdbcType=VARCHAR} AND MAX(begin_time)
-    </select>
-    <select id="selectBySid" resultType="com.example.demo.bean.StudentSeat">
-        select
-        <include refid="Base_Column_List"/>
-        from student_seat
-        where sid = #{sid,jdbcType=VARCHAR} AND statuss = #{status,jdbcType=INTEGER}
+        where s_tid = #{sTid,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from student_seat
-        where s_tid = #{STid,jdbcType=INTEGER}
+        where s_tid = #{sTid,jdbcType=INTEGER}
     </delete>
+
     <insert id="insert" parameterType="com.example.demo.bean.StudentSeat">
-        insert into student_seat (s_tid, sid, tid, begin_time, end_time, statuss)
-        values (#{STid,jdbcType=INTEGER},
+        insert into student_seat (s_tid, sid, tid, begin_time, end_time, statuss, res)
+        values (#{sTid,jdbcType=INTEGER},
                 #{sid,jdbcType=VARCHAR},
                 #{tid,jdbcType=INTEGER},
-                #{beginDatetime,jdbcType=TIMESTAMP},
+                #{startDatetime,jdbcType=TIMESTAMP},
                 #{endDatetime,jdbcType=TIMESTAMP},
-                #{status,jdbcType=INTEGER})
+                #{statuss,jdbcType=INTEGER},
+                #{res,jdbcType=BIT})
     </insert>
     <insert id="insertSelective" parameterType="com.example.demo.bean.StudentSeat">
         insert into student_seat
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="STid != null">
+            <if test="sTid != null">
                 s_tid,
             </if>
             <if test="sid != null">
@@ -57,19 +48,22 @@
             <if test="tid != null">
                 tid,
             </if>
-            <if test="beginDatetime != null">
+            <if test="startDatetime != null">
                 begin_time,
             </if>
             <if test="endDatetime != null">
                 end_time,
             </if>
-            <if test="status != null">
+            <if test="statuss != null">
                 statuss,
+            </if>
+            <if test="res != null">
+                res,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="STid != null">
-                #{STid,jdbcType=INTEGER},
+            <if test="sTid != null">
+                #{sTid,jdbcType=INTEGER},
             </if>
             <if test="sid != null">
                 #{sid,jdbcType=VARCHAR},
@@ -77,17 +71,22 @@
             <if test="tid != null">
                 #{tid,jdbcType=INTEGER},
             </if>
-            <if test="beginDatetime != null">
-                #{beginDatetime,jdbcType=TIMESTAMP},
+            <if test="startDatetime != null">
+                #{startDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="endDatetime != null">
                 #{endDatetime,jdbcType=TIMESTAMP},
             </if>
-            <if test="status != null">
-                #{status,jdbcType=INTEGER},
+            <if test="statuss != null">
+                #{statuss,jdbcType=INTEGER},
+            </if>
+            <if test="res != null">
+                #{res,jdbcType=BIT},
             </if>
         </trim>
     </insert>
+
+
     <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.StudentSeat">
         update student_seat
         <set>
@@ -97,24 +96,29 @@
             <if test="tid != null">
                 tid = #{tid,jdbcType=INTEGER},
             </if>
-            <if test="beginDatetime != null">
-                begin_time = #{beginDatetime,jdbcType=TIMESTAMP},
+            <if test="startDatetime != null">
+                begin_time = #{startDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="endDatetime != null">
                 end_time = #{endDatetime,jdbcType=TIMESTAMP},
             </if>
-            <if test="status != null">
-                statuss = #{status,jdbcType=INTEGER},
+            <if test="statuss != null">
+                statuss = #{statuss,jdbcType=INTEGER},
+            </if>
+            <if test="res != null">
+                res = #{res,jdbcType=BIT},
             </if>
         </set>
-        where s_tid = #{STid,jdbcType=INTEGER}
+        where s_tid = #{sTid,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.StudentSeat">
         update student_seat
         set sid        = #{sid,jdbcType=VARCHAR},
             tid        = #{tid,jdbcType=INTEGER},
-            begin_time = #{beginDatetime,jdbcType=TIMESTAMP},
-            end_time   = #{endDatetime,jdbcType=TIMESTAMP}
-        where s_tid = #{STid,jdbcType=INTEGER}
+            begin_time = #{startDatetime,jdbcType=TIMESTAMP},
+            end_time   = #{endDatetime,jdbcType=TIMESTAMP},
+            statuss    = #{statuss,jdbcType=INTEGER},
+            res        = #{res,jdbcType=BIT}
+        where s_tid = #{sTid,jdbcType=INTEGER}
     </update>
 </mapper>

@@ -3,10 +3,9 @@ package com.example.demo.controller.admin;
 import com.example.demo.service.AdminService;
 import com.example.demo.service.admin.AdminSeatService;
 import com.example.demo.service.admin.AdminStudentService;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@Transactional
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired

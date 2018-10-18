@@ -5,11 +5,9 @@ import java.io.Serializable;
 public class Building implements Serializable {
     private Integer bid;
 
-    private String bName;
+    private String bname;
 
     private Integer maxFloor;
-
-    private Integer state;
 
     private static final long serialVersionUID = 1L;
 
@@ -21,12 +19,12 @@ public class Building implements Serializable {
         this.bid = bid;
     }
 
-    public String getbName() {
-        return bName;
+    public String getBname() {
+        return bname;
     }
 
-    public void setbName(String bName) {
-        this.bName = bName == null ? null : bName.trim();
+    public void setBname(String bname) {
+        this.bname = bname == null ? null : bname.trim();
     }
 
     public Integer getMaxFloor() {
@@ -37,14 +35,6 @@ public class Building implements Serializable {
         this.maxFloor = maxFloor;
     }
 
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -52,9 +42,8 @@ public class Building implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", bid=").append(bid);
-        sb.append(", bName=").append(bName);
+        sb.append(", bname=").append(bname);
         sb.append(", maxFloor=").append(maxFloor);
-        sb.append(", state=").append(state);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

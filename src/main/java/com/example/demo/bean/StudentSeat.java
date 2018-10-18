@@ -1,43 +1,39 @@
 package com.example.demo.bean;
 
-import com.example.demo.util.BaseData;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class StudentSeat implements Serializable {
-    private Integer STid;
+    private Integer sTid;
 
     private String sid;
 
     private Integer tid;
 
-    private LocalDateTime beginDatetime;
+    private LocalDateTime startDatetime;
 
     private LocalDateTime endDatetime;
-    /**
-     * 相应的状态码啊在BaseDatSetting 中进行了定义
-     *
-     * @see BaseData
-     */
-    private Integer status;
+
+    private Integer statuss;
+
+    private Boolean res;
 
     private static final long serialVersionUID = 1L;
 
-    public StudentSeat(String sid, Integer tid, LocalDateTime startDatetime, LocalDateTime endDatetime, Integer stuSeatUsing) {
+    public StudentSeat(String sid, Integer tid, LocalDateTime startDatetime, LocalDateTime endDatetime, int status) {
         this.sid = sid;
         this.tid = tid;
-        this.beginDatetime = startDatetime;
+        this.startDatetime = startDatetime;
         this.endDatetime = endDatetime;
-        this.status = stuSeatUsing;
+        this.statuss = status;
     }
 
-    public Integer getSTid() {
-        return STid;
+    public Integer getsTid() {
+        return sTid;
     }
 
-    public void setSTid(Integer STid) {
-        this.STid = STid;
+    public void setsTid(Integer sTid) {
+        this.sTid = sTid;
     }
 
     public String getSid() {
@@ -56,12 +52,12 @@ public class StudentSeat implements Serializable {
         this.tid = tid;
     }
 
-    public LocalDateTime getBeginDatetime() {
-        return beginDatetime;
+    public LocalDateTime getStartDatetime() {
+        return startDatetime;
     }
 
-    public void setBeginDatetime(LocalDateTime beginDatetime) {
-        this.beginDatetime = beginDatetime;
+    public void setStartDatetime(LocalDateTime startDatetime) {
+        this.startDatetime = startDatetime;
     }
 
     public LocalDateTime getEndDatetime() {
@@ -72,22 +68,37 @@ public class StudentSeat implements Serializable {
         this.endDatetime = endDatetime;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getStatuss() {
+        return statuss;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setStatuss(Integer statuss) {
+        this.statuss = statuss;
+    }
+
+    public Boolean getRes() {
+        return res;
+    }
+
+    public void setRes(Boolean res) {
+        this.res = res;
     }
 
     @Override
     public String toString() {
-        return "StudentSeat{" +
-                "STid=" + STid +
-                ", sid='" + sid + '\'' +
-                ", tid=" + tid +
-                ", beginDatetime=" + beginDatetime +
-                ", endDatetime=" + endDatetime +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", sTid=").append(sTid);
+        sb.append(", sid=").append(sid);
+        sb.append(", tid=").append(tid);
+        sb.append(", startDatetime=").append(startDatetime);
+        sb.append(", endDatetime=").append(endDatetime);
+        sb.append(", statuss=").append(statuss);
+        sb.append(", res=").append(res);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

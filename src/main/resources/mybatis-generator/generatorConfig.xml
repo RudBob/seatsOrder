@@ -60,8 +60,8 @@
         <!--<table tableName="building"/>-->
         <!--<table tableName="class_room"/>-->
         <!--<table tableName="seat"/>-->
-        <!--<table tableName="student"/>-->
+        <table tableName="student"/>
         <!--<table tableName="student_seat"/>-->
-        <table tableName="msg"/>
+        <!--<table tableName="msg"/>-->
     </context>
 </generatorConfiguration>

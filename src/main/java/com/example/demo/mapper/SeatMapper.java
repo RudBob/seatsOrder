@@ -2,8 +2,10 @@ package com.example.demo.mapper;
 
 import com.example.demo.bean.Seat;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface SeatMapper {
 
@@ -12,6 +14,7 @@ public interface SeatMapper {
     int insert(Seat record);
 
     int insertSelective(Seat record);
+
 
     Seat selectByPrimaryKey(Integer tid);
 

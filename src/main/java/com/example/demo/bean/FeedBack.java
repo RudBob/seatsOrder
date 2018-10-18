@@ -2,7 +2,7 @@ package com.example.demo.bean;
 
 import java.io.Serializable;
 
-public class Msg implements Serializable {
+public class FeedBack implements Serializable {
     private Integer mid;
 
     private String context;

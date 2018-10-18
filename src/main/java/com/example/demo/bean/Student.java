@@ -5,27 +5,21 @@ import java.io.Serializable;
 public class Student implements Serializable {
     private String sid;
 
-
     private String name;
 
     private String pwd;
-    /**
-     * 0 为正常
-     * 1 为使用中
-     * 2 为暂停使用
-     */
-    private Integer state;
+
+    private Integer statuss;
 
     private Integer tid;
 
     private static final long serialVersionUID = 1L;
 
-    public Student() {
-    }
-
-    public Student(String username, String pwd) {
-        this.name = username;
+    public Student(String sid, String name, String pwd, int statuss) {
+        this.sid = sid;
+        this.name = name;
         this.pwd = pwd;
+        this.statuss = statuss;
     }
 
     public String getSid() {
@@ -52,12 +46,12 @@ public class Student implements Serializable {
         this.pwd = pwd == null ? null : pwd.trim();
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getStatuss() {
+        return statuss;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setStatuss(Integer statuss) {
+        this.statuss = statuss;
     }
 
     public Integer getTid() {
@@ -70,12 +64,17 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "sid='" + sid + '\'' +
-                ", name='" + name + '\'' +
-                ", pwd='" + pwd + '\'' +
-                ", state=" + state +
-                ", tid=" + tid +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", sid=").append(sid);
+        sb.append(", name=").append(name);
+        sb.append(", pwd=").append(pwd);
+        sb.append(", statuss=").append(statuss);
+        sb.append(", tid=").append(tid);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

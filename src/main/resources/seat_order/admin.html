@@ -131,7 +131,7 @@
                     <p id="floor_no">楼层号<input id="fno" type="text"/></p>
                     <p id="class_no">自习室<input id="cno" type="text"/></p>
                     <p id="seat_no">座位号<input id="sno" type="text"/></p>
-                    <p>状态&emsp;<input id="status" type="text" placeholder="维修or正常"/></p>
+                    <p>状态&emsp;<input id="statuss" type="text" placeholder="维修or正常"/></p>
                 </div>
 
                 <!-- 模态框底部 -->
@@ -177,16 +177,16 @@
             $("#class_no").hide();
         });
         var tid = "";
-        var status = "";
+        var statuss = "";
         $("button").click(function () {
             //获取input中的值,拼成一个字符串即座位号tid
             tid = $("#bno").val() + $("#fno").val() + $("#cno").val() + $("#sno").val();
-            status = $("#status").val();
+            statuss = $("#statuss").val();
             var url;
-            if(status == "维修"){
+            if(statuss == "维修"){
                 url = "/seatsOrder/adminSeat/seatNeedRepair";
             }
-            else if(status == "正常"){
+            else if(statuss == "正常"){
                 url = "/seatsOrder/adminSeat/seatRepaired";
             }
             var param = "tid=" + tid;
