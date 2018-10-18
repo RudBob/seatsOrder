@@ -96,12 +96,13 @@
     </style>
 </head>
 <body>
+<h1>座位预约管理系统</h1>
 <div id="middle">
-    <!--<p>
+    <p class="p">
         <i class="icon-pencil icon-5x"></i>
         <button type="submit" id="sign" class="button">签到</button>
         <button type="submit" id="signed" class="button">已签到</button>
-    </p>-->
+    </p>
     <p class="p">
         <i class="icon-lock icon-5x"></i>
         <button type="submit" class="button" data-toggle="modal" data-target="#modal_pwd">修改密码</button>
@@ -172,6 +173,12 @@
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
 <script type="text/javascript">
+    //签到
+    $("#signed").hide();
+    $("#sign").click(function () {
+        $("#sign").hide();
+        $("#signed").show();
+    });
     //修改密码
     $("#pwd_ok").click(function () {
         var sid = $("#sid").val();
