@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
  * @date 2018/10/18 13:56
  */
 @RestController
+@RequestMapping("/login")
 public class LoginController {
     @Autowired
     StudentService studentService;

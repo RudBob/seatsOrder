@@ -37,7 +37,7 @@ public class SeatController {
      */
     @ApiOperation("预约座位，默认该预约保留15分钟")
     @ResponseBody
-    @RequestMapping(value = "getSeat", method = RequestMethod.POST)
+    @RequestMapping(value = "orderSeat", method = RequestMethod.POST)
     public Msg orderSeat(@RequestParam(value = "sid", required = true) String sid,
                          @RequestParam(value = "tid", required = true) Integer tid) {
         boolean res = seatService.orderSeat(sid, tid);
