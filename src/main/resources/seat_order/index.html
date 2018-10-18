@@ -81,7 +81,7 @@
                 shade: [0.2, '#fff']
                 //0.1透明度的白色背景
             });
-            var url = "/seatsOrder/student/login";
+            var url = "/seatsOrder/login/login";
             var param = "username=" + username + "&pwd=" + password;
             //发送ajax
             selectPageData(url, param);
@@ -117,7 +117,14 @@
                 showMsg(data.msg);
                 location.href = "/seatsOrder";
                 return false;
-            }else{
+            }else {
+                layer.alert("登陆成功!");
+                if (data.data.student.sid) {
+                    location.href = "/seatsOrder/home_page.html"
+                }
+                else {
+                    location.href = "/seatsOrder/admin.html"
+                }
                 //存入数据
                 //user对象
                 // var user = data.data.student;
@@ -130,10 +137,7 @@
                 // User.login(user);
                 //User.setuserType(userType);
                 //登陆成功
-                layer.alert("登陆成功!");
-                location.href = "/seatsOrder/home_page.html"
             }
-
         }
     }
 </script>
