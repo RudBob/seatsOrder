@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.bean.FeedBack;
 import com.example.demo.bean.Student;
 import com.example.demo.mapper.FeedBackMapper;
 import com.example.demo.mapper.StudentMapper;
@@ -21,7 +22,7 @@ public class StudentService {
     @Autowired
     private StudentMapper studentMapper;
     @Autowired
-    private FeedBackMapper msgMapper;
+    private FeedBackMapper feedBackMapper;
 
     public Student login(String username, String password, HttpSession session) {
         // 使用密码和用户账号查询用户.
@@ -50,7 +51,8 @@ public class StudentService {
     }
 
     public boolean feedback(String sid, String context) {
-//        FeedBack
+        FeedBack feedBack = new FeedBack(sid,context);
+        feedBackMapper.insert(feedBack);
         return false;
     }
 }

@@ -14,30 +14,23 @@ import static org.junit.Assert.*;
  * Description:
  *
  * @author 任耀
- * @ClassName: SeatControllerTest
- * @date 2018/10/18 17:28
+ * @ClassName: StudentControllerTest
+ * @date 2018/10/18 17:15
  */
 @RunWith(SpringJUnit4ClassRunner.class) // SpringJUnit支持，由此引入Spring-Test框架支持！
-@SpringBootTest(classes = DemoApplication.class)// 指定spring-boot的启动类
+@SpringBootTest(classes= DemoApplication.class)// 指定spring-boot的启动类
 @WebAppConfiguration
-public class SeatControllerTest {
+public class StudentControllerTest {
 
     @Autowired
-    SeatController seatController;
+    StudentController studentController;
     @Test
-    public void orderSeat() {
-        seatController.orderSeat("10000",10101003);
+    public void updatePassword() {
+        studentController.updatePassword("10000","testpwd","pwd");
     }
 
     @Test
-    public void getSeat() {
-    }
-
-    @Test
-    public void outSeat() {
-    }
-
-    @Test
-    public void tempOut() {
+    public void feedback() {
+        studentController.feedback("10000","this is a feedback");
     }
 }

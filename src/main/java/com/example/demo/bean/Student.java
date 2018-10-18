@@ -21,6 +21,13 @@ public class Student implements Serializable {
         this.pwd = pwd;
         this.statuss = statuss;
     }
+    public Student(String sid, String name, String pwd, int statuss,int tid) {
+        this.sid = sid;
+        this.name = name;
+        this.pwd = pwd;
+        this.statuss = statuss;
+        this.tid = tid;
+    }
 
     public String getSid() {
         return sid;

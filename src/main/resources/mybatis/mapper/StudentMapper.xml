@@ -17,7 +17,7 @@
         from student
         where sid = #{sid,jdbcType=VARCHAR}
     </select>
-    <select id="login" resultType="com.example.demo.bean.Student">
+    <select id="login" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from student

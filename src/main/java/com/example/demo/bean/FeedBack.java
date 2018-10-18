@@ -11,6 +11,12 @@ public class FeedBack implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public FeedBack(String sid, String context) {
+        this.sid = sid;
+        this.context = context;
+
+    }
+
     public Integer getMid() {
         return mid;
     }
