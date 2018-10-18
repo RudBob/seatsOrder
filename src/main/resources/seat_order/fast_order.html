@@ -49,6 +49,13 @@
             height: 70px;
             font-size: 40px;
         }
+        button{
+            margin-top: 50px;
+            margin-right: 15px;
+            margin-bottom: 20px;
+            height: 70px;
+            font-size: 40px;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +69,7 @@
             保留15分钟，否则您将选择新的座位。
         </span>
         <input id="tid" type="text" placeholder="请您输入座位号"/>
+        <input id="tid_ok" type="submit"/>
         <!--<span>请选择校区地点：</span>
         <select>
             <option value="A">A区XX图书馆</option>
@@ -85,7 +93,7 @@
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("input").click(function () {
+        $("#tid_ok").click(function () {
             var tid = $("#tid").val();
             //判断一下输入的是否均为数字，
             if(tid.length == 9){
