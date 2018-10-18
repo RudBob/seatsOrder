@@ -203,6 +203,11 @@
         $("#return").hide();
         $("#temp").click(function () {
             $("#temp").hide();
+            //发送ajax?
+            var sid = "10000";
+            var url = "/seatsOrder/seat/tempOut";
+            var param = "sid=" + sid;
+            selectPageData(url, param, "post");
             afterthirtym();
             $("#return").show();
         })
@@ -227,7 +232,7 @@
                 var url = "/seatsOrder/student/updatePassword"
                 var param = "sid=" + sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
                 //发送ajax验证
-                selectPageData(url, param)
+                selectPageData(url, param, "post");
             }
         })
         //投诉建议
@@ -238,15 +243,21 @@
         })
         //结束使用
         $("#over").click(function () {
-            alert("已成功结束使用!");
+            var sid = '10000';
+            //发送ajax将座位释放http://localhost:8080
+            var url = "/seatsOrder/seat/outSeat";
+            var param = "sid=" + sid;
             //发送ajax账号退出
+            var url = "/seatsOrder/student/logout";
+            var param = "sid=" + sid;
+            selectPageData(url, param, 'post');
             window.location.href = '/seatsOrder/';
         })
     })
     //调用ajax函数
-    function selectPageData(url, param) {
+    function selectPageData(url, param, type) {
         $.ajax({
-            type : "post",//请求方式
+            type : type,//请求方式
             url : url + "?" + param,//发送请求的地址
             async : true,//请求为异步请求
             success : function(data) {//成功时调用的回调函数
