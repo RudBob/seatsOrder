@@ -109,11 +109,12 @@
             /*var index = $("input").index(this);
             //获取用座时间区间
             interval_time(index);*/
+            var sid = '10000';
+            var url = "/seatsOrder/seat/orderSeat"
+            var param = "sid=" + sid + "&tid=" + tid;
+            selectPageData(url, param);
         });
-        var sid = '10000';
-        var url = "/seatsOrder/seat/orderSeat"
-        var param = "sid=" + sid + "&tid=" + tid;
-        selectPageData(url, param);
+
     });
 
     /*function interval_time(index) {
@@ -149,11 +150,11 @@
             url : url + "?" + param,//发送请求的地址
             async : true,//请求为异步请求
             success : function(data) {//成功时调用的回调函数
-                // 返回操作是否成功,操作成功
-                if(data.code == 200){
+                // 返回操作是否成功,操作成功 100
+                if(data.code == 100){
                     showMsg("您已成功预约到座位！");
                     window.location.href='/seatsOrder/home_page.html';
-                }else if(data.code == 100){
+                }else if(data.code == 200){
                     showMsg("请您重新预约座位！");
                     location.href = "/seatsOrder/fast_order.html"
                 }

@@ -212,7 +212,7 @@
         //发送ajax账号退出
         var url = "/seatsOrder/login/logout";
         var param = "sid=" + sid;
-        selectPageData(url, param, 'post');
+        selectPageData(url, param, 'get');
     })
     //调用ajax函数
     function selectPageData(url, param, type) {
