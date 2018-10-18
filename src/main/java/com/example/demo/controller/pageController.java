@@ -43,11 +43,9 @@ public class pageController {
     public String intoSeatFlat() {
         return "/seat_flat";
     }
+
     @GetMapping(value = "personal")
-    public String intoPersonal(){
-        return "personal";
+    public String intoPersonal() {
+        return "/personal";
     }
-
-
-
 }
