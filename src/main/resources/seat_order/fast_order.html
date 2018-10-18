@@ -29,7 +29,7 @@
         }
 
         span {
-            font-size: 50px;
+            font-size: 30px;
         }
 
         select {
@@ -43,10 +43,16 @@
         }
 
         input {
-            margin-left: 20px;
+            margin-top: 50px;
             margin-right: 15px;
             margin-bottom: 20px;
-            width: 300px;
+            height: 70px;
+            font-size: 40px;
+        }
+        button{
+            margin-top: 50px;
+            margin-right: 15px;
+            margin-bottom: 20px;
             height: 70px;
             font-size: 40px;
         }
@@ -57,14 +63,21 @@
 <div id="middle">
     <div>
         <p style="font-size: 50px">快速选座</p>
-        <span>请选择校区地点：</span>
+        <span>
+            欢迎使用快速选座，我们对座位进行了统一的管理，您可以根据需要选择合适的座位，我们的座位
+            是由楼号-层号-自习室号-座位号组成的一组数字，您输入之后，如果座位没有被占，该座位将为您
+            保留15分钟，否则您将选择新的座位。
+        </span>
+        <input id="tid" type="text" placeholder="请您输入座位号"/>
+        <input id="tid_ok" type="submit"/>
+        <!--<span>请选择校区地点：</span>
         <select>
             <option value="A">A区XX图书馆</option>
             <option value="B">B区XX图书馆</option>
             <option value="C">C区XX图书馆</option>
-        </select>
+        </select>-->
     </div>
-    <p style="float: left;">选择可预约使用时长</p>
+    <!--<p style="float: left;">选择可预约使用时长</p>
     <div style="margin-left: 50px;">
         <input type="submit" value="半个小时"/>
         <input type="submit" value="一个小时"/>
@@ -72,7 +85,7 @@
         <input type="submit" value="两个小时"/>
         <input type="submit" value="两个半小时"/>
         <input type="submit" value="三个小时"/>
-    </div>
+    </div>-->
 
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
@@ -80,14 +93,30 @@
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("input").click(function () {
-            var index = $("input").index(this);
+        $("#tid_ok").click(function () {
+            var tid = $("#tid").val();
+            //判断一下输入的是否均为数字，
+            if(tid.length == 9){
+                for(var i = 0; i < 9; i++){
+                    if (tid[i] < '0' || tid[i] > '9') {
+                        alert("请您输入符合要求的座位号！");
+                        break;
+                    }
+                }
+            }else{
+                alert("请您输入符合要求的座位号！");
+            }
+            /*var index = $("input").index(this);
             //获取用座时间区间
-            interval_time(index);
+            interval_time(index);*/
         });
+        var sid = '10000';
+        var url = "/seatsOrder/seat/orderSeat"
+        var param = "sid=" + sid + "&tid=" + tid;
+        selectPageData(url, param);
     });
 
-    function interval_time(index) {
+    /*function interval_time(index) {
         //区间时间单位是分钟
         var inteval = (index + 1) * 30;
         var hour = new Date().getHours();
@@ -107,7 +136,7 @@
             selectPageData(url, param);
             window.location.href = "/seatsOrder/home_page.html"
         }
-    }
+    }*/
 
     //页面信息提示函数
     function showMsg(message) {
@@ -120,10 +149,14 @@
             url : url + "?" + param,//发送请求的地址
             async : true,//请求为异步请求
             success : function(data) {//成功时调用的回调函数
-                // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
-                if(data == 500){
-                    showMsg(data.message);					}
-                window.location.href='/seatsOrder/home_page.html';
+                // 返回操作是否成功,操作成功
+                if(data.code == 200){
+                    showMsg("您已成功预约到座位！");
+                    window.location.href='/seatsOrder/home_page.html';
+                }else if(data.code == 100){
+                    showMsg("请您重新预约座位！");
+                    location.href = "/seatsOrder/fast_order.html"
+                }
             },
             error : function() {//失败时被调用的函数
                 alert("网络异常");

@@ -239,7 +239,13 @@
         $("#msg_ok").click(function () {
             var msg = $("textarea").val();
             var msg_length = msg.length;
-            alert(msg_length);
+            if(msg_length < 5 || msg.length > 255){
+                alert("请重新输入！");
+                location.href = '/seatsOrder/home_page.html';
+            }
+            var url = "/seatOrder/student/feedback";
+            var param = "sid=" + sid + "context" + msg;
+            selectPageData(url, param, "post");
         })
         //结束使用
         $("#over").click(function () {
@@ -248,7 +254,7 @@
             var url = "/seatsOrder/seat/outSeat";
             var param = "sid=" + sid;
             //发送ajax账号退出
-            var url = "/seatsOrder/student/logout";
+            var url = "/seatsOrder/login/logout";
             var param = "sid=" + sid;
             selectPageData(url, param, 'post');
             window.location.href = '/seatsOrder/';
