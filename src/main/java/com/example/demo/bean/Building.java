@@ -11,6 +11,9 @@ public class Building implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Building() {
+    }
+
     public Integer getBid() {
         return bid;
     }

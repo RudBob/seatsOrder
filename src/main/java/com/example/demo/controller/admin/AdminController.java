@@ -1,12 +1,19 @@
 package com.example.demo.controller.admin;
 
+import com.example.demo.bean.FeedBack;
+import com.example.demo.mapper.FeedBackMapper;
 import com.example.demo.service.AdminService;
 import com.example.demo.service.admin.AdminSeatService;
 import com.example.demo.service.admin.AdminStudentService;
+import com.example.demo.util.Msg;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Description:
@@ -23,12 +30,12 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @Autowired
-    AdminStudentService adminStudentService;
-
-    @Autowired
-    AdminSeatService adminSeatService;
-
+    @ApiOperation("展示所有")
+    @RequestMapping(value = "showFeedBacks", method = RequestMethod.GET)
+    public Msg showFeedBacks() {
+        List<FeedBack> feedBacks = adminService.showFeedBacks();
+        return Msg.success().add("feedBacks", feedBacks);
+    }
 
 
 }

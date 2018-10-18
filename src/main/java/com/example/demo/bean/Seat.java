@@ -9,7 +9,10 @@ public class Seat implements Serializable {
 
     private Byte statuss;
 
-    private Integer sid;
+    private String sid;
+
+    public Seat() {
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -37,11 +40,11 @@ public class Seat implements Serializable {
         this.statuss = statuss;
     }
 
-    public Integer getSid() {
+    public String getSid() {
         return sid;
     }
 
-    public void setSid(Integer sid) {
+    public void setSid(String sid) {
         this.sid = sid;
     }
 

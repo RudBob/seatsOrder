@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Description:
@@ -54,5 +55,10 @@ public class StudentService {
         FeedBack feedBack = new FeedBack(sid,context);
         feedBackMapper.insert(feedBack);
         return false;
+    }
+
+    public List<FeedBack> getStuFeedBack(String sid) {
+        List<FeedBack> feedBacks = feedBackMapper.selectBySid(sid);
+        return feedBacks;
     }
 }

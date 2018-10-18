@@ -18,6 +18,9 @@ public class StudentSeat implements Serializable {
 
     private Boolean res;
 
+    public StudentSeat() {
+    }
+
     private static final long serialVersionUID = 1L;
 
     public StudentSeat(String sid, Integer tid, LocalDateTime startDatetime, LocalDateTime endDatetime, int status) {

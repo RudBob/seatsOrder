@@ -54,8 +54,10 @@ public class SeatService {
             studentSeatMapper.insert(studentSeat);
             // 更改学生和座位对应的状态
             seat.setStatuss(BaseData.SEAT_ORDERING);
-            // 学生状态码改为使用中
+            seat.setSid(stu.getSid());
+            // 学生状态码改为预约中
             stu.setStatuss(BaseData.STU_ORDERING);
+            stu.setTid(seat.getTid());
             seatMapper.updateByPrimaryKey(seat);
             studentMapper.updateByPrimaryKey(stu);
             return true;

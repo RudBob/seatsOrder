@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.bean.FeedBack;
 import com.example.demo.service.StudentService;
 import com.example.demo.util.Msg;
 import io.swagger.annotations.Api;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Description:
@@ -55,6 +58,24 @@ public class StudentController {
         } else {
             return Msg.fail();
         }
+    }
+
+    @ApiOperation("学生信息查看")
+    @RequestMapping(value = "getStuInfo", method = RequestMethod.POST)
+    public Msg getStuInfo(@RequestParam(value = "sid", required = true) String sid) {
+        if (true) {
+            return Msg.success();
+        } else {
+            return Msg.fail();
+        }
+    }
+
+    @ApiOperation("学生反馈查看")
+    @RequestMapping(value = "getStuFeedBack", method = RequestMethod.POST)
+    public Msg getStuFeedBack(@RequestParam(value = "sid", required = true) String sid) {
+        List<FeedBack> feedBacks = studentService.getStuFeedBack(sid);
+        return Msg.success().add("stuFeedBack", feedBacks);
+
     }
 
 
