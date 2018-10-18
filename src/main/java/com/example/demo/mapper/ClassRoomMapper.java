@@ -12,9 +12,7 @@ public interface ClassRoomMapper {
 
     int insertSelective(Region record);
 
-
     Region selectByPrimaryKey(Integer cid);
-
 
     int updateByPrimaryKeySelective(Region record);
 

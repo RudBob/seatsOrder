@@ -1,7 +1,6 @@
 package com.example.demo.service.admin;
 
 import com.example.demo.bean.Seat;
-import com.example.demo.bean.Seats;
 import com.example.demo.mapper.SeatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class AdminSeatService {
         Seat seat = selectByPrimaryKey(tid);
         if (seat != null) {
             // 更改状态码
-            Seats.waitRepair(seat);
+//            Seats.waitRepair(seat);
             // 直接调用update语句
             seatMapper.updateByPrimaryKey(seat);
             return true;
@@ -48,7 +47,7 @@ public class AdminSeatService {
         Seat seat = selectByPrimaryKey(tid);
         if (seat != null) {
             // 更改状态码
-            Seats.waitingUse(seat);
+//            Seats.waitingUse(seat);
             // 直接调用update语句
             seatMapper.updateByPrimaryKey(seat);
             return true;

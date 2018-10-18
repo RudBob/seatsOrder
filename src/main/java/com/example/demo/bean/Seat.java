@@ -15,19 +15,8 @@ public class Seat implements Serializable {
     /**
      * 状态，1表示有人，2表示预约中,3表示检修，0表示可预约.
      */
-    private Byte state;
-    /**
-     * 座位的学生的id
-     */
-    private String sid;
+    private Byte status;
 
-    public String getSid() {
-        return sid;
-    }
-
-    public void setSid(String sid) {
-        this.sid = sid;
-    }
 
     public Integer getTid() {
         return tid;
@@ -45,25 +34,20 @@ public class Seat implements Serializable {
         this.rid = rid;
     }
 
-    public Byte getState() {
-        return state;
+    public Byte getStatus() {
+        return status;
     }
 
-    protected void setState(Byte state) {
-        this.state = state;
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", tid=").append(tid);
-        sb.append(", rid=").append(rid);
-        sb.append(", state=").append(state);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Seat{" +
+                "tid=" + tid +
+                ", rid=" + rid +
+                ", status=" + status +
+                '}';
     }
 }

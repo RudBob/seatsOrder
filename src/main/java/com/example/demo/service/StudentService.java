@@ -22,7 +22,7 @@ public class StudentService {
 
     public Student login(String username, String password, HttpSession session) {
         // MD5加密
-//        password = Md5.EncoderByMd5(password);
+        // password = Md5.EncoderByMd5(password);
 
         // 使用加密后的密码和用户账号查询用户.
         Student student = studentMapper.login(username, password);
@@ -30,7 +30,6 @@ public class StudentService {
 
         //加到session中
         session.setAttribute("student", student);
-        session.getAttribute("student");
         return student;
     }
 

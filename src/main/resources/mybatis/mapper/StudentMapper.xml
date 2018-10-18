@@ -6,7 +6,6 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
-        <result column="tid" property="tid" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -40,7 +39,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        sid, name, pwd, state, tid
+        sid, name, pwd, state
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -62,12 +61,8 @@
     </delete>
 
     <insert id="insert" parameterType="com.example.demo.bean.Student">
-        insert into student (sid, name, pwd, state, tid)
-        values (#{sid,jdbcType=VARCHAR},
-                #{name,jdbcType=VARCHAR},
-                #{pwd,jdbcType=VARCHAR},
-                #{state,jdbcType=INTEGER},
-                #{tid,jdbcType=INTEGER})
+        insert into student (sid, name, pwd, state)
+        values (#{sid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.example.demo.bean.Student">
         insert into student
@@ -84,9 +79,6 @@
             <if test="state != null">
                 state,
             </if>
-            <if test="tid != null">
-                tid,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="sid != null">
@@ -100,9 +92,6 @@
             </if>
             <if test="state != null">
                 #{state,jdbcType=INTEGER},
-            </if>
-            <if test="tid != null">
-                #{tid,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -119,9 +108,6 @@
             <if test="state != null">
                 state = #{state,jdbcType=INTEGER},
             </if>
-            <if test="tid != null">
-                tid = #{tid,jdbcType=INTEGER},
-            </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
@@ -129,8 +115,7 @@
         update student
         set name  = #{name,jdbcType=VARCHAR},
             pwd   = #{pwd,jdbcType=VARCHAR},
-            state = #{state,jdbcType=INTEGER},
-            tid   = #{tid,jdbcType=INTEGER}
+            state = #{state,jdbcType=INTEGER}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

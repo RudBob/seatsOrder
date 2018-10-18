@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
     <classPathEntry
-            location="E:\maven\repo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar"/>
+            location="C:\Users\10146\.m2\repository\mysql\mysql-connector-java\8.0.11\mysql-connector-java-8.0.11.jar"/>
     <context id="context1" targetRuntime="MyBatis3">
         <!-- 抑制警告 -->
         <property name="suppressTypeWarnings" value="true"/>
@@ -25,8 +25,8 @@
 
         <!-- 数据库配置文件的url是不能直接拷贝过来用的，需要把&换成'&amp;' -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/seat_order"
-                        userId="root" pwd="123456">
+                        connectionURL="jdbc:mysql://202.196.1.132:33166/seat_order"
+                        userId="enjoystudy" password="lxx123">
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -53,34 +53,15 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <!--
-          catalog CDATA #IMPLIED
-          schema CDATA #IMPLIED
-          tableName CDATA #REQUIRED
-          alias CDATA #IMPLIED
-          domainObjectName CDATA #IMPLIED
-          enableInsert CDATA #IMPLIED
-          enableSelectByPrimaryKey CDATA #IMPLIED
-          enableUpdateByPrimaryKey CDATA #IMPLIED
-          enableDeleteByPrimaryKey CDATA #IMPLIED
-          enableCountByExample CDATA #IMPLIED
-          enableUpdateByExample CDATA #IMPLIED
-          enableDeleteByExample CDATA #IMPLIED
-          enableSelectByExample CDATA #IMPLIED
-          selectByExampleQueryId CDATA #IMPLIED
-          selectByPrimaryKeyQueryId CDATA #IMPLIED
-          modelType CDATA #IMPLIED
-          escapeWildcards CDATA #IMPLIED
-          delimitIdentifiers CDATA #IMPLIED
-          delimitAllColumns CDATA #IMPLIED
-         -->
 
-        <table tableName="admin"/>
-        <table tableName="black_list"/>
-        <table tableName="building"/>
-        <table tableName="class_room"/>
-        <table tableName="seat"/>
-        <table tableName="student"/>
+
+        <!--<table tableName="admin"/>-->
+        <!--<table tableName="black_list"/>-->
+        <!--<table tableName="building"/>-->
+        <!--<table tableName="class_room"/>-->
+        <!--<table tableName="seat"/>-->
+        <!--<table tableName="student"/>-->
+        <table tableName="student_seat"/>
 
     </context>
 </generatorConfiguration>

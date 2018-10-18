@@ -5,10 +5,15 @@ import java.io.Serializable;
 public class Student implements Serializable {
     private String sid;
 
+
     private String name;
 
     private String pwd;
-
+    /**
+     * 0 为正常
+     * 1 为使用中
+     * 2 为暂停使用
+     */
     private Integer state;
 
     private Integer tid;
@@ -65,17 +70,12 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", sid=").append(sid);
-        sb.append(", name=").append(name);
-        sb.append(", pwd=").append(pwd);
-        sb.append(", state=").append(state);
-        sb.append(", tid=").append(tid);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Student{" +
+                "sid='" + sid + '\'' +
+                ", name='" + name + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", state=" + state +
+                ", tid=" + tid +
+                '}';
     }
 }

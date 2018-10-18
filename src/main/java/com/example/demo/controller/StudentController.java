@@ -28,42 +28,6 @@ public class StudentController {
     StudentService studentService;
 
     /**
-     * 学生登录
-     *
-     * @param username 用户名
-     * @param password 密码
-     * @return 成功 or 失败
-     */
-    @ApiOperation("学生登录")
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public Msg login(@RequestParam(value = "username", required = true) String username,
-                     @RequestParam(value = "pwd", required = true) String password,
-                     HttpSession session) {
-        Student student = studentService.login(username, password,session);
-        if (student != null) {
-            return Msg.success().add("student", student);
-        }
-        return Msg.fail().setMsg("账号或密码错误");
-    }
-
-    /**
-     * 学生登出
-     *
-     * @param sid
-     * @return
-     */
-    @ApiOperation("学生登出")
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
-    public Msg logout(@RequestParam(value = "sid", required = true) String sid,
-                      HttpSession session) {
-        Boolean outFlag = studentService.logout(sid,session);
-        if (outFlag) {
-            return Msg.success();
-        }
-        return Msg.fail();
-    }
-
-    /**
      * 学生修改密码
      *
      * @param sid

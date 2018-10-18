@@ -47,7 +47,13 @@
     from admin
     where aid = #{aid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="login" resultType="com.example.demo.bean.Admin">
+        select
+        <include refid="Base_Column_List" />
+        from admin
+        where name = #{username,jdbcType=VARCHAR} AND pwd = #{password,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from admin
     where aid = #{aid,jdbcType=INTEGER}
   </delete>
