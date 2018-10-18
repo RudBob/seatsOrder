@@ -61,7 +61,7 @@
         <!--<table tableName="class_room"/>-->
         <!--<table tableName="seat"/>-->
         <!--<table tableName="student"/>-->
-        <table tableName="student_seat"/>
-
+        <!--<table tableName="student_seat"/>-->
+        <table tableName="msg"/>
     </context>
 </generatorConfiguration>

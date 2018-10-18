@@ -46,4 +46,16 @@ public class StudentController {
             return Msg.fail();
         }
     }
+    @ApiOperation("学生反馈")
+    @RequestMapping(value = "feedback", method = RequestMethod.POST)
+    public Msg feedback(@RequestParam(value = "sid", required = true) String sid,
+                             @RequestParam(value = "context",required = true) String context) {
+        if (studentService.feedback(sid, context)) {
+            return Msg.success();
+        } else {
+            return Msg.fail();
+        }
+    }
+
+
 }

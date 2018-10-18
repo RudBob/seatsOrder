@@ -29,7 +29,7 @@ public class SeatController {
     SeatService seatService;
 
     /**
-     * 学生占座.
+     * 学生预约座位.
      *
      * @return
      * @Param sid 学生id。
@@ -38,14 +38,15 @@ public class SeatController {
     @ApiOperation("预约座位，默认该预约保留15分钟")
     @ResponseBody
     @RequestMapping(value = "getSeat", method = RequestMethod.POST)
-    public Msg orderSeat(@RequestParam(value = "sid",required = true) String sid,
-                       @RequestParam(value = "tid",required = true) Integer tid) {
+    public Msg orderSeat(@RequestParam(value = "sid", required = true) String sid,
+                         @RequestParam(value = "tid", required = true) Integer tid) {
         boolean res = seatService.orderSeat(sid, tid);
         if (res) {
             return Msg.success();
         }
         return Msg.fail();
     }
+
     /**
      * 学生占座.
      *
@@ -55,11 +56,11 @@ public class SeatController {
      */
     @ResponseBody
     @RequestMapping(value = "getSeat", method = RequestMethod.POST)
-    public Msg getSeat(@RequestParam(value = "sid",required = true) String sid,
-                       @RequestParam(value = "tid",required = true) Integer tid,
-                       @RequestParam(value = "startDatetime",required = true)LocalDateTime startDatetime,
-                       @RequestParam(value = "endDatetime",required = true)LocalDateTime endDatetime ) {
-        boolean res = seatService.getSeat(sid, tid,startDatetime,endDatetime);
+    public Msg getSeat(@RequestParam(value = "sid", required = true) String sid,
+                       @RequestParam(value = "tid", required = true) Integer tid,
+                       @RequestParam(value = "startDatetime", required = true) LocalDateTime startDatetime,
+                       @RequestParam(value = "endDatetime", required = true) LocalDateTime endDatetime) {
+        boolean res = seatService.getSeat(sid, tid, startDatetime, endDatetime);
         if (res) {
             return Msg.success();
         }
@@ -75,9 +76,9 @@ public class SeatController {
      */
     @ResponseBody
     @RequestMapping(value = "outSeat", method = RequestMethod.POST)
-    public Msg outSeat(@RequestParam(value = "sid",required = true) String sid,
-                       @RequestParam(value = "timeOfTempOut",required = true)LocalDateTime timeOfTempOut) {
-        boolean res = seatService.outSeat(sid,timeOfTempOut);
+    public Msg outSeat(@RequestParam(value = "sid", required = true) String sid,
+                       @RequestParam(value = "timeOfTempOut", required = true) LocalDateTime timeOfTempOut) {
+        boolean res = seatService.outSeat(sid, timeOfTempOut);
         if (res) {
             return Msg.success();
         }
@@ -93,7 +94,7 @@ public class SeatController {
      */
     @ResponseBody
     @RequestMapping(value = "tempOut", method = RequestMethod.POST)
-    public Msg tempOut(@RequestParam(value = "sid",required = true) String sid) {
+    public Msg tempOut(@RequestParam(value = "sid", required = true) String sid) {
         boolean res = seatService.tempOut(sid);
         if (res) {
             return Msg.success();
