@@ -39,5 +39,15 @@ public class pageController {
         return "/user_letters";
     }
 
+    @GetMapping(value = "/seat_flat")
+    public String intoSeatFlat() {
+        return "/seat_flat";
+    }
+    @GetMapping(value = "personal")
+    public String intoPersonal(){
+        return "personal";
+    }
+
+
 
 }
