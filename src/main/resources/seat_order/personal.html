@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url(/seatsOrder/static/img/bg.jpg);
+        }
+
+        h1 {
+            font-size: 70px;
+            font-family: "黑体";
+            text-align: center;
+            vertical-align: middle;
+            color: #fff;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background-color: #000;
+        }
+
+        /*input{
+            width: 750px;
+            height: 50px;
+            font-size: 30px;
+        }*/
+        #middle {
+            margin-top: 200px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .p {
+            margin-bottom: 70px;
+        }
+
+        .button {
+            width: 550px;
+            height: 70px;
+            background-color: blue;
+            font-size: 45px;
+            color: #fff;
+        }
+
+        .icon-5x {
+            font-size: 5em;
+        }
+
+        .modal-dialog {
+            position: relative;
+            width: 500px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .modal-header > i {
+            font-weight: bold;
+            color: #ADADAD;
+            float: right;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            position: relative;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+
+        }
+
+        .modal-body input {
+            width: 450px;
+            border-radius: 4px;
+            border: 1px solid #DDDDDD;
+            outline: none;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .modal-footer {
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #e5e5e5;
+        }
+
+    </style>
+</head>
+<body>
+<div id="middle">
+    <!--<p>
+        <i class="icon-pencil icon-5x"></i>
+        <button type="submit" id="sign" class="button">签到</button>
+        <button type="submit" id="signed" class="button">已签到</button>
+    </p>-->
+    <p class="p">
+        <i class="icon-lock icon-5x"></i>
+        <button type="submit" class="button" data-toggle="modal" data-target="#modal_pwd">修改密码</button>
+    </p>
+    <p class="p">
+        <i class="icon-envelope icon-5x"></i>
+        <button type="submit" class="button" data-toggle="modal" data-target="#modal_manage">投诉建议</button>
+    </p>
+    <p class="p">
+        <i class="icon-stop icon-5x"></i>
+        <button type="submit" id="over" class="button">退出登录</button>
+    </p>
+    <!--修改密码的模态框-->
+    <div class="modal fade" id="modal_pwd">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">修改密码</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+                    <p><input id="sid" type="text" placeholder="请输入您的账号"/></p>
+                    <p><input id="old_pwd" type="password" placeholder="请输入您的原始密码"/></p>
+                    <p><input id="new_pwd" type="password" placeholder="请输入您的新密码"/></p>
+                    <p><input id="re_pwd" type="password" placeholder="请再次输入您的新密码"/></p>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button id="pwd_ok" type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--投诉建议的模态框-->
+    <div class="modal fade" id="modal_manage">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">投诉建议</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+                    <!--<p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>-->
+                    <textarea placeholder="可对用户和座位进行投诉或建议,字数应在5~255之间" cols="30" rows="6">
+</textarea>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" id="msg_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript">
+    //修改密码
+    $("#pwd_ok").click(function () {
+        var sid = $("#sid").val();
+        var old_pwd = $("#old_pwd").val();
+        var new_pwd = $("#new_pwd").val();
+        var re_pwd = $("#re_pwd").val()
+        if(new_pwd != re_pwd){
+            alert("两次密码的输入不一致，请重新输入！");}
+        else{
+            var url = "/seatsOrder/student/updatePassword"
+            var param = "sid=" + sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
+            //发送ajax验证
+            selectPageData(url, param, "post");
+        }
+    })
+    //投诉建议
+    $("#msg_ok").click(function () {
+        var msg = $("textarea").val();
+        var msg_length = msg.length;
+        if(msg_length < 5 || msg.length > 255){
+            alert("请重新输入！");
+            location.href = '/seatsOrder/home_page.html';
+        }
+        var url = "/seatOrder/student/feedback";
+        var param = "sid=" + sid + "context" + msg;
+        selectPageData(url, param, "post");
+    })
+    //退出登录
+    $("#over").click(function () {
+        var sid = '10000';
+        //发送ajax账号退出
+        var url = "/seatsOrder/login/logout";
+        var param = "sid=" + sid;
+        selectPageData(url, param, 'post');
+    })
+    //调用ajax函数
+    function selectPageData(url, param, type) {
+        $.ajax({
+            type : type,//请求方式
+            url : url + "?" + param,//发送请求的地址
+            async : true,//请求为异步请求
+            success : function(data) {//成功时调用的回调函数
+                // 返回操作是否成功
+                if(data.code == 200){
+                    alert("操作成功!");
+                    location.href = "/seatsOrder/";
+                } else{
+                    showMsg(data.msg);					}
+            },
+            error : function() {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    function showMsg(message) {
+        alert(message);
+    }
+</script>
+</body>
+</html>
