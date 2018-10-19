@@ -21,4 +21,6 @@ public interface SeatMapper {
     int updateByPrimaryKeySelective(Seat record);
 
     int updateByPrimaryKey(Seat record);
+
+    Seat getEmptySeat();
 }

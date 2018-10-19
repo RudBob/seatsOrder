@@ -18,8 +18,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for admin
 -- ----------------------------
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin` (
+DROP TABLE IF EXISTS `adminn`;
+CREATE TABLE `adminn` (
   `aid` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `pwd` varchar(255) DEFAULT NULL,

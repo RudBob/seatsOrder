@@ -20,6 +20,12 @@
         from student_seat
         where s_tid = #{sTid,jdbcType=INTEGER}
     </select>
+    <select id="selectBySid" resultType="com.example.demo.bean.StudentSeat">
+        select
+        <include refid="Base_Column_List"/>
+        from student_seat
+        where sid = #{sid,jdbcType=VARCHAR}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from student_seat

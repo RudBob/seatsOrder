@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.bean.FeedBack;
 import com.example.demo.bean.Student;
+import com.example.demo.bean.StudentSeat;
 import com.example.demo.mapper.FeedBackMapper;
 import com.example.demo.mapper.StudentMapper;
+import com.example.demo.mapper.StudentSeatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class StudentService {
     private StudentMapper studentMapper;
     @Autowired
     private FeedBackMapper feedBackMapper;
+
+    @Autowired
+    private StudentSeatMapper studentSeatMapper;
 
     public Student login(String username, String password, HttpSession session) {
         // 使用密码和用户账号查询用户.
@@ -52,7 +57,7 @@ public class StudentService {
     }
 
     public boolean feedback(String sid, String context) {
-        FeedBack feedBack = new FeedBack(sid,context);
+        FeedBack feedBack = new FeedBack(sid, context);
         feedBackMapper.insert(feedBack);
         return false;
     }
@@ -60,5 +65,15 @@ public class StudentService {
     public List<FeedBack> getStuFeedBack(String sid) {
         List<FeedBack> feedBacks = feedBackMapper.selectBySid(sid);
         return feedBacks;
+    }
+
+    public Student getStudent(String sid) {
+
+        return studentMapper.selectByPrimaryKey(sid);
+    }
+
+    public List<StudentSeat> getHistory(String sid) {
+        List<StudentSeat> history = studentSeatMapper.selectBySid(sid);
+        return history;
     }
 }

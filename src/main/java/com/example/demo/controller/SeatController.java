@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.bean.Seat;
 import com.example.demo.service.SeatService;
 import com.example.demo.util.Msg;
 import io.swagger.annotations.Api;
@@ -50,6 +51,19 @@ public class SeatController {
     }
 
     /**
+     * 得到一个没有被使用的座位id
+     *
+     * @return
+     */
+    public Msg getSeatId() {
+        Seat seat = seatService.getSeatId();
+        if (seat != null) {
+            return Msg.success().add("seatId", seat.getTid());
+        }
+        return Msg.fail().setMsg("图书馆已满，请稍后重试");
+    }
+
+    /**
      * 学生占座.
      *
      * @return
@@ -60,9 +74,9 @@ public class SeatController {
 
     @RequestMapping(value = "getSeat", method = RequestMethod.POST)
     public Msg getSeat(@RequestParam(value = "sid", required = true) String sid,
-                            @RequestParam(value = "tid", required = true) Integer tid,
-                            @RequestParam(value = "startDatetime", required = true) LocalDateTime startDatetime,
-                            @RequestParam(value = "endDatetime", required = true) LocalDateTime endDatetime) {
+                       @RequestParam(value = "tid", required = true) Integer tid,
+                       @RequestParam(value = "startDatetime", required = true) LocalDateTime startDatetime,
+                       @RequestParam(value = "endDatetime", required = true) LocalDateTime endDatetime) {
         boolean res = seatService.getSeat(sid, tid, startDatetime, endDatetime);
         if (res) {
             return Msg.success();
@@ -80,7 +94,7 @@ public class SeatController {
     @ResponseBody
     @RequestMapping(value = "outSeat", method = RequestMethod.POST)
     public Msg outSeat(@RequestParam(value = "sid", required = true) String sid,
-                            @RequestParam(value = "timeOfTempOut", required = true) LocalDateTime timeOfTempOut) {
+                       @RequestParam(value = "timeOfTempOut", required = true) LocalDateTime timeOfTempOut) {
         boolean res = seatService.outSeat(sid, timeOfTempOut);
         if (res) {
             return Msg.success();

@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.bean.FeedBack;
+import com.example.demo.bean.Student;
+import com.example.demo.bean.StudentSeat;
 import com.example.demo.service.StudentService;
 import com.example.demo.util.Msg;
 import io.swagger.annotations.Api;
@@ -49,6 +51,11 @@ public class StudentController {
         }
     }
 
+    /**
+     * @param sid
+     * @param context 反馈正文，String类型，所以不接受文本
+     * @return
+     */
     @ApiOperation("学生反馈")
     @RequestMapping(value = "feedback", method = RequestMethod.POST)
     public Msg feedback(@RequestParam(value = "sid", required = true) String sid,
@@ -60,23 +67,50 @@ public class StudentController {
         }
     }
 
+    /**
+     * 查看学生自己的详情
+     *
+     * @param sid
+     * @return
+     */
     @ApiOperation("学生信息查看")
     @RequestMapping(value = "getStuInfo", method = RequestMethod.POST)
     public Msg getStuInfo(@RequestParam(value = "sid", required = true) String sid) {
-        if (true) {
-            return Msg.success();
+        // 得到学生对象
+        Student student = studentService.getStudent(sid);
+        if (student != null) {
+            return Msg.success().add("stuInfo", student);
         } else {
-            return Msg.fail();
+            return Msg.fail().setMsg("未知错误");
         }
     }
 
-    @ApiOperation("学生反馈查看")
+    /**
+     * 学生查看自己的反馈
+     *
+     * @param sid
+     * @return
+     */
+    @ApiOperation("学生查看自己的反馈")
     @RequestMapping(value = "getStuFeedBack", method = RequestMethod.POST)
     public Msg getStuFeedBack(@RequestParam(value = "sid", required = true) String sid) {
         List<FeedBack> feedBacks = studentService.getStuFeedBack(sid);
         return Msg.success().add("stuFeedBack", feedBacks);
-
     }
 
-
+    /**
+     * 学生查看自己的历史记录
+     *
+     * @param sid
+     * @return
+     */
+    @ApiOperation("学生的历史记录查看")
+    @RequestMapping(value = "getStuHistory", method = RequestMethod.POST)
+    public Msg getStuHistory(@RequestParam(value = "sid", required = true) String sid) {
+        List<StudentSeat> studentHistory = studentService.getHistory(sid);
+        if (studentHistory.size() == 0) {
+            return Msg.success().setMsg("暂无历史记录");
+        }
+        return Msg.success().add("history", studentHistory);
+    }
 }
