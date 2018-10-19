@@ -43,7 +43,7 @@
 <body>
 <h1>座位预约管理系统</h1>
 <div id="middle">
-    <p>用户来信</p>
+    <p>学生历史信息</p>
     <ul>
         <li><i class="icon-envelope">投诉X号楼X自习室X座位号同学</i></li>
         <li><i class="icon-envelope">X号楼X自习室X座位号需要维修</i></li>
@@ -56,7 +56,7 @@
 <script type="text/javascript">
     $(function () {
         var sid = '10000';
-        var url = "/seatsOrder/student/getStuFeedBack";
+        var url = "/seatsOrder/student/getStuHistory";
         var param = "sid=" + sid;
 
         //发送ajax
@@ -74,8 +74,8 @@
                 // 返回操作是否成功
                 if (data.code == 100) {
                     //如果操作成功,返回发送过来的数据总条数n和包含n条信息的数组
-                    var stuFeedBack = data.data.stuFeedBack;
-                    var stuFeedBack_length = stuFeedBack.length;
+                    var history = data.data.history;
+                    var history_length = history.length;
                     Page.TODO(stuFeedBack_length, stuFeedBack);
                 }
                 else{
@@ -99,7 +99,16 @@
             for (var i = 0; i < n; i++) {
                 var li = $("ul").prepend("<li><i class=\"icon-envelope\"></i></li>");
                 var first_li = $("ul li:first-child i");
-                first_li.html(stringarr[i].context);
+                var status;
+                if(stringarr[i].status == 1){
+                    status = "预定过";
+                }else if(stringarr[i].statuss == 2){
+                    status = "使用过";
+                }else if(stringarr[i].statuss == 3){
+                    status = "暂离过";
+                }
+                var history = "学生账号为" + stringarr[i].sid + "的学生" + status + "座位号为" + stringarr[i].tid + "的座位。";
+                first_li.html(history);
             }
         }
     }

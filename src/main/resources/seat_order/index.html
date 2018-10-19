@@ -119,10 +119,10 @@
                 return false;
             }else {
                 layer.alert("登陆成功!");
-                if (data.data.student.sid) {
+                if (data.data.student) {
                     location.href = "/seatsOrder/home_page.html"
                 }
-                else {
+                else if(data.data.admin){
                     location.href = "/seatsOrder/admin.html"
                 }
                 //存入数据
