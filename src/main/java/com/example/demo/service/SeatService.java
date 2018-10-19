@@ -166,4 +166,12 @@ public class SeatService {
         return true;
     }
 
+    /**
+     * 得到一个没有使用的座位
+     * @return
+     */
+    public Seat getSeatId() {
+        Seat seat = seatMapper.getEmptySeat();
+        return seat;
+    }
 }

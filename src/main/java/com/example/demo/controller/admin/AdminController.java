@@ -1,10 +1,7 @@
 package com.example.demo.controller.admin;
 
 import com.example.demo.bean.FeedBack;
-import com.example.demo.mapper.FeedBackMapper;
 import com.example.demo.service.AdminService;
-import com.example.demo.service.admin.AdminSeatService;
-import com.example.demo.service.admin.AdminStudentService;
 import com.example.demo.util.Msg;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +27,7 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @ApiOperation("展示所有")
+    @ApiOperation("展示所有反馈")
     @RequestMapping(value = "showFeedBacks", method = RequestMethod.GET)
     public Msg showFeedBacks() {
         List<FeedBack> feedBacks = adminService.showFeedBacks();

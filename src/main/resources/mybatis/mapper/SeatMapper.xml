@@ -17,6 +17,12 @@
         from seat
         where tid = #{tid,jdbcType=INTEGER}
     </select>
+    <select id="getEmptySeat" resultType="com.example.demo.bean.Seat">
+        select
+        <include refid="Base_Column_List"/>
+        from seat
+        where statuss = 0 limit 1;
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from seat
