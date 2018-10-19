@@ -55,8 +55,9 @@
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        var url = "/seatsOrder/adminSeat/seatNeedRepair";
-        var param = "tid=" + tid;
+        var sid = '10000';
+        var url = "/seatsOrder/student/getStuFeedBack";
+        var param = "sid=" + sid;
 
         //发送ajax
         selectPageData(url, param);
@@ -71,11 +72,13 @@
             async: true,//请求为异步请求
             success: function (data) {//成功时调用的回调函数
                 // 返回操作是否成功
-                if (data == 200) {
+                if (data.code == 100) {
                     //如果操作成功,返回发送过来的数据总条数n和包含n条信息的数组
-                    Page.TODO(n, stringarr);
+                    var stuFeedBack = data.data.stuFeedBack;
+                    var stuFeedBack_length = stuFeedBack.length;
+                    Page.TODO(stuFeedBack_length, stuFeedBack);
                 }
-                else if (data == 100) {
+                else{
                     showMsg(data.message);
                 }
             },
@@ -91,6 +94,8 @@
 
     var Page = {
         TODO: function (n, stringarr) {
+            if(n > 5)
+                n = 5;
             for (var i = 0; i < n; i++) {
                 var li = $("ul").prepend("<li><i class=\"icon-envelope\"></i></li>");
                 var first_li = $("ul li:first-child i");
