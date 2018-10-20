@@ -78,10 +78,12 @@
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
         //先从ajax获取上次预约结束时间得到本次续座的初始时间
         //发送ajax
+        var tid;
         var url = "/seatsOrder/adminSeat/seatNeedRepair";
         var param = "tid=" + tid;
         //发送ajax

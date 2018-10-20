@@ -60,7 +60,7 @@
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
-<!--<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>-->
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     var loading;//加载页面的全局变量
     $(function () {
@@ -111,34 +111,39 @@
             }
         });
     }
+
     var Page = {
-        toDo : function (data) {
+        toDo: function (data) {
             if (data.code == 200) {
                 showMsg(data.msg);
                 location.href = "/seatsOrder";
                 return false;
-            }else {
+            } else {
                 layer.alert("登陆成功!");
                 if (data.data.student) {
+                    storage(data.data.student);
                     location.href = "/seatsOrder/home_page.html"
                 }
-                else if(data.data.admin){
+                else if (data.data.admin) {
+                    storage(data.data.admin);
                     location.href = "/seatsOrder/admin.html"
                 }
-                //存入数据
-                //user对象
-                // var user = data.data.student;
-                // //user名字
-                // var username = data.data.student.name;
-                // /*//用户是否被禁用
-                // var status = data.data.user.status;*/
-                // //用户权限
-                // //var userType = data.data.user.userType;
-                // User.login(user);
-                //User.setuserType(userType);
-                //登陆成功
             }
         }
+    }
+
+    function storage(users) {
+        //存入数据
+        //user对象
+        var user = users;
+        //user名字
+        var name = users.name;
+        //user密码
+        var pwd = users.pwd;
+        //user状态
+        var status = users.status;
+        User.login(user);
+        //登陆成功
     }
 </script>
 </body>

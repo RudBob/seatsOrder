@@ -91,6 +91,7 @@
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
         $("#tid_ok").click(function () {
@@ -109,7 +110,7 @@
             /*var index = $("input").index(this);
             //获取用座时间区间
             interval_time(index);*/
-            var sid = '10000';
+            var sid = User.user.sid;
             var url = "/seatsOrder/seat/orderSeat"
             var param = "sid=" + sid + "&tid=" + tid;
             selectPageData(url, param);

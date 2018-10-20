@@ -23,15 +23,10 @@ User = {
     getUser : function () {
         //获取存储的用户信息
         var juser = sessionStorage.getItem("user");
-        var userType = sessionStorage.getItem("userType");
         if(juser == null || juser == "undefined"){
             return false;
         }
-        if(userType == null || userType == "undefined"){
-            return false;
-        }
         User.user = JSON.parse(juser);
-        User.userTypes = JSON.parse(userType);
         return true;
     }
 }

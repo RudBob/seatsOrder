@@ -126,6 +126,7 @@
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
         //签到
@@ -147,7 +148,7 @@
         $("#temp").click(function () {
             $("#temp").hide();
             //发送ajax?
-            var sid = "10000";
+            var sid = User.user.sid;
             var url = "/seatsOrder/seat/tempOut";
             var param = "sid=" + sid;
             selectPageData(url, param, "post");
@@ -165,7 +166,7 @@
         });
         //结束使用
         $("#over").click(function () {
-            var sid = '10000';
+            var sid = User.user.sid;
             //发送ajax将座位释放http://localhost:8080
             var url = "/seatsOrder/seat/outSeat";
             var param = "sid=" + sid;
