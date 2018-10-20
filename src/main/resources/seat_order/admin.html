@@ -110,9 +110,10 @@
     <ul>
         <li><a href="user_letters.html" style="color: #000;">用户来信</a></li>
         <li id="manage_seats" data-toggle="modal">管理座位</li>
-        <li id="manage_class" data-toggle="modal">管理自习室</li>
+        <li id="watch_stuInfo" data-toggle="modal">查看学生信息</li>
+        <!--<li id="manage_class" data-toggle="modal">管理自习室</li>
         <li id="manage_floor" data-toggle="modal">管理楼层</li>
-        <li id="manage_build" data-toggle="modal">管理楼号</li>
+        <li id="manage_build" data-toggle="modal">管理楼号</li>-->
     </ul>
     <!-- 管理座位模态框 -->
     <div class="modal fade" id="modal_manage">
@@ -121,22 +122,49 @@
 
                 <!-- 模态框头部 -->
                 <div class="modal-header">
-                    <h4 class="modal-title">管理</h4>
+                    <h4 class="modal-title">管理座位</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
-                    <p id="build_no">楼号&emsp;<input id="bno" type="text"/></p>
-                    <p id="floor_no">楼层号<input id="fno" type="text"/></p>
-                    <p id="class_no">自习室<input id="cno" type="text"/></p>
-                    <p id="seat_no">座位号<input id="sno" type="text"/></p>
+                    <p id="build_no">楼号&emsp;<input id="bno" type="text" placeholder="XX(从0到9的两位数字)"/></p>
+                    <p id="floor_no">楼层号<input id="fno" type="text" placeholder="XX(从0到9的两位数字)"/></p>
+                    <p id="class_no">自习室<input id="cno" type="text" placeholder="XX(从0到9的两位数字)"/></p>
+                    <p id="seat_no">座位号<input id="sno" type="text" placeholder="XXX(从0到9的三位数字)"/></p>
                     <p>状态&emsp;<input id="statuss" type="text" placeholder="维修or正常"/></p>
                 </div>
 
                 <!-- 模态框底部 -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 查看学生信息模态框 -->
+    <div class="modal fade" id="modal_stuInfo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">查看学生信息</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+                    <p id="stu_id">学生id<input id="sid" type="text"/></p>
+                    <p id="stu_name">姓名&emsp;<input id="sname" type="text"/></p>
+                    <p id="stu_pwd">密码&emsp;<input id="spwd" type="text"/></p>
+                    <p id="stu_status">状态&emsp;<input id="sstatus" type="text"/></p>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button id="submit" type="submit" class="btn btn-secondary" data-dismiss="modal">确定</button>
                 </div>
 
             </div>
@@ -155,7 +183,7 @@
             $("#floor_no").show();
             $("#manage_seats").attr("data-target", "#modal_manage");
         });
-        //显示管理自习室的模态框
+        /*//显示管理自习室的模态框
         $("#manage_class").click(function () {
             $("#manage_class").attr("data-target", "#modal_manage");
             $("#class_no").show();
@@ -175,10 +203,10 @@
             $("#floor_no").hide();
             $("#seat_no").hide();
             $("#class_no").hide();
-        });
+        });*/
         var tid = "";
         var statuss = "";
-        $("button").click(function () {
+        $("#submit").click(function () {
             //获取input中的值,拼成一个字符串即座位号tid
             tid = $("#bno").val() + $("#fno").val() + $("#cno").val() + $("#sno").val();
             statuss = $("#statuss").val();
@@ -191,11 +219,17 @@
             }
             var param = "tid=" + tid;
             //发送ajax
-            selectPageData(url, param);
-        })
+            selectPageData_adminSeat(url, param);
+        });
+        $("#watch_stuInfo").click(function () {
+            var sid = "10000";
+            var url = "/seatsOrder/adminStudent/getStudentById";
+            var param = "sid=" + sid;
+            selectPageData_adminStu(url, param);
+        });
     })
     //调用ajax函数
-    function selectPageData(url, param) {
+    function selectPageData_adminSeat(url, param) {
         $.ajax({
             type : "post",//请求方式
             url : url + "?" + param,//发送请求的地址
@@ -207,6 +241,61 @@
                     location.href = "/seatsOrder/admin.html"
                 } else{
                     showMsg(data.message);					}
+            },
+            error : function() {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    function selectPageData_adminSeat(url, param) {
+        $.ajax({
+            type : "get",//请求方式
+            url : url + "?" + param,//发送请求的地址
+            async : true,//请求为异步请求
+            success : function(data) {//成功时调用的回调函数
+                // 返回操作是否成功
+                if(data.code == 100){
+                    alert("操作成功!");
+                    location.href = "/seatsOrder/admin.html"
+                } else{
+                    showMsg(data.message);					}
+            },
+            error : function() {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    function selectPageData_adminStu(url, param) {
+        $.ajax({
+            type : "get",//请求方式
+            url : url + "?" + param,//发送请求的地址
+            async : true,//请求为异步请求
+            success : function(data) {//成功时调用的回调函数
+                // 返回操作是否成功
+                if(data){
+                    alert("操作成功!");debugger
+                    $("#sid").val(data.sid);
+                    $("#sname").val(data.name);
+                    $("#spwd").val(data.pwd);
+                    var status;
+                    /*学生的各种状态
+                     * 正常时的状态 = 0;
+                     * 学生正在使用座位的状态码 = 1;
+                     * 学生暂停使用的状态码 = 2;
+                     * 学生预约座位时的状态码 = 3;*/
+                    if(data.statuss == 0){
+                        status = "正常状态"
+                    }else if(data.statuss == 1){
+                        status = "学生正在使用座位";
+                    }else if(data.statuss == 2){
+                        status = "学生暂停使用座位";
+                    }else if(data.statuss == 3){
+                        status = "学生正在预约座位";
+                    }
+                    $("#sstatus").val(status);
+                    $("#watch_stuInfo").attr("data-target", "#modal_stuInfo");
+                } else{
+                    showMsg("该用户不存在！");					}
             },
             error : function() {//失败时被调用的函数
                 alert("网络异常");

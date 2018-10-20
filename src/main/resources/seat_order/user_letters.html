@@ -56,27 +56,25 @@
 <script type="text/javascript">
     $(function () {
         var sid = '10000';
-        var url = "/seatsOrder/student/getStuFeedBack";
-        var param = "sid=" + sid;
-
+        var url = "/seatsOrder/admin/showFeedBacks";
         //发送ajax
-        selectPageData(url, param);
+        selectPageData(url);
 
     })
 
     //调用ajax函数
-    function selectPageData(url, param) {
+    function selectPageData(url) {
         $.ajax({
-            type: "post",//请求方式
-            url: url + "?" + param,//发送请求的地址
+            type: "get",//请求方式
+            url: url,//发送请求的地址
             async: true,//请求为异步请求
             success: function (data) {//成功时调用的回调函数
                 // 返回操作是否成功
                 if (data.code == 100) {
                     //如果操作成功,返回发送过来的数据总条数n和包含n条信息的数组
-                    var stuFeedBack = data.data.stuFeedBack;
-                    var stuFeedBack_length = stuFeedBack.length;
-                    Page.TODO(stuFeedBack_length, stuFeedBack);
+                    var feedBacks = data.data.feedBacks;
+                    var feedBacks_length = feedBacks.length;
+                    Page.TODO(feedBacks_length, feedBacks);
                 }
                 else{
                     showMsg(data.message);
