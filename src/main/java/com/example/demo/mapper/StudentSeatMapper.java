@@ -4,7 +4,9 @@ import com.example.demo.bean.StudentSeat;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.tomcat.jni.Local;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -22,5 +24,13 @@ public interface StudentSeatMapper {
 
     int updateByPrimaryKey(StudentSeat record);
 
-    List<StudentSeat> selectBySid(@Param("sid") String sid);
+    List<StudentSeat> selectHistoryBySid(@Param("sid") String sid);
+
+    StudentSeat selectBySidTid(@Param("sid") String sid, @Param("tid") Integer tid, @Param("now") LocalDateTime now);
+
+    default StudentSeat selectBySidTid( String sid, Integer tid) {
+        return selectBySidTid(sid, tid, LocalDateTime.now());
+    }
+
+    StudentSeat getEndTime(@Param("sid") String sid, @Param("tid") Integer tid);
 }
