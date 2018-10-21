@@ -65,7 +65,7 @@
         <p style="font-size: 50px">快速选座</p>
         <span>
             欢迎使用快速选座，我们对座位进行了统一的管理，您可以根据需要选择合适的座位，我们的座位
-            是由楼号-层号-自习室号-座位号组成的一组数字，您输入之后，如果座位没有被占，该座位将为您
+            是由楼号-层号-自习室号-座位号（例000000000）组成的一组数字，您输入之后，如果座位没有被占，该座位将为您
             保留15分钟，否则您将选择新的座位。
         </span>
         <input id="tid" type="text" placeholder="请您输入座位号"/>
@@ -112,7 +112,7 @@
             interval_time(index);*/
             var sid = User.user.sid;
             var url = "/seatsOrder/seat/orderSeat"
-            var param = "sid=" + sid + "&tid=" + tid;
+            var param = "sid=" + User.user.sid + "&tid=" + tid;
             selectPageData(url, param);
         });
 
