@@ -62,12 +62,13 @@
 <h1>座位预约管理系统</h1>
 <div id="middle">
     <div>
-        <p style="font-size: 50px">快速选座</p>
+        <p style="font-size: 50px">预约座位</p>
         <span>
-            欢迎使用快速选座，我们对座位进行了统一的管理，您可以根据需要选择合适的座位，我们的座位
+            欢迎使用预约座位，我们对座位进行了统一的管理，您可以采用随机选座，也可以根据需要选择合适的座位，我们的座位
             是由楼号-层号-自习室号-座位号（例000000000）组成的一组数字，您输入之后，如果座位没有被占，该座位将为您
             保留15分钟，否则您将选择新的座位。
         </span>
+        <p><input id="random_seat" placeholder="点击后随机选座"/></p>
         <input id="tid" type="text" placeholder="请您输入座位号"/>
         <input id="tid_ok" type="submit"/>
         <!--<span>请选择校区地点：</span>
@@ -115,7 +116,10 @@
             var param = "sid=" + User.user.sid + "&tid=" + tid;
             selectPageData(url, param);
         });
-
+        $("#random_seat").click(function () {
+            var url = "/seatsOrder/seat/getSeatId";
+            selectPageData_gettid(url);
+        });
     });
 
     /*function interval_time(index) {
@@ -157,7 +161,28 @@
                     window.location.href='/seatsOrder/home_page.html';
                 }else if(data.code == 200){
                     showMsg("请您重新预约座位！");
-                    location.href = "/seatsOrder/fast_order.html"
+                    location.href = "/seatsOrder/order_seat.html"
+                }
+            },
+            error : function() {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    //调用ajax函数
+    function selectPageData_gettid(url) {
+        $.ajax({
+            type : "get",//请求方式
+            url : url,//发送请求的地址
+            async : true,//请求为异步请求
+            success : function(data) {//成功时调用的回调函数
+                // 返回操作是否成功,操作成功 100
+                if(data.code == 100){
+                    showMsg("您已成功预约到座位！座位id为" + data.data.seatId);
+                    window.location.href='/seatsOrder/home_page.html';
+                }else if(data.code == 200){
+                    showMsg("请您重新预约座位！");
+                    location.href = "/seatsOrder/order_seat.html"
                 }
             },
             error : function() {//失败时被调用的函数
