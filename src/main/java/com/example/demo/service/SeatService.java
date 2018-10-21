@@ -7,7 +7,6 @@ import com.example.demo.mapper.SeatMapper;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.mapper.StudentSeatMapper;
 import com.example.demo.util.BaseData;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +55,7 @@ public class SeatService {
         LocalDateTime endDatetime = startDatetime.plusMinutes(BaseData.ORDER_TIME);
 
         // 合法的学生，并且座位可以使用.
-        if (stu.getStatuss() == 0 && BaseData.SEAT_CAN_USE_AGAIN == seat.getStatuss()) {
+        if (stu.getStatuss() == BaseData.STU_NORMAL && BaseData.SEAT_CAN_USE_AGAIN == seat.getStatuss()) {
             // 得到预约的状态码.
             int status = BaseData.STU_SEAT_ORDERING;
             // 生成一个多对多对象
@@ -130,11 +129,11 @@ public class SeatService {
         StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
         Duration duration = java.time.Duration.between(studentSeat.getStartDatetime(), studentSeat.getEndDatetime());
         System.out.println(duration.toMinutes());
-//        if (duration.toMinutes() <= minutes) {
-//            // 剩余时间不足以暂离.
-//            return false;
-//        }
-        if (stu.getStatuss() == 1) {
+        if (duration.toMinutes() <= minutes) {
+            // 剩余时间不足以暂离.
+            return false;
+        }
+        if (stu.getStatuss() == BaseData.STU_USING) {
             // 座位回到可以使用
             seat.setStatuss(BaseData.SEAT_TEMP_OUT);
             // 学生状态为暂离
@@ -207,7 +206,7 @@ public class SeatService {
         if (stu.getStatuss() == BaseData.STU_USING) {
             // 座位与学生都回到可以使用
             seat.setStatuss(BaseData.SEAT_CAN_USE_AGAIN);
-            stu.setStatuss(BaseData.STU_CAN_USE_AGAIN);
+            stu.setStatuss(BaseData.STU_NORMAL);
             studentSeat.setEndDatetime(LocalDateTime.now());
             studentSeat.setRes(true);
             // 更新上面三者

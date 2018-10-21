@@ -11,7 +11,7 @@ public class BaseData {
     /**
      * 正常时的状态码
      */
-    public static final int STU_CAN_USE_AGAIN = 0;
+    public static final int STU_NORMAL = 0;
     /**
      * 学生正在使用座位的状态码.
      */
