@@ -62,15 +62,26 @@ public class SeatController {
 
     /**
      * 取消预约
+     * TODO
      */
     @ApiOperation("取消预约")
-    @RequestMapping(value = "getSeatId", method = RequestMethod.POST)
+    @RequestMapping(value = "cancelOrder", method = RequestMethod.POST)
     public Msg cancelOrder(@RequestParam(value = "sid", required = true) String sid,
                            @RequestParam(value = "tid", required = true) Integer tid) {
 
         return Msg.success();
     }
+    /**
+     * TODO
+     * 续坐
+     */
+    @ApiOperation("续坐")
+    @RequestMapping(value = "addTime", method = RequestMethod.POST)
+    public Msg addTime(@RequestParam(value = "sid", required = true) String sid,
+                           @RequestParam(value = "tid", required = true) Integer tid) {
 
+        return Msg.success();
+    }
     /**
      * 学生占座.
      *
@@ -82,8 +93,8 @@ public class SeatController {
     @RequestMapping(value = "getSeat", method = RequestMethod.POST)
     public Msg getSeat(@RequestParam(value = "sid", required = true) String sid,
                        @RequestParam(value = "tid", required = true) Integer tid,
-                       @RequestParam(value = "startDatetime", required = true)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDatetime,
-                       @RequestParam(value = "endDatetime", required = true)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDatetime) {
+                       @RequestParam(value = "startDatetime", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDatetime,
+                       @RequestParam(value = "endDatetime", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDatetime) {
         boolean res = seatService.getSeat(sid, tid, startDatetime, endDatetime);
         if (res) {
             return Msg.success();
@@ -106,7 +117,7 @@ public class SeatController {
         if (res) {
             return Msg.success();
         }
-        return Msg.fail();
+        return Msg.fail().setMsg("出现未知错误，请联系管理员");
     }
 
     /**
@@ -125,8 +136,9 @@ public class SeatController {
         if (res) {
             return Msg.success();
         }
-        return Msg.fail();
+        return Msg.fail().setMsg("请先使用座位");
     }
+
     /**
      * 暂离座位.
      *
@@ -137,7 +149,7 @@ public class SeatController {
     @ApiOperation("结束暂离座位")
     @RequestMapping(value = "cancelTempOut", method = RequestMethod.POST)
     public Msg cancelTempOut(@RequestParam(value = "sid", required = true) String sid,
-                       @RequestParam(value = "tid", required = true) Integer tid) {
+                             @RequestParam(value = "tid", required = true) Integer tid) {
         boolean res = seatService.cancelTempOut(sid, tid);
         if (res) {
             return Msg.success();
