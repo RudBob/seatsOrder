@@ -6,6 +6,7 @@ import com.example.demo.util.Msg;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,8 +82,8 @@ public class SeatController {
     @RequestMapping(value = "getSeat", method = RequestMethod.POST)
     public Msg getSeat(@RequestParam(value = "sid", required = true) String sid,
                        @RequestParam(value = "tid", required = true) Integer tid,
-                       @RequestParam(value = "startDatetime", required = true) LocalDateTime startDatetime,
-                       @RequestParam(value = "endDatetime", required = true) LocalDateTime endDatetime) {
+                       @RequestParam(value = "startDatetime", required = true)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDatetime,
+                       @RequestParam(value = "endDatetime", required = true)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDatetime) {
         boolean res = seatService.getSeat(sid, tid, startDatetime, endDatetime);
         if (res) {
             return Msg.success();
