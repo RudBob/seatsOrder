@@ -73,7 +73,7 @@ public class StudentService {
     }
 
     public List<StudentSeat> getHistory(String sid) {
-        List<StudentSeat> history = studentSeatMapper.selectBySid(sid);
+        List<StudentSeat> history = studentSeatMapper.selectHistoryBySid(sid);
         return history;
     }
 }

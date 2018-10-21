@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class StudentSeat implements Serializable {
-    private Integer sTid;
+    private Integer stid;
 
     private String sid;
 
@@ -31,14 +31,13 @@ public class StudentSeat implements Serializable {
         this.statuss = status;
     }
 
-    public Integer getsTid() {
-        return sTid;
+    public Integer getStid() {
+        return stid;
     }
 
-    public void setsTid(Integer sTid) {
-        this.sTid = sTid;
+    public void setStid(Integer stid) {
+        this.stid = stid;
     }
-
     public String getSid() {
         return sid;
     }
@@ -87,13 +86,15 @@ public class StudentSeat implements Serializable {
         this.res = res;
     }
 
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", sTid=").append(sTid);
+        sb.append(", stid=").append(stid);
         sb.append(", sid=").append(sid);
         sb.append(", tid=").append(tid);
         sb.append(", startDatetime=").append(startDatetime);
