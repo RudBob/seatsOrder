@@ -169,7 +169,7 @@
                 $("#order_seat").hide();
                 $("#cancel_order").show();
             }else{
-                alert("用户只有在预约座位之前，才能预约座位！")；
+                alert("用户只有在预约座位之前，才能预约座位！");
             }
         });
         //暂离
@@ -238,8 +238,10 @@
                 var url = "/seatsOrder/seat/outSeat";
                 var param = "sid=" + sid;
                 selectPageData(url, param, "post");
+                $("#over").hide();
+                $("#start").show();
             }else{
-                alert("请确保用户正在使用座位，然后才可以正常结束使用！")；
+                alert("请确保用户正在使用座位，然后才可以正常结束使用！");
             }
 
         });
@@ -252,7 +254,7 @@
             async : true,//请求为异步请求
             success : function(data) {//成功时调用的回调函数
                 // 返回操作是否成功
-                if(data.code == 200){
+                if(data.code == 100){
                     alert("操作成功!");
                     location.href = "/seatsOrder/home_page.html"
                 } else{
