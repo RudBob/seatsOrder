@@ -164,10 +164,12 @@
         });
         //预约座位
         $("#order_seat").click(function () {
-            if(User.user.statuss == 0){
-                window.location.href = '/seatsOrder/order_seat.html';
+            if(User.user.statuss == 2){
                 $("#order_seat").hide();
                 $("#cancel_order").show();
+            }
+            if(User.user.statuss == 0){
+                window.location.href = '/seatsOrder/order_seat.html';
             }else{
                 alert("用户只有在预约座位之前，才能预约座位！");
             }
@@ -176,7 +178,7 @@
         $("#temp").click(function () {
             //用户正常使用座位时，才可以暂离座位
             if(User.user.statuss == 1){
-                $("#temp").hide();
+
                 //发送ajax
                 var sid = User.user.sid;
                 var tid = User.user.tid;
@@ -185,6 +187,10 @@
                 selectPageData(url, param, "post");
                 afterthirtym();
                 $("#return").show();
+                if(User.user.statuss == 3){
+                    $("#temp").hide();
+                    $("#return").show();
+                }
             }else{
                 alert("用户正常使用座位时，才可以暂离座位!");
             }
@@ -192,7 +198,6 @@
         //返回
         $("#return").click(function () {
             if(User.user.statuss == 3){
-                $("#return").hide();
                 //发送ajax
                 var sid = User.user.sid;
                 var tid = User.user.tid;
@@ -200,10 +205,17 @@
                 var param = "sid=" + sid + "&tid=" + tid;
                 selectPageData(url, param, "post");
                 $("#temp").show();
+                var url = "/seatsOrder/login/login";
+                var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
+                //发送ajax
+                selectlogin(url, param);
+                if(User.user.status == 1){
+                    $("#return").hide();
+                    $("#temp").show();
+                }
             }else{
                 alert("用户只有在暂离座位后，才能取消暂离！");
             }
-
         })
         //续座
         $("#continue").click(function () {
@@ -214,13 +226,13 @@
             if(User.user.statuss == 2){
                 $("#btn_ok").click(function () {
                     var start_time = $("#start_time").val();
-                    start_time = start_time.slice(0,9)+"T"+start_time.slice(11,18);
+                    start_time = start_time.slice(0,10)+"T"+start_time.slice(11,19);
                     var over_time = $("#over_time").val();
-                    var over_time = over_time.slice(0,9)+"T"+over_time.slice(11,18);
+                    var over_time = over_time.slice(0,10)+"T"+over_time.slice(11,19);
                     var sid = User.user.sid;
                     var tid = User.user.tid;
-                    //发送ajax将座位释放
-                    var url = "/seatsOrder/seat/outSeat";
+                    //发送ajax开始使用座位
+                    var url = "/seatsOrder/seat/getSeat";
                     var param = "sid=" + sid + "&tid=" + tid + "&startDatetime=" + start_time + "&endDatetime=" + over_time;
                     selectPageData(url, param, "post");
                     $("#start").hide();
@@ -243,7 +255,6 @@
             }else{
                 alert("请确保用户正在使用座位，然后才可以正常结束使用！");
             }
-
         });
     })
     //调用ajax函数
@@ -256,7 +267,10 @@
                 // 返回操作是否成功
                 if(data.code == 100){
                     alert("操作成功!");
-                    location.href = "/seatsOrder/home_page.html"
+                    var url = "/seatsOrder/login/login";
+                    var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
+                    //发送ajax
+                    selectlogin(url, param);
                 } else{
                     showMsg(data.message);					}
             },
@@ -280,6 +294,20 @@
         } else {
             alert("请于" + hour + ":" + minute + "返回");
         }
+    }
+    function selectlogin(url, param) {
+        $.ajax({
+            type: "post",//请求方式
+            url: url + "?" + param,//发送请求的地址
+            async: true,//请求为异步请求
+            success: function (data) {//成功时调用的回调函数
+                // 返回操作是否成功,操作成功
+                User.login(data.data.student);
+            },
+            error: function () {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
     }
 </script>
 </body>

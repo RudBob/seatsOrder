@@ -102,8 +102,8 @@
             url: url + "?" + param,//发送请求的地址
             async: true,//请求为异步请求
             success: function (data) {//成功时调用的回调函数
-                // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
-                var flag = Page.toDo(data);
+                // 返回操作是否成功,操作成功
+                Page.toDo(data);
                 console.info(data);
             },
             error: function () {//失败时被调用的函数
@@ -141,7 +141,7 @@
         //user密码
         var pwd = users.pwd;
         //user状态
-        var status = users.status;
+        var status = users.statuss;
         User.login(user);
         //登陆成功
     }
