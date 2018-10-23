@@ -57,12 +57,6 @@
 <div id="middle">
     <div>
         <p style="font-size: 50px">续座</p>
-        <!--<span>请选择校区地点：</span>
-        <select>
-            <option value="A">A区XX图书馆</option>
-            <option value="B">B区XX图书馆</option>
-            <option value="C">C区XX图书馆</option>
-        </select>-->
     </div>
     <p style="float: left;">选择续座时长</p>
     <div style="margin-left: 50px;">
@@ -81,7 +75,6 @@
 <script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
-        //先从ajax获取上次预约结束时间得到本次续座的初始时间
         //发送ajax
         var tid;
         var url = "/seatsOrder/adminSeat/seatNeedRepair";
@@ -133,7 +126,7 @@
             async : true,//请求为异步请求
             success : function(data) {//成功时调用的回调函数
                 // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
-                if(data == 500){
+                if(data == 100){
                     showMsg(data.message);
                 }
                 window.location.href='home_page.html';
@@ -151,8 +144,8 @@
             async : true,//请求为异步请求
             success : function(data) {//成功时调用的回调函数
                 // 返回操作是否成功,操作成功,管理员和用户返回不同的状态码
-                if(data == 500){
-                    showMsg(data.message);					}
+                if(data == 100){
+                    showMsg(data.msg);					}
                 window.location.href='home_page.html';
             },
             error : function() {//失败时被调用的函数

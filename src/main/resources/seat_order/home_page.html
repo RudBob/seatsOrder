@@ -121,7 +121,7 @@
     </p>
     <p class="p">
         <i class="icon-plus icon-5x"></i>
-        <button type="submit" id="continue" class="button">续座</button>
+        <button type="submit" id="continue" class="button" data-toggle="modal" data-target="#modal_con">续座</button>
     </p>
     <!--开始使用的模态框-->
     <div class="modal fade" id="modal_start">
@@ -142,6 +142,30 @@
                     <!-- 模态框底部 -->
                     <div class="modal-footer">
                         <button type="button" id="btn_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--续座的模态框-->
+    <div class="modal fade" id="modal_con">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">续座</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+                    <!--<p>开始使用时间<input id="start_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>-->
+                    <p>结束使用时间<input id="reover" type="text" placeholder="year-month-day hh:mm:ss"/></p>
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="button" id="rebtn_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
                     </div>
 
                 </div>
@@ -205,6 +229,19 @@
                 alert("用户只有在预约座位之前，才能预约座位！");
             }
         });
+        //取消预约
+        $("#cancel_order").click(function () {
+            if(User.user.statuss === 2){
+                //发送ajax
+                var sid = User.user.sid;
+                var tid = User.user.tid;
+                var url = "/seatsOrder/seat/cancelOrder";
+                var param = "sid=" + sid + "&tid=" + tid;
+                selectPageData(url, param, "post");
+            }else {
+                alert("用户在预约座位状态时，才可以取消预约!");
+            }
+        })
         //暂离
         $("#temp").click(function () {
             //用户正常使用座位时，才可以暂离座位
@@ -235,7 +272,18 @@
         })
         //续座
         $("#continue").click(function () {
-            location.href = '/seatsOrder/continue_seat.html';
+            if (User.user.statuss === 1) {
+                $("#btn_ok").click(function () {
+                    var over_time = $("#reover").val();
+                    var over_time = over_time.slice(0, 10) + "T" + over_time.slice(11, 19);
+                    var sid = User.user.sid;
+                    var tid = User.user.tid;
+                    //发送ajax开始使用座位
+                    var url = "/seatsOrder/seat/addTime";
+                    var param = "sid=" + sid + "&tid=" + tid + "&endDatetime=" + over_time;
+                    selectPageData(url, param, "post");
+                });
+            }
         });
         //开始使用
         $("#start").click(function () {
