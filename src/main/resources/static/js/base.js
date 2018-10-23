@@ -6,6 +6,7 @@ User = {
     login : function(juser){
         user = juser;
         //将用户信息存储
+        sessionStorage.removeItem("user");
         sessionStorage.setItem("user", JSON.stringify(juser));
     },
     //存入用户权限

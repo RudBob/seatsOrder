@@ -71,23 +71,7 @@
         <p><input id="random_seat" placeholder="点击后随机选座"/></p>
         <input id="tid" type="text" placeholder="请您输入座位号"/>
         <input id="tid_ok" type="submit"/>
-        <!--<span>请选择校区地点：</span>
-        <select>
-            <option value="A">A区XX图书馆</option>
-            <option value="B">B区XX图书馆</option>
-            <option value="C">C区XX图书馆</option>
-        </select>-->
     </div>
-    <!--<p style="float: left;">选择可预约使用时长</p>
-    <div style="margin-left: 50px;">
-        <input type="submit" value="半个小时"/>
-        <input type="submit" value="一个小时"/>
-        <input type="submit" value="一半个小时"/>
-        <input type="submit" value="两个小时"/>
-        <input type="submit" value="两个半小时"/>
-        <input type="submit" value="三个小时"/>
-    </div>-->
-
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
@@ -125,28 +109,6 @@
         });
     });
 
-    /*function interval_time(index) {
-        //区间时间单位是分钟
-        var inteval = (index + 1) * 30;
-        var hour = new Date().getHours();
-        var minute = new Date().getMinutes();
-        var Stime = hour + ":" + minute;
-        hour += parseInt(inteval / 60);
-        minute += (inteval + 60) % 60;
-        if (hour > 22) {
-            alert("自习室即将关闭,不再提供暂离服务!");
-        } else {
-            var Etime = hour + ":" + minute;
-            alert("您已预约" + Stime + "到" + Etime + "");
-            //发送ajax
-            var url = "/seatsOrder/adminSeat/seatNeedRepair";
-            var param = "tid=" + tid;
-            //发送ajax
-            selectPageData(url, param);
-            window.location.href = "/seatsOrder/home_page.html"
-        }
-    }*/
-
     //页面信息提示函数
     function showMsg(message) {
         alert(message);
@@ -160,16 +122,14 @@
             success : function(data) {//成功时调用的回调函数
                 // 返回操作是否成功,操作成功 100
                 if(data.code == 100){
-                    if(User.user.tid == 0){
-                        User.user.tid = tid;
-                    }
+                    User.user.tid = tid;
                     //2表示学生预约座位时的状态码
                     User.user.status = 2;
                     showMsg("您已成功预约到座位！座位号为" + User.user.tid);
                     var url = "/seatsOrder/login/login";
                     var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
                     //发送ajax
-                    selectlogin(url, param);
+                    updateSession(url, param);
                     location.href='/seatsOrder/home_page.html';
                 }else if(data.code == 200){
                     showMsg("请您重新预约座位！");
@@ -200,11 +160,11 @@
                 }
             },
             error : function() {//失败时被调用的函数
-                alert("随机选座的网络异常");
+                alert("网络异常");
             }
         });
     }
-    function selectlogin(url, param) {
+    function updateSession(url, param) {
         $.ajax({
             type: "post",//请求方式
             url: url + "?" + param,//发送请求的地址
@@ -218,6 +178,27 @@
             }
         });
     }
+    /*function interval_time(index) {
+        //区间时间单位是分钟
+        var inteval = (index + 1) * 30;
+        var hour = new Date().getHours();
+        var minute = new Date().getMinutes();
+        var Stime = hour + ":" + minute;
+        hour += parseInt(inteval / 60);
+        minute += (inteval + 60) % 60;
+        if (hour > 22) {
+            alert("自习室即将关闭,不再提供暂离服务!");
+        } else {
+            var Etime = hour + ":" + minute;
+            alert("您已预约" + Stime + "到" + Etime + "");
+            //发送ajax
+            var url = "/seatsOrder/adminSeat/seatNeedRepair";
+            var param = "tid=" + tid;
+            //发送ajax
+            selectPageData(url, param);
+            window.location.href = "/seatsOrder/home_page.html"
+        }
+    }*/
 </script>
 </body>
 </html>
