@@ -23,9 +23,9 @@ public class pageController {
         return "/continue_seat";
     }
 
-    @GetMapping(value = "/fast_order")
+    @GetMapping(value = "/order_seat")
     public String intoFastOrder() {
-        return "/fast_order";
+        return "/order_seat";
     }
 
     @GetMapping(value = "/home_page")
@@ -44,7 +44,7 @@ public class pageController {
         return "/seat_flat";
     }
 
-    @GetMapping(value = "personal")
+    @GetMapping(value = "/personal")
     public String intoPersonal() {
         return "/personal";
     }

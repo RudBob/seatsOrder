@@ -111,6 +111,7 @@
         <li><a href="user_letters.html" style="color: #000;">用户来信</a></li>
         <li id="manage_seats" data-toggle="modal">管理座位</li>
         <li id="watch_stuInfo" data-toggle="modal">查看学生信息</li>
+        <li id="logout">退出登录</li>
         <!--<li id="manage_class" data-toggle="modal">管理自习室</li>
         <li id="manage_floor" data-toggle="modal">管理楼层</li>
         <li id="manage_build" data-toggle="modal">管理楼号</li>-->
@@ -156,6 +157,8 @@
 
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
+                    <p id="get_id">学生id<input id="get_sid" type="text" placeholder="请输入要查询的学生id"/>
+                    <button id="sid_ok">确定</button></p>
                     <p id="stu_id">学生id<input id="sid" type="text"/></p>
                     <p id="stu_name">姓名&emsp;<input id="sname" type="text"/></p>
                     <p id="stu_pwd">密码&emsp;<input id="spwd" type="text"/></p>
@@ -174,6 +177,7 @@
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
         //显示管理座位的模态框
@@ -222,34 +226,27 @@
             selectPageData_adminSeat(url, param);
         });
         $("#watch_stuInfo").click(function () {
-            var sid = "10000";
-            var url = "/seatsOrder/adminStudent/getStudentById";
-            var param = "sid=" + sid;
-            selectPageData_adminStu(url, param);
+            $("#watch_stuInfo").attr("data-target", "#modal_stuInfo");
+            var sid;
+            $("#sid_ok").click(function () {
+                sid = $("#get_sid").val();
+                var url = "/seatsOrder/adminStudent/getStudentById";
+                var param = "sid=" + sid;
+                selectPageData_adminStu(url, param);
+            });
         });
+        //退出登录
+        $("#logout").click(function () {
+            var url = "/seatsOrder/login/logout";
+            var param = "sid=" + User.user.name;
+            selectPageData_logout(url, param, 'get');
+            User.logout();
+        })
     })
     //调用ajax函数
     function selectPageData_adminSeat(url, param) {
         $.ajax({
             type : "post",//请求方式
-            url : url + "?" + param,//发送请求的地址
-            async : true,//请求为异步请求
-            success : function(data) {//成功时调用的回调函数
-                // 返回操作是否成功
-                if(data.code == 100){
-                    alert("操作成功!");
-                    location.href = "/seatsOrder/admin.html"
-                } else{
-                    showMsg(data.message);					}
-            },
-            error : function() {//失败时被调用的函数
-                alert("网络异常");
-            }
-        });
-    }
-    function selectPageData_adminSeat(url, param) {
-        $.ajax({
-            type : "get",//请求方式
             url : url + "?" + param,//发送请求的地址
             async : true,//请求为异步请求
             success : function(data) {//成功时调用的回调函数
@@ -273,7 +270,7 @@
             success : function(data) {//成功时调用的回调函数
                 // 返回操作是否成功
                 if(data){
-                    alert("操作成功!");debugger
+                    alert("操作成功!");
                     $("#sid").val(data.sid);
                     $("#sname").val(data.name);
                     $("#spwd").val(data.pwd);
@@ -293,9 +290,27 @@
                         status = "学生正在预约座位";
                     }
                     $("#sstatus").val(status);
-                    $("#watch_stuInfo").attr("data-target", "#modal_stuInfo");
+
                 } else{
                     showMsg("该用户不存在！");					}
+            },
+            error : function() {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
+    }
+    function selectPageData_logout(url, param) {
+        $.ajax({
+            type : "get",//请求方式
+            url : url + "?" + param,//发送请求的地址
+            async : true,//请求为异步请求
+            success : function(data) {//成功时调用的回调函数
+                // 返回操作是否成功
+                if(data.code == 100){
+                    alert("操作成功!");
+                    location.href = "/seatsOrder/"
+                } else{
+                    showMsg(data.message);					}
             },
             error : function() {//失败时被调用的函数
                 alert("网络异常");

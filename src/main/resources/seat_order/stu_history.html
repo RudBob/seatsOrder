@@ -53,9 +53,10 @@
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
-        var sid = '10000';
+        var sid = User.user.sid;
         var url = "/seatsOrder/student/getStuHistory";
         var param = "sid=" + sid;
 

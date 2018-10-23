@@ -172,6 +172,7 @@
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     //签到
     $("#signed").hide();
@@ -184,7 +185,10 @@
         var sid = $("#sid").val();
         var old_pwd = $("#old_pwd").val();
         var new_pwd = $("#new_pwd").val();
-        var re_pwd = $("#re_pwd").val()
+        var re_pwd = $("#re_pwd").val();
+        if(sid != User.user.sid){
+            alert("您输入的sid错误，请重新输入！");
+        }
         if(new_pwd != re_pwd){
             alert("两次密码的输入不一致，请重新输入！");}
         else{
@@ -203,16 +207,17 @@
             location.href = '/seatsOrder/personal.html';
         }
         var url = "/seatsOrder/student/feedback";
-        var param = "sid=" + sid + "&context=" + msg;
+        var param = "sid=" + User.user.sid + "&context=" + msg;
         selectPageData(url, param, "post");
     })
     //退出登录
     $("#over").click(function () {
-        var sid = '10000';
+        var sid = User.user.sid;
         //发送ajax账号退出
         var url = "/seatsOrder/login/logout";
         var param = "sid=" + sid;
         selectPageData(url, param, 'get');
+        User.logout();
     })
     //调用ajax函数
     function selectPageData(url, param, type) {

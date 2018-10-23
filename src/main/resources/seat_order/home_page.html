@@ -74,7 +74,7 @@
         .modal-body {
             position: relative;
             padding: 15px;
-            height: 200px;
+            height: 400px;
             overflow-y: auto;
 
         }
@@ -106,7 +106,13 @@
     </p>
     <p class="p">
         <i class="icon-list icon-5x"></i>
-        <button type="submit" id="fast_order" class="button">快速选座</button>
+        <button type="submit" id="order_seat" class="button">预约座位</button>
+        <button type="submit" id="cancel_order" class="button">取消预约</button>
+    </p>
+    <p class="p">
+        <i class="icon-stop icon-5x"></i>
+        <button type="submit" id="start" class="button" data-toggle="modal" data-target="#modal_start">开始使用</button>
+        <button type="submit" id="over" class="button">结束使用</button>
     </p>
     <p class="p">
         <i class="icon-time icon-5x"></i>
@@ -117,83 +123,181 @@
         <i class="icon-plus icon-5x"></i>
         <button type="submit" id="continue" class="button">续座</button>
     </p>
-    <p class="p">
-        <i class="icon-stop icon-5x"></i>
-        <button type="submit" id="over" class="button">结束使用</button>
-    </p>
+    <!--开始使用的模态框-->
+    <div class="modal fade" id="modal_start">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">开始使用</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+                    <!--<p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>-->
+                    <p>开始使用时间<input id="start_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>
+                    <p>结束使用时间<input id="over_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="button" id="btn_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
-        //签到
-        /*$("#signed").hide();
-        $("#sign").click(function () {
-            $("#sign").hide();
-            $("#signed").show();
-        });*/
-        //个人中心、
+        /** 正常时的状态 = 0;
+         * 学生正在使用座位的状态码 = 1;
+         * 学生预约座位时的状态码 = 2;
+         * 学生暂停使用的状态码 = 3;*/
+        var NORMAL = 0;
+        var USING = 1;
+        var ORDER = 2;
+        var TEMP = 3;
+        //学生正常状态
+        if(User.user.statuss === 0){
+            $("#order_seat").show();
+            $("#cancel_order").hide();
+            $("#start").show();
+            $("#over").hide();
+            $("#temp").show();
+            $("#return").hide();
+        }else if(User.user.statuss == 2){//学生预约状态
+            $("#order_seat").hide();
+            $("#cancel_order").show();
+            $("#start").show();
+            $("#over").hide();
+            $("#temp").show();
+            $("#return").hide();
+        }else if(User.user.statuss == 1){//学生使用座位状态状态
+            $("#order_seat").hide();
+            $("#cancel_order").show();
+            $("#start").hide();
+            $("#over").show();
+            $("#temp").show();
+            $("#return").hide();
+        } else if(User.user.statuss == 3){//学生暂停使用座位状态状态
+            $("#order_seat").hide();
+            $("#cancel_order").show();
+            $("#start").hide();
+            $("#over").show();
+            $("#temp").hide();
+            $("#return").show();
+        }
+        //个人中心
         $("#personal").click(function () {
             location.href = "/seatsOrder/personal.html";
         });
-        //快速选座
-        $("#fast_order").click(function () {
-            window.location.href = '/seatsOrder/fast_order.html';
+        //预约座位
+        $("#order_seat").click(function () {
+            if (User.user.statuss == 0) {
+                location.href = '/seatsOrder/order_seat.html';
+            } else {
+                alert("用户只有在预约座位之前，才能预约座位！");
+            }
         });
         //暂离
-        $("#return").hide();
         $("#temp").click(function () {
-            $("#temp").hide();
-            //发送ajax?
-            var sid = "10000";
-            var url = "/seatsOrder/seat/tempOut";
-            var param = "sid=" + sid;
-            selectPageData(url, param, "post");
-            afterthirtym();
-            $("#return").show();
+            //用户正常使用座位时，才可以暂离座位
+            if (User.user.statuss == 1) {
+                //发送ajax
+                var sid = User.user.sid;
+                var tid = User.user.tid;
+                var url = "/seatsOrder/seat/tempOut";
+                var param = "sid=" + sid + "&tid=" + tid + "&outTimeMinutes=15";
+                selectPageData(url, param, "post");
+                afterthirtym();
+            } else {
+                alert("用户正常使用座位时，才可以暂离座位!");
+            }
         })
         //返回
         $("#return").click(function () {
-            $("#return").hide();
-            $("#temp").show();
+            if (User.user.statuss == 3) {
+                //发送ajax
+                var sid = User.user.sid;
+                var tid = User.user.tid;
+                var url = "/seatsOrder/seat/cancelTempOut";
+                var param = "sid=" + sid + "&tid=" + tid;
+                selectPageData(url, param, "post");
+            } else {
+                alert("用户只有在暂离座位后，才能取消暂离！");
+            }
         })
         //续座
         $("#continue").click(function () {
-            window.location.href = '/seatsOrder/continue_seat.html';
+            location.href = '/seatsOrder/continue_seat.html';
+        });
+        //开始使用
+        $("#start").click(function () {
+            if (User.user.statuss === 2) {
+                $("#btn_ok").click(function () {
+                    var start_time = $("#start_time").val();
+                    start_time = start_time.slice(0, 10) + "T" + start_time.slice(11, 19);
+                    var over_time = $("#over_time").val();
+                    var over_time = over_time.slice(0, 10) + "T" + over_time.slice(11, 19);
+                    var sid = User.user.sid;
+                    var tid = User.user.tid;
+                    //发送ajax开始使用座位
+                    var url = "/seatsOrder/seat/getSeat";
+                    var param = "sid=" + sid + "&tid=" + tid + "&startDatetime=" + start_time + "&endDatetime=" + over_time;
+                    selectPageData(url, param, "post");
+                });
+            } else {
+                alert("请先预约座位！");
+            }
         });
         //结束使用
         $("#over").click(function () {
-            var sid = '10000';
-            //发送ajax将座位释放http://localhost:8080
-            var url = "/seatsOrder/seat/outSeat";
-            var param = "sid=" + sid;
-            selectPageData(url, param, "post");
-        })
+            if (User.user.statuss === 1) {
+                var sid = User.user.sid;
+                //发送ajax将座位释放
+                var url = "/seatsOrder/seat/outSeat";
+                var param = "sid=" + sid + "&tid=" + User.user.tid;
+                selectPageData(url, param, "post");
+            } else {
+                alert("请确保用户正在使用座位，然后才可以正常结束使用！");
+            }
+        });
     })
+
     //调用ajax函数
     function selectPageData(url, param, type) {
-            $.ajax({
-            type : type,//请求方式
-            url : url + "?" + param,//发送请求的地址
-            async : true,//请求为异步请求
-            success : function(data) {//成功时调用的回调函数
+        $.ajax({
+            type: type,//请求方式
+            url: url + "?" + param,//发送请求的地址
+            async: true,//请求为异步请求
+            success: function (data) {//成功时调用的回调函数
                 // 返回操作是否成功
-                if(data.code == 200){
-                    alert("操作成功!");
-                    location.href = "/seatsOrder/home_page.html"
-                } else{
-                    showMsg(data.message);					}
+                if (data.code === 100) {
+                    alert("操作成功!");debugger
+                    var url = "/seatsOrder/login/login";
+                    var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
+                    //发送ajax
+                    updateSession(url, param);
+                } else {
+                    showMsg(data.msg);
+                }
             },
-            error : function() {//失败时被调用的函数
+            error: function () {//失败时被调用的函数
                 alert("网络异常");
             }
         });
     }
+
     function showMsg(message) {
         alert(message);
     }
+
     function afterthirtym() {
         var hour = new Date().getHours();
         var minute = new Date().getMinutes();
@@ -204,8 +308,25 @@
         if (hour > 22) {
             alert("自习室即将关闭,不再提供暂离服务!");
         } else {
-            alert("请于" + hour + ":" + minute + "返回");
+            alert("请于" + hour + ":" + minute + "之前返回！");
         }
+    }
+
+    function updateSession(url, param) {
+        $.ajax({
+            type: "post",//请求方式
+            url: url + "?" + param,//发送请求的地址
+            async: true,//请求为异步请求
+            success: function (data) {//成功时调用的回调函数
+                // 返回操作是否成功,操作成功
+                User.user.statuss = data.data.student.statuss;
+                User.login(data.data.student);
+                location.href = "/seatsOrder/home_page.html";
+            },
+            error: function () {//失败时被调用的函数
+                alert("网络异常");
+            }
+        });
     }
 </script>
 </body>
