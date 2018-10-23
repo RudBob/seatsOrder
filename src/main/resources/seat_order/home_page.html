@@ -273,7 +273,7 @@
         //续座
         $("#continue").click(function () {
             if (User.user.statuss === 1) {
-                $("#btn_ok").click(function () {
+                $("#rebtn_ok").click(function () {
                     var over_time = $("#reover").val();
                     var over_time = over_time.slice(0, 10) + "T" + over_time.slice(11, 19);
                     var sid = User.user.sid;
@@ -283,6 +283,8 @@
                     var param = "sid=" + sid + "&tid=" + tid + "&endDatetime=" + over_time;
                     selectPageData(url, param, "post");
                 });
+            }else{
+                alert("请确保用户正在使用座位，然后才可以正常续座！");
             }
         });
         //开始使用
@@ -327,7 +329,7 @@
             success: function (data) {//成功时调用的回调函数
                 // 返回操作是否成功
                 if (data.code === 100) {
-                    alert("操作成功!");debugger
+                    alert("操作成功!");
                     var url = "/seatsOrder/login/login";
                     var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
                     //发送ajax
