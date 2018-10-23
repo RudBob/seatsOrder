@@ -28,9 +28,16 @@ public interface StudentSeatMapper {
 
     StudentSeat selectBySidTid(@Param("sid") String sid, @Param("tid") Integer tid, @Param("now") LocalDateTime now);
 
-    default StudentSeat selectBySidTid( String sid, Integer tid) {
+    default StudentSeat selectBySidTid(String sid, Integer tid) {
         return selectBySidTid(sid, tid, LocalDateTime.now());
     }
 
     StudentSeat getEndTime(@Param("sid") String sid, @Param("tid") Integer tid);
+
+    /**
+     * 异常记录,当前时间 > 结束时间的话，得到所有异常的问题.
+     *
+     * @return
+     */
+    List<StudentSeat> selectExcRecord();
 }

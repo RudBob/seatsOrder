@@ -51,7 +51,7 @@ public class BaseData {
      * 4代表维修中.
      * 5代表其他.
      */
-    public static final byte SEAT_CAN_USE_AGAIN = 0;
+    public static final byte SEAT_NORMAL = 0;
     public static final byte SEAT_USING = 1;
     public static final byte SEAT_ORDERING = 2;
     public static final byte SEAT_TEMP_OUT = 3;

@@ -27,10 +27,10 @@ public class SeatController {
     @Autowired
     SeatService seatService;
 
+
     /**
      * 学生预约座位.
      *
-     * @return
      * @Param sid 学生id。
      * @Param tid 座位id
      */
@@ -47,8 +47,6 @@ public class SeatController {
 
     /**
      * 得到一个没有被使用的座位id
-     *
-     * @return
      */
     @ApiOperation("随机找到一个空座位")
     @RequestMapping(value = "getSeatId", method = RequestMethod.GET)
@@ -68,20 +66,33 @@ public class SeatController {
     @RequestMapping(value = "cancelOrder", method = RequestMethod.POST)
     public Msg cancelOrder(@RequestParam(value = "sid", required = true) String sid,
                            @RequestParam(value = "tid", required = true) Integer tid) {
-
-        return Msg.success();
+        boolean res = seatService.cancelOrder(sid, tid);
+        if (res) {
+            return Msg.success();
+        }
+        return Msg.fail().setMsg("出现未知错误，请尽快联系管理员查看");
     }
+
     /**
-     * TODO
      * 续坐
+     * @param sid
+     * @param tid
+     * @param endDatetime
+     * @return
      */
     @ApiOperation("续坐")
     @RequestMapping(value = "addTime", method = RequestMethod.POST)
     public Msg addTime(@RequestParam(value = "sid", required = true) String sid,
-                           @RequestParam(value = "tid", required = true) Integer tid) {
-
-        return Msg.success();
+                       @RequestParam(value = "tid", required = true) Integer tid,
+                       @RequestParam(value = "endDatetime", required = true)
+                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDatetime) {
+        boolean res = seatService.addTime(sid, tid, endDatetime);
+        if (res) {
+            return Msg.success();
+        }
+        return Msg.fail().setMsg("出现未知错误，请尽快联系管理员查看");
     }
+
     /**
      * 学生占座.
      *

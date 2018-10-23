@@ -55,7 +55,7 @@ public class SeatService {
         LocalDateTime endDatetime = startDatetime.plusMinutes(BaseData.ORDER_TIME);
 
         // 合法的学生，并且座位可以使用.
-        if (stu.getStatuss() == BaseData.STU_NORMAL && BaseData.SEAT_CAN_USE_AGAIN == seat.getStatuss()) {
+        if (stu.getStatuss() == BaseData.STU_NORMAL && BaseData.SEAT_NORMAL == seat.getStatuss()) {
             // 得到预约的状态码.
             int status = BaseData.STU_SEAT_ORDERING;
             // 生成一个多对多对象
@@ -205,16 +205,52 @@ public class SeatService {
 
         if (stu.getStatuss() == BaseData.STU_USING) {
             // 座位与学生都回到可以使用
-            seat.setStatuss(BaseData.SEAT_CAN_USE_AGAIN);
+            seat.setStatuss(BaseData.SEAT_NORMAL);
             stu.setStatuss(BaseData.STU_NORMAL);
             studentSeat.setEndDatetime(LocalDateTime.now());
             studentSeat.setRes(true);
             // 更新上面三者
             update(stu, seat, studentSeat);
+            return true;
         }
         return false;
     }
 
+    /**
+     * 续坐
+     *
+     * @param sid         学生id，
+     * @param tid         座位id，
+     *                    以上是为了取出对应的记录，并且改变结束时间即可
+     * @param endDatetime 待改变的结束时间.
+     * @return 操作成功与否
+     */
+    public boolean addTime(String sid, Integer tid, LocalDateTime endDatetime) {
+        StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
+        studentSeat.setEndDatetime(endDatetime);
+        studentSeatMapper.updateByPrimaryKey(studentSeat);
+        return true;
+    }
+
+    /**
+     * 取消预约
+     *
+     * @param sid
+     * @param tid
+     * @return
+     */
+    public boolean cancelOrder(String sid, Integer tid) {
+        Student stu = studentMapper.selectByPrimaryKey(sid);
+        Seat seat = seatMapper.selectByPrimaryKey(tid);
+        StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
+        // 改变状态
+        stu.setStatuss(BaseData.STU_NORMAL);
+        seat.setStatuss(BaseData.SEAT_NORMAL);
+        studentSeat.setRes(true);
+        // 更新数据库
+        update(stu, seat, studentSeat);
+        return true;
+    }
 
     private void update(Student student, StudentSeat studentSeat) {
         if (student != null) {
