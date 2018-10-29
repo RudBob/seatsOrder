@@ -136,9 +136,8 @@
 
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
-                    <!--<p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>-->
                     <p>开始使用时间<input id="start_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>
-                    <p>结束使用时间<input id="over_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>
+                    <p>结束使用时间<input id="over_time" type="text"/></p>
                     <!-- 模态框底部 -->
                     <div class="modal-footer">
                         <button type="button" id="btn_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
@@ -175,6 +174,7 @@
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/Font-Awesome-3.2.1/"
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
@@ -293,8 +293,18 @@
                 $("#btn_ok").click(function () {
                     var start_time = $("#start_time").val();
                     start_time = start_time.slice(0, 10) + "T" + start_time.slice(11, 19);
-                    var over_time = $("#over_time").val();
-                    var over_time = over_time.slice(0, 10) + "T" + over_time.slice(11, 19);
+                    /*var over_time = $("#over_time").val();
+                    var over_time = over_time.slice(0, 10) + "T" + over_time.slice(11, 19);*/
+                    $("#over_time").click(function () {
+                        //限定可选时间
+                        laydate.render({
+                            elem: '#test-limit3'
+                            ,type: 'time'
+                            ,min: '08:00:00'
+                            ,max: '22:30:00'
+                            ,btns: ['clear', 'confirm']
+                        });
+                    });
                     var sid = User.user.sid;
                     var tid = User.user.tid;
                     //发送ajax开始使用座位
