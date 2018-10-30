@@ -95,34 +95,35 @@
         }
 
     </style>
+    <script src="../static/layDate-v5.0.9/laydate/laydate.js"></script>
 </head>
 
 <body>
 <h1>座位预约管理系统</h1>
 <div id="middle">
-    <p class="p">
+    <p id="p_personal" class="p">
         <i class="icon-user icon-5x"></i>
         <button type="submit" id="personal" class="button">个人中心</button>
     </p>
-    <p class="p">
+    <p id="p_order" class="p">
         <i class="icon-list icon-5x"></i>
         <button type="submit" id="order_seat" class="button">预约座位</button>
         <button type="submit" id="cancel_order" class="button">取消预约</button>
     </p>
-    <p class="p">
+    <p id="p_use" class="p">
         <i class="icon-stop icon-5x"></i>
         <button type="submit" id="start" class="button" data-toggle="modal" data-target="#modal_start">开始使用</button>
         <button type="submit" id="over" class="button">结束使用</button>
     </p>
-    <p class="p">
+    <p id="p_temp" class="p">
         <i class="icon-time icon-5x"></i>
         <button type="submit" id="temp" class="button">暂离</button>
         <button type="submit" id="return" class="button">返回</button>
     </p>
-    <p class="p">
+    <p id="p_continue" class="p">
         <i class="icon-plus icon-5x"></i>
         <button type="submit" id="continue" class="button" data-toggle="modal" data-target="#modal_con">续座</button>
-    </p>
+    </pid>
     <!--开始使用的模态框-->
     <div class="modal fade" id="modal_start">
         <div class="modal-dialog">
@@ -174,7 +175,7 @@
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/Font-Awesome-3.2.1/"
+<script type="text/javascript" src="/seatsOrder/static/layDate-v5.0.9/laydate/laydate.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
@@ -189,31 +190,33 @@
         var TEMP = 3;
         //学生正常状态
         if(User.user.statuss === 0){
+            $("#p_order").show();
             $("#order_seat").show();
             $("#cancel_order").hide();
-            $("#start").show();
-            $("#over").hide();
-            $("#temp").show();
-            $("#return").hide();
+            $("#p_use").hide();
+            $("#p_temp").hide();
+            $("#p_continue").hide();
         }else if(User.user.statuss == 2){//学生预约状态
+            $("#p_order").show();
             $("#order_seat").hide();
             $("#cancel_order").show();
+            $("#p_use").show();
             $("#start").show();
             $("#over").hide();
-            $("#temp").show();
-            $("#return").hide();
+            $("#p_temp").hide();
         }else if(User.user.statuss == 1){//学生使用座位状态状态
-            $("#order_seat").hide();
-            $("#cancel_order").show();
+            $("#p_order").hide();
+            $("#p_use").show();
             $("#start").hide();
             $("#over").show();
+            $("#p_temp").show();
             $("#temp").show();
             $("#return").hide();
+            $("#p_continue").show();
         } else if(User.user.statuss == 3){//学生暂停使用座位状态状态
-            $("#order_seat").hide();
-            $("#cancel_order").show();
-            $("#start").hide();
-            $("#over").show();
+            $("#p_order").hide();
+            $("#p_use").hide();
+            $("#p_temp").show();
             $("#temp").hide();
             $("#return").show();
         }
