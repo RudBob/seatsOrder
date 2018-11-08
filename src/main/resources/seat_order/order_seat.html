@@ -171,6 +171,7 @@
             url: url + "?" + param,//发送请求的地址
             async: true,//请求为异步请求
             success: function (data) {//成功时调用的回调函数
+                User.user.statuss = data.data.student.statuss;
                 // 返回操作是否成功,操作成功
                 User.login(data.data.student);
             },

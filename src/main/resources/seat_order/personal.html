@@ -184,13 +184,13 @@
         var new_pwd = $("#new_pwd").val();
         var re_pwd = $("#re_pwd").val();
         if(name != User.user.name){
-            alert("您输入的sid错误，请重新输入！");
+            alert("您输入的账户名错误，请重新输入！");
         }
         if(new_pwd != re_pwd){
             alert("两次密码的输入不一致，请重新输入！");}
         else{
             var url = "/seatsOrder/student/updatePassword"
-            var param = "sid=" + sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
+            var param = "sid=" + User.user.sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
             //发送ajax验证
             selectPageData(url, param, "post");
         }
@@ -231,7 +231,7 @@
                     } else{
                         showMsg(data.msg);					}
                 }else if(type == 'post'){
-                    if(data.code == 200){
+                    if(data.code == 100){
                         alert("操作成功!");
                         location.href = "/seatsOrder/personal.html";
                     } else{

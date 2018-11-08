@@ -118,8 +118,8 @@
     </p>
     <p id="p_temp" class="p">
         <i class="icon-time icon-5x"></i>
-        <button type="submit" id="temp" class="button">暂离</button>
-        <button type="submit" id="return" class="button">返回</button>
+        <button type="submit" id="temp" class="button">暂离座位</button>
+        <button type="submit" id="return" class="button">返回座位</button>
     </p>
     <p id="p_continue" class="p">
         <i class="icon-plus icon-5x"></i>
@@ -205,6 +205,7 @@
             $("#start").show();
             $("#over").hide();
             $("#p_temp").hide();
+            $("#p_continue").hide();
         }else if(User.user.statuss == 1){//学生使用座位状态状态
             $("#p_order").hide();
             $("#p_use").show();
@@ -220,6 +221,7 @@
             $("#p_temp").show();
             $("#temp").hide();
             $("#return").show();
+            $("#p_continue").hide();
         }
         //个人中心
         $("#personal").click(function () {
