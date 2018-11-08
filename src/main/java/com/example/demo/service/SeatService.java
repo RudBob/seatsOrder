@@ -260,6 +260,19 @@ public class SeatService {
         return true;
     }
 
+    /**
+     * 得到用户对这个座位使用的结束时间
+     * @param sid
+     * @return
+     */
+    public LocalDateTime getEndTime(String sid) {
+        Student stu = studentMapper.selectByPrimaryKey(sid);
+        int tid = stu.getTid();
+        Seat seat = seatMapper.selectByPrimaryKey(tid);
+        StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
+        return studentSeat.getEndDatetime();
+    }
+
     private void update(Student student, StudentSeat studentSeat) {
         if (student != null) {
             studentMapper.updateByPrimaryKey(student);
