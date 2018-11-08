@@ -35,9 +35,8 @@ public interface StudentSeatMapper {
     StudentSeat getEndTime(@Param("sid") String sid, @Param("tid") Integer tid);
 
     /**
-     * 异常记录,当前时间 > 结束时间的话，得到所有异常的问题.
+     * 异常记录,当前时间 > 历史记录的结束时间且并无结果的话，得到所有异常的问题.
      *
-     * @return
      */
     List<StudentSeat> selectExcRecord();
 }

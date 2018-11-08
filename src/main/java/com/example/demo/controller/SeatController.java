@@ -74,6 +74,14 @@ public class SeatController {
     }
 
     /**
+     * 得到用户的结束时间
+     */
+    public Msg getEndTime(@RequestParam(value = "sid", required = true) String sid){
+        LocalDateTime endDateTime = seatService.getEndTime(sid);
+        return Msg.success().add("endDateTime", endDateTime);
+    }
+
+    /**
      * 续坐
      * @param sid
      * @param tid
@@ -84,8 +92,10 @@ public class SeatController {
     @RequestMapping(value = "addTime", method = RequestMethod.POST)
     public Msg addTime(@RequestParam(value = "sid", required = true) String sid,
                        @RequestParam(value = "tid", required = true) Integer tid,
-                       @RequestParam(value = "endDatetime", required = true)
-                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDatetime) {
+                       @RequestParam(value = "addHours", required = true)Integer addHours,
+                       @RequestParam(value = "addMinutes",required = false,defaultValue = 0)Integer addMinutes) {
+        LocalDateTime endDateTime = seatService.getEndTime(sid);
+
         boolean res = seatService.addTime(sid, tid, endDatetime);
         if (res) {
             return Msg.success();
@@ -104,8 +114,8 @@ public class SeatController {
     @RequestMapping(value = "getSeat", method = RequestMethod.POST)
     public Msg getSeat(@RequestParam(value = "sid", required = true) String sid,
                        @RequestParam(value = "tid", required = true) Integer tid,
-                       @RequestParam(value = "startDatetime", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDatetime,
-                       @RequestParam(value = "endDatetime", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDatetime) {
+                      @RequestParam(value = "useHours",required = true)Integer hours,
+                       @RequestParam(value = "useMinutes",required = true) Integer minutes) {
         boolean res = seatService.getSeat(sid, tid, startDatetime, endDatetime);
         if (res) {
             return Msg.success();

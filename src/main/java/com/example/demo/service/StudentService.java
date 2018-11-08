@@ -32,6 +32,7 @@ public class StudentService {
 
     public Student login(String username, String password, HttpSession session) {
         // 使用密码和用户账号查询用户.
+
         return studentMapper.login(username, password);
     }
 

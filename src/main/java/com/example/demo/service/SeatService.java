@@ -87,6 +87,7 @@ public class SeatService {
         Seat seat = seatMapper.selectByPrimaryKey(tid);
         Student stu = studentMapper.selectByPrimaryKey(sid);
         StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid, startDatetime);
+
         // 学生并未预约过这个座位
         if (!studentSeat.getStatuss().equals(BaseData.STU_SEAT_ORDERING)
                 || BaseData.SEAT_ORDERING != seat.getStatuss()
@@ -94,10 +95,12 @@ public class SeatService {
             // 未预约。
             return false;
         }
+
         // 先结束预约的记录.首先设定结束时间，其次改变结果为成功归还
         studentSeat.setEndDatetime(LocalDateTime.now());
         studentSeat.setRes(true);
         studentSeatMapper.updateByPrimaryKey(studentSeat);
+
         // 新增一条使用座位的记录
         int status = BaseData.STU_SEAT_USING;
         StudentSeat studentSeat2 = new StudentSeat(sid, tid, startDatetime, endDatetime, status);
@@ -118,21 +121,26 @@ public class SeatService {
     /**
      * 暂离座位.使用学生id和座位id得到数据后，改变数据的状态码
      * 以及结束以上的记录，开始一条新的暂离记录
+     * TODO debug
      *
      * @param sid
-     * @return
      */
     public boolean tempOut(String sid, Integer tid, Integer minutes) {
         // 得到一组数据:学生，座位，记录
         Student stu = studentMapper.selectByPrimaryKey(sid);
         Seat seat = seatMapper.selectByPrimaryKey(tid);
         StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
-        Duration duration = java.time.Duration.between(studentSeat.getStartDatetime(), studentSeat.getEndDatetime());
-        System.out.println(duration.toMinutes());
+
+        LocalDateTime startTime = studentSeat.getStartDatetime();
+        LocalDateTime endTime = studentSeat.getEndDatetime();
+        // 时间间隔格式
+        Duration duration = java.time.Duration.between(startTime, endTime);
+
         if (duration.toMinutes() <= minutes) {
             // 剩余时间不足以暂离.
             return false;
         }
+
         if (stu.getStatuss() == BaseData.STU_USING) {
             // 座位回到可以使用
             seat.setStatuss(BaseData.SEAT_TEMP_OUT);
@@ -166,6 +174,7 @@ public class SeatService {
         Seat seat = seatMapper.selectByPrimaryKey(tid);
         StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
         StudentSeat lastUsingHistory = studentSeatMapper.getEndTime(sid, tid);
+
         LocalDateTime end = studentSeat.getStartDatetime();
         if (stu.getStatuss() == BaseData.STU_PAUSE) {
             // 座位回到使用状态
@@ -202,7 +211,6 @@ public class SeatService {
         Student stu = studentMapper.selectByPrimaryKey(sid);
         Seat seat = seatMapper.selectByPrimaryKey(tid);
         StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
-
         if (stu.getStatuss() == BaseData.STU_USING) {
             // 座位与学生都回到可以使用
             seat.setStatuss(BaseData.SEAT_NORMAL);
