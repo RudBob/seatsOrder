@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+    <!--<link rel="stylesheet" href="/seatsOrder/static/layui-v2.4.4/layui/css/layui.css" />
+    <link rel="stylesheet" href="/seatsOrder/static/layui-v2.4.4/layui/css/modules/laydate/default/laydate.css" />-->
     <style type="text/css">
         body {
             margin: 0;
@@ -100,28 +102,28 @@
 <body>
 <h1>座位预约管理系统</h1>
 <div id="middle">
-    <p class="p">
+    <p id="p_personal" class="p">
         <i class="icon-user icon-5x"></i>
         <button type="submit" id="personal" class="button">个人中心</button>
     </p>
-    <p class="p">
+    <p id="p_order" class="p">
         <i class="icon-list icon-5x"></i>
         <button type="submit" id="order_seat" class="button">预约座位</button>
         <button type="submit" id="cancel_order" class="button">取消预约</button>
     </p>
-    <p class="p">
+    <p id="p_use" class="p">
         <i class="icon-stop icon-5x"></i>
         <button type="submit" id="start" class="button" data-toggle="modal" data-target="#modal_start">开始使用</button>
         <button type="submit" id="over" class="button">结束使用</button>
     </p>
-    <p class="p">
+    <p id="p_temp" class="p">
         <i class="icon-time icon-5x"></i>
-        <button type="submit" id="temp" class="button">暂离</button>
-        <button type="submit" id="return" class="button">返回</button>
+        <button type="submit" id="temp" class="button">暂离座位</button>
+        <button type="submit" id="return" class="button">返回座位</button>
     </p>
-    <p class="p">
+    <p id="p_continue" class="p">
         <i class="icon-plus icon-5x"></i>
-        <button type="submit" id="continue" class="button">续座</button>
+        <button type="submit" id="continue" class="button" data-toggle="modal" data-target="#modal_con">续座</button>
     </p>
     <!--开始使用的模态框-->
     <div class="modal fade" id="modal_start">
@@ -136,9 +138,8 @@
 
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
-                    <!--<p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>-->
-                    <p>开始使用时间<input id="start_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>
-                    <p>结束使用时间<input id="over_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>
+                    <p>开始使用时间<input id="start_time" type="text"/></p>
+                    <p>结束使用时间<input id="over_time" type="text"/></p>
                     <!-- 模态框底部 -->
                     <div class="modal-footer">
                         <button type="button" id="btn_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
@@ -148,9 +149,34 @@
             </div>
         </div>
     </div>
+    <!--续座的模态框-->
+    <div class="modal fade" id="modal_con">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">续座</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body" style="font-size: 20px;">
+                    <!--<p>开始使用时间<input id="start_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>-->
+                    <p>结束使用时间<input id="reover" type="text"/></p>
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="button" id="rebtn_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/seatsOrder/static/layDate-v5.0.9/laydate/laydate.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
@@ -165,33 +191,37 @@
         var TEMP = 3;
         //学生正常状态
         if(User.user.statuss === 0){
+            $("#p_order").show();
             $("#order_seat").show();
             $("#cancel_order").hide();
-            $("#start").show();
-            $("#over").hide();
-            $("#temp").show();
-            $("#return").hide();
+            $("#p_use").hide();
+            $("#p_temp").hide();
+            $("#p_continue").hide();
         }else if(User.user.statuss == 2){//学生预约状态
+            $("#p_order").show();
             $("#order_seat").hide();
             $("#cancel_order").show();
+            $("#p_use").show();
             $("#start").show();
             $("#over").hide();
-            $("#temp").show();
-            $("#return").hide();
+            $("#p_temp").hide();
+            $("#p_continue").hide();
         }else if(User.user.statuss == 1){//学生使用座位状态状态
-            $("#order_seat").hide();
-            $("#cancel_order").show();
+            $("#p_order").hide();
+            $("#p_use").show();
             $("#start").hide();
             $("#over").show();
+            $("#p_temp").show();
             $("#temp").show();
             $("#return").hide();
+            $("#p_continue").show();
         } else if(User.user.statuss == 3){//学生暂停使用座位状态状态
-            $("#order_seat").hide();
-            $("#cancel_order").show();
-            $("#start").hide();
-            $("#over").show();
+            $("#p_order").hide();
+            $("#p_use").hide();
+            $("#p_temp").show();
             $("#temp").hide();
             $("#return").show();
+            $("#p_continue").hide();
         }
         //个人中心
         $("#personal").click(function () {
@@ -205,6 +235,19 @@
                 alert("用户只有在预约座位之前，才能预约座位！");
             }
         });
+        //取消预约
+        $("#cancel_order").click(function () {
+            if(User.user.statuss === 2){
+                //发送ajax
+                var sid = User.user.sid;
+                var tid = User.user.tid;
+                var url = "/seatsOrder/seat/cancelOrder";
+                var param = "sid=" + sid + "&tid=" + tid;
+                selectPageData(url, param, "post");
+            }else {
+                alert("用户在预约座位状态时，才可以取消预约!");
+            }
+        })
         //暂离
         $("#temp").click(function () {
             //用户正常使用座位时，才可以暂离座位
@@ -235,16 +278,35 @@
         })
         //续座
         $("#continue").click(function () {
-            location.href = '/seatsOrder/continue_seat.html';
+            if (User.user.statuss === 1) {
+                $("#rebtn_ok").click(function () {
+                    var over_time = getFormatDate() + "T" + $("#reover").val();
+                    var sid = User.user.sid;
+                    var tid = User.user.tid;
+                    //发送ajax开始使用座位
+                    var url = "/seatsOrder/seat/addTime";
+                    var param = "sid=" + sid + "&tid=" + tid + "&endDatetime=" + over_time;
+                    selectPageData(url, param, "post");
+                });
+            }else{
+                alert("请确保用户正在使用座位，然后才可以正常续座！");
+            }
+        });
+        //续座的日期框
+        laydate.render({
+            elem: '#reover'
+            ,type: 'time'
+            ,min: '08:00:00'
+            ,max: '22:30:00'
+            ,btns: ['clear', 'confirm']
         });
         //开始使用
         $("#start").click(function () {
             if (User.user.statuss === 2) {
                 $("#btn_ok").click(function () {
-                    var start_time = $("#start_time").val();
-                    start_time = start_time.slice(0, 10) + "T" + start_time.slice(11, 19);
-                    var over_time = $("#over_time").val();
-                    var over_time = over_time.slice(0, 10) + "T" + over_time.slice(11, 19);
+                    var start_time = getFormatDate()+"T"+$("#start_time").val();
+                    var over_time = getFormatDate()+"T"+$("#over_time").val();
+                    console.info(over_time);
                     var sid = User.user.sid;
                     var tid = User.user.tid;
                     //发送ajax开始使用座位
@@ -255,6 +317,22 @@
             } else {
                 alert("请先预约座位！");
             }
+        });
+        //开始使用时间的日期框
+        laydate.render({
+            elem: '#start_time'
+            ,type: 'time'
+            ,min: '08:00:00'
+            ,max: '22:30:00'
+            ,btns: ['clear', 'confirm']
+        });
+        //结束使用时间的日期框
+        laydate.render({
+            elem: '#over_time'
+            ,type: 'time'
+            ,min: '08:00:00'
+            ,max: '22:30:00'
+            ,btns: ['clear', 'confirm']
         });
         //结束使用
         $("#over").click(function () {
@@ -279,7 +357,7 @@
             success: function (data) {//成功时调用的回调函数
                 // 返回操作是否成功
                 if (data.code === 100) {
-                    alert("操作成功!");debugger
+                    alert("操作成功!");
                     var url = "/seatsOrder/login/login";
                     var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
                     //发送ajax
@@ -289,7 +367,7 @@
                 }
             },
             error: function () {//失败时被调用的函数
-                alert("网络异常");
+                alert("您的开始使用时间应在预约时的15分钟之内!");
             }
         });
     }
@@ -327,6 +405,22 @@
                 alert("网络异常");
             }
         });
+    }
+    function getFormatDate(){
+        var year = ""+new Date().getFullYear();
+        var month;
+        if((new Date().getMonth()+1)<10){
+            month = "0" + (new Date().getMonth()+1);
+        }else{
+            month = "" + (new Date().getMonth()+1);
+        }
+        var day;
+        if(new Date().getDate()<10){
+            day = "0"+new Date().getDate();
+        }else{
+            day = ""+new Date().getDate();
+        }
+        return year+"-"+month+"-"+day;
     }
 </script>
 </body>

@@ -99,9 +99,8 @@
 <h1>座位预约管理系统</h1>
 <div id="middle">
     <p class="p">
-        <i class="icon-pencil icon-5x"></i>
-        <button type="submit" id="sign" class="button">签到</button>
-        <button type="submit" id="signed" class="button">已签到</button>
+        <i class="icon-reply icon-5x"></i>
+        <button type="submit" id="return_homePage" class="button">返回主页面</button>
     </p>
     <p class="p">
         <i class="icon-lock icon-5x"></i>
@@ -128,7 +127,7 @@
 
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
-                    <p><input id="sid" type="text" placeholder="请输入您的账号"/></p>
+                    <p><input id="sname" type="text" placeholder="请输入您的账号"/></p>
                     <p><input id="old_pwd" type="password" placeholder="请输入您的原始密码"/></p>
                     <p><input id="new_pwd" type="password" placeholder="请输入您的新密码"/></p>
                     <p><input id="re_pwd" type="password" placeholder="请再次输入您的新密码"/></p>
@@ -174,26 +173,24 @@
 <script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
 <script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
 <script type="text/javascript">
-    //签到
-    $("#signed").hide();
-    $("#sign").click(function () {
-        $("#sign").hide();
-        $("#signed").show();
+    //返回主页面
+    $("#return_homePage").click(function(){
+        location.href = "/seatsOrder/home_page.html";
     });
     //修改密码
     $("#pwd_ok").click(function () {
-        var sid = $("#sid").val();
+        var name = $("#sname").val();
         var old_pwd = $("#old_pwd").val();
         var new_pwd = $("#new_pwd").val();
         var re_pwd = $("#re_pwd").val();
-        if(sid != User.user.sid){
-            alert("您输入的sid错误，请重新输入！");
+        if(name != User.user.name){
+            alert("您输入的账户名错误，请重新输入！");
         }
         if(new_pwd != re_pwd){
             alert("两次密码的输入不一致，请重新输入！");}
         else{
             var url = "/seatsOrder/student/updatePassword"
-            var param = "sid=" + sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
+            var param = "sid=" + User.user.sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
             //发送ajax验证
             selectPageData(url, param, "post");
         }
@@ -234,7 +231,7 @@
                     } else{
                         showMsg(data.msg);					}
                 }else if(type == 'post'){
-                    if(data.code == 200){
+                    if(data.code == 100){
                         alert("操作成功!");
                         location.href = "/seatsOrder/personal.html";
                     } else{

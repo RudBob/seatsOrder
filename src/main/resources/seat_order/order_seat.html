@@ -68,9 +68,9 @@
             是由楼号-层号-自习室号-座位号（例000000000）组成的一组数字，您输入之后，如果座位没有被占，该座位将为您
             保留15分钟，否则您将选择新的座位。
         </span>
-        <p><input id="random_seat" placeholder="点击后随机选座"/></p>
+        <p><input id="random_seat" type="submit" value="随机选座"/>
         <input id="tid" type="text" placeholder="请您输入座位号"/>
-        <input id="tid_ok" type="submit"/>
+        <input id="tid_ok" type="submit"/></p>
     </div>
 </div>
 <script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
@@ -125,7 +125,7 @@
                     User.user.tid = tid;
                     //2表示学生预约座位时的状态码
                     User.user.status = 2;
-                    showMsg("您已成功预约到座位！座位号为" + User.user.tid);
+                    layer.alert("您已成功预约到座位！座位号为" + User.user.tid + ",请在15分钟之内开始使用座位");
                     var url = "/seatsOrder/login/login";
                     var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
                     //发送ajax
@@ -153,7 +153,8 @@
                     var url = "/seatsOrder/seat/orderSeat";
                     var param = "sid=" + User.user.sid + "&tid=" + data.data.seatId;
                     User.user.tid = data.data.seatId;
-                    selectPageData(url, param, data.data.seatId);
+                    $("#tid").val(data.data.seatId);
+                    //selectPageData(url, param, data.data.seatId);
                 }else if(data.code == 200){
                     showMsg("请您重新预约座位！");
                     location.href = "/seatsOrder/order_seat.html"
@@ -170,6 +171,7 @@
             url: url + "?" + param,//发送请求的地址
             async: true,//请求为异步请求
             success: function (data) {//成功时调用的回调函数
+                User.user.statuss = data.data.student.statuss;
                 // 返回操作是否成功,操作成功
                 User.login(data.data.student);
             },
