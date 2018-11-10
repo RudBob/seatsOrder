@@ -138,8 +138,7 @@
 
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
-                    <p>开始使用时间<input id="start_time" type="text"/></p>
-                    <p>结束使用时间<input id="over_time" type="text"/></p>
+                    <p>使用时长<input id="time_interval" type="text"/></p>
                     <!-- 模态框底部 -->
                     <div class="modal-footer">
                         <button type="button" id="btn_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
@@ -163,6 +162,7 @@
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
                     <!--<p>开始使用时间<input id="start_time" type="text" placeholder="year-month-day hh:mm:ss"/></p>-->
+                    <p>距您的结束使用时间还有,请选择您想续座的时长</p>
                     <p>结束使用时间<input id="reover" type="text"/></p>
                     <!-- 模态框底部 -->
                     <div class="modal-footer">
@@ -284,8 +284,11 @@
                     var sid = User.user.sid;
                     var tid = User.user.tid;
                     //发送ajax开始使用座位
+                    var reover=$("#reover").val();
+                    var addHours=reover[0]*10+reover[1]*1;
+                    var addMinutes=reover[3]*10+reover[4]*1;
                     var url = "/seatsOrder/seat/addTime";
-                    var param = "sid=" + sid + "&tid=" + tid + "&endDatetime=" + over_time;
+                    var param = "sid=" + sid + "&tid=" + tid + "&addHours=" + addHours + "&addMinutes=" + addMinutes;
                     selectPageData(url, param, "post");
                 });
             }else{
@@ -296,43 +299,34 @@
         laydate.render({
             elem: '#reover'
             ,type: 'time'
-            ,min: '08:00:00'
-            ,max: '22:30:00'
-            ,btns: ['clear', 'confirm']
+            ,format: 'HH:mm'
+            ,btns: [ 'confirm','clear']
         });
         //开始使用
         $("#start").click(function () {
             if (User.user.statuss === 2) {
-                $("#btn_ok").click(function () {
-                    var start_time = getFormatDate()+"T"+$("#start_time").val();
-                    var over_time = getFormatDate()+"T"+$("#over_time").val();
-                    console.info(over_time);
+                    $("#btn_ok").click(function () {
                     var sid = User.user.sid;
                     var tid = User.user.tid;
                     //发送ajax开始使用座位
+                    var time_interval=$("#time_interval").val();
+                    var useHours=time_interval[0]*10+time_interval[1]*1;
+                    alert(useHours);
+                    var useMinutes=time_interval[3]*10+time_interval[4]*1;
                     var url = "/seatsOrder/seat/getSeat";
-                    var param = "sid=" + sid + "&tid=" + tid + "&startDatetime=" + start_time + "&endDatetime=" + over_time;
+                    var param = "sid=" + sid + "&tid=" + tid + "&useHours=" + useHours + "&useMinutes=" + useMinutes;
                     selectPageData(url, param, "post");
                 });
             } else {
                 alert("请先预约座位！");
             }
         });
-        //开始使用时间的日期框
+        //使用时长的日期框
         laydate.render({
-            elem: '#start_time'
+            elem: '#time_interval'
             ,type: 'time'
-            ,min: '08:00:00'
-            ,max: '22:30:00'
-            ,btns: ['clear', 'confirm']
-        });
-        //结束使用时间的日期框
-        laydate.render({
-            elem: '#over_time'
-            ,type: 'time'
-            ,min: '08:00:00'
-            ,max: '22:30:00'
-            ,btns: ['clear', 'confirm']
+            ,format: 'HH:mm'
+            ,btns: [ 'confirm','clear']
         });
         //结束使用
         $("#over").click(function () {
