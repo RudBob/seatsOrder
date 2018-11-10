@@ -47,6 +47,14 @@
         AND tid = #{tid,jdbcType=INTEGER}
         AND res IS NOT NULL)
     </select>
+    <!--  捕获到异常的记录，交由定时器处理 -->
+    <select id="selectExcRecord" resultType="com.example.demo.bean.StudentSeat">
+        select
+        <include refid="Base_Column_List"/>
+        from student_seat
+        WHERE end_time >= now()
+        AND res IS NULL;
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

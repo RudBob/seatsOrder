@@ -95,9 +95,9 @@ public class SeatController {
                        @RequestParam(value = "tid", required = true) Integer tid,
                        @RequestParam(value = "addHours", required = true) Integer addHours,
                        @RequestParam(value = "addMinutes", required = false, defaultValue = "0") Integer addMinutes) {
-        LocalDateTime endDateTime = seatService.getEndTime(sid);
-        endDateTime = endDateTime.plusHours(addHours).plusMinutes(addMinutes);
-        boolean res = seatService.addTime(sid, tid, endDateTime);
+        LocalDateTime oldEndDateTime = seatService.getEndTime(sid);
+        LocalDateTime newEndDateTime = oldEndDateTime.plusHours(addHours).plusMinutes(addMinutes);
+        boolean res = seatService.addTime(sid, tid, newEndDateTime);
         if (res) {
             return Msg.success();
         }
