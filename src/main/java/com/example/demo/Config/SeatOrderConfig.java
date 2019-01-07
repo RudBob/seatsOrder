@@ -12,52 +12,43 @@ import org.springframework.web.servlet.config.annotation.*;
  * @ClassName: SeatOrderConfig
  * @date 2018/10/13 18:25
  */
-@Configuration
-@EnableWebMvc // 1开启默认配置
-@EnableScheduling
-public class SeatOrderConfig extends WebMvcConfigurerAdapter {
+//@Configuration
+//@EnableWebMvc // 1开启默认配置
+//@EnableScheduling
+//extends WebMvcConfigurerAdapter
+public class SeatOrderConfig {
 
-    /**
-     * Description: 对一些静态资源的再次配置, 似乎是由于 spring boot 2.0 以后导致的一些关于资源访问的问题
-     *
-     * @param registry
-     * @Title: addResourceHandlers
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 静态资源配置
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//    /**
+//     * Description: 对一些静态资源的再次配置, 似乎是由于 spring boot 2.0 以后导致的一些关于资源访问的问题
+//     *
+//     * @param registry
+//     * @Title: addResourceHandlers
+//     */
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        // 静态资源配置
+//        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//
+//        // 解决 swagger 无法访问的错误
+//        registry.addResourceHandler("swagger-ui.html")
+//                .addResourceLocations("classpath:/META-INF/resources/");
+//
+//        registry.addResourceHandler("/webjars/**")
+//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+//
+//    }
 
-        // 解决 swagger 无法访问的错误
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
 
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-
-    }
-
-    /**
-     * Description: 页面转向
-     *
-     * @param registry
-     * @Title: addViewControllers
-     */
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("/index.html");
-    }
-
-    /**
-     * Description: 添加拦截器
-     *
-     * @param registry
-     * @Title: addInterceptors
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-
-    }
+//    /**
+//     * Description: 添加拦截器
+//     *
+//     * @param registry
+//     * @Title: addInterceptors
+//     */
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//
+//    }
 }
 
 

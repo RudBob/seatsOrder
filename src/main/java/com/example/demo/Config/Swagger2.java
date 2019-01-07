@@ -1,4 +1,4 @@
-package com.example.demo.util;
+package com.example.demo.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +12,16 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @ClassName SwaggerConfig
+ * @Description swagger的配置类
+ * @Author 任耀
+ * @Date 2018/12/23 14:13
+ * @Version 1.0
+ */
 @Configuration
 @EnableSwagger2
-public class Swagger2 extends WebMvcConfigurationSupport {
+public class Swagger2  {
 
     @Bean
     public Docket createRestApi() {
@@ -34,18 +41,5 @@ public class Swagger2 extends WebMvcConfigurationSupport {
                 .version("1.0")
                 .build();
     }
-
-    /**
-     * 防止@EnableMvc把默认的静态资源路径覆盖了，手动设置的方式
-     *
-     * @param registry
-     */
-    @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").
-                addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
-    }
-
-
 }
 

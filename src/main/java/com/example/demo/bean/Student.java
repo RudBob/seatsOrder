@@ -15,23 +15,6 @@ public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Student() {
-    }
-
-    public Student(String sid, String name, String pwd, int statuss) {
-        this.sid = sid;
-        this.name = name;
-        this.pwd = pwd;
-        this.statuss = statuss;
-    }
-    public Student(String sid, String name, String pwd, int statuss,int tid) {
-        this.sid = sid;
-        this.name = name;
-        this.pwd = pwd;
-        this.statuss = statuss;
-        this.tid = tid;
-    }
-
     public String getSid() {
         return sid;
     }
