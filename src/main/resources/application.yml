@@ -1,15 +1,19 @@
-server:
-  servlet-path: /seatsOrder
+#server:
+#  servlet-path: /seatsOrder
 logging:
   level:
     com.example.demo: trace
 spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/static/seat_order/
+    suffix: .html
   datasource:
     username: root
     password: RenYao123!
     url: jdbc:mysql://47.112.28.98:3306/seat_order?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+    type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
