@@ -39,7 +39,7 @@ public class FeedBackController {
      * 学生查看自己的反馈
      */
     @ApiOperation("学生查看自己的反馈")
-    @RequestMapping(value = "/getStuFeedBack", method = RequestMethod.POST)
+    @RequestMapping(value = "/getStuFeedBack", method = RequestMethod.GET)
     public Msg getStuFeedBack(@RequestParam(value = "sid", required = true) String sid) {
         List<FeedBack> feedBacks = feedBackService.getStuFeedBack(sid);
         return Msg.success().add("stuFeedBack", feedBacks);

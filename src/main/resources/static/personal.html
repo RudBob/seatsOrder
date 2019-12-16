@@ -108,7 +108,12 @@
     </p>
     <p class="p">
         <i class="icon-envelope icon-5x"></i>
-        <button type="submit" class="button" data-toggle="modal" data-target="#modal_manage">投诉建议</button>
+        <button id="myFeedback" type="submit" class="button" data-toggle="modal" data-target="#modal_history">我的投诉
+        </button>
+    </p>
+    <p class="p">
+        <i class="icon-envelope icon-5x"></i>
+        <button type="submit" class="button" data-toggle="modal" data-target="#modal_manage">进行投诉</button>
     </p>
     <p class="p">
         <i class="icon-stop icon-5x"></i>
@@ -141,9 +146,48 @@
             </div>
         </div>
     </div>
+    <!-- 展示历史投诉的模态框 -->
+    <div class="modal fade" id="modal_history">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <!--模态框头部-->
+                <div class="modal-header">
+                    <h4 class="modal-title">我的历史投诉</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!--模态框主体-->
+                <div class="modal-body" style="font-size: 20px;">
+                    <!--<p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>-->
+                    <!--展示历史投诉-->
+                    <!--<textarea placeholder="可对用户和座位进行投诉或建议,字数应在5~255之间" cols="30" rows="6"/>-->
+                    <table id="msg_history_table">
+                        <thead>
+                        <tr>
+                            <th>反馈编号</th>
+                            <th>反馈内容</th>
+                            <th>反馈学生编号</th>
+                            <th>反馈时间</th>
+                        </tr>
+                        </thead>
+                        <tbody id="feedbackInfo">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" id="msg_history_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--投诉建议的模态框-->
     <div class="modal fade" id="modal_manage">
+
         <div class="modal-dialog">
+
             <div class="modal-content">
 
                 <!-- 模态框头部 -->
@@ -155,17 +199,17 @@
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
                     <!--<p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>-->
-                    <textarea placeholder="可对用户和座位进行投诉或建议,字数应在5~255之间" cols="30" rows="6">
-</textarea>
+                    <textarea id="feedback_msg" placeholder="可对用户和座位进行投诉或建议,字数应在5~255之间" cols="30"
+                              rows="6"></textarea>
                 </div>
 
                 <!-- 模态框底部 -->
                 <div class="modal-footer">
                     <button type="button" id="msg_ok" class="btn btn-secondary" data-dismiss="modal">确定</button>
                 </div>
-
             </div>
         </div>
+
     </div>
 </div>
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
@@ -173,8 +217,49 @@
 <script type="text/javascript" src="/static/layer/layer.js"></script>
 <script type="text/javascript" src="/static/js/base.js"></script>
 <script type="text/javascript">
-    //返回主页面
-    $("#return_homePage").click(function(){
+    // 返回主页面
+    $("#myFeedback").click(function () {
+        sid = User.user.sid;
+        var url = "/getStuFeedBack";
+        var param = "sid=" + sid;
+        selectPageData_Msg(url, param);
+
+    });
+
+    function selectPageData_Msg(url, param) {
+        $.ajax({
+            type: "get",//请求方式
+            url: url + "?" + param,//发送请求的地址
+            async: true,//请求为异步请求
+            success: function (d) {
+                data = d.data.stuFeedBack;
+                $("#feedbackInfo").empty();
+                if (data.length == 0) {
+                    $("#feedbackInfo").append("暂无数据");
+                } else {
+                    for (var i = 0; i < data.length; i++) {
+                        var $tr = $("<tr></tr>");
+                        var $fid = $("<td>" + data[i].mid + "</td>");
+                        var $context = $("<td>" + data[i].context + "</td>");
+                        var $sid = $("<td>" + data[i].sid + "</td>");
+                        var $feedback_time = $("<td>" + data[i].feedbackTime + "</td>");
+                        // var $opera = $("<td><a onclick='deleteById(" + data[i].eid + ")' href='#'>删除</a>/<a onclick='selectById(" + data[i].eid + ")'  href='#'>编辑</a></td>");
+                        $tr.append($tr);
+                        $tr.append($fid);
+                        $tr.append($context);
+                        $tr.append($sid);
+                        $tr.append($feedback_time);
+                        // $tr.append($opera);
+                        $("#feedbackInfo").append($tr);
+                    }
+                }
+            }
+        });
+
+    }
+
+    // 返回主页面
+    $("#return_homePage").click(function () {
         location.href = "/home_page.html";
     });
     //修改密码
@@ -183,12 +268,12 @@
         var old_pwd = $("#old_pwd").val();
         var new_pwd = $("#new_pwd").val();
         var re_pwd = $("#re_pwd").val();
-        if(name != User.user.name){
+        if (name != User.user.name) {
             alert("您输入的账户名错误，请重新输入！");
         }
-        if(new_pwd != re_pwd){
-            alert("两次密码的输入不一致，请重新输入！");}
-        else{
+        if (new_pwd != re_pwd) {
+            alert("两次密码的输入不一致，请重新输入！");
+        } else {
             var url = "/student/updatePassword"
             var param = "sid=" + User.user.sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
             //发送ajax验证
@@ -197,15 +282,16 @@
     })
     //投诉建议
     $("#msg_ok").click(function () {
-        var msg = $("textarea").val();
+        var msg = $("#feedback_msg").val();
         var msg_length = msg.length;
-        if(msg_length < 5 || msg.length > 255){
+        if (msg_length < 5 || msg.length > 255) {
             alert("请重新输入！");
             location.href = '/personal.html';
+        } else {
+            var url = "/feedback";
+            var param = "sid=" + User.user.sid + "&context=" + msg;
+            selectPageData(url, param, "post");
         }
-        var url = "/feedback";
-        var param = "sid=" + User.user.sid + "&context=" + msg;
-        selectPageData(url, param, "post");
     })
     //退出登录
     $("#over").click(function () {
@@ -216,34 +302,38 @@
         selectPageData(url, param, 'get');
         User.logout();
     })
+
     //调用ajax函数
     function selectPageData(url, param, type) {
         $.ajax({
-            type : type,//请求方式
-            url : url + "?" + param,//发送请求的地址
-            async : true,//请求为异步请求
-            success : function(data) {//成功时调用的回调函数
+            type: type,//请求方式
+            url: url + "?" + param,//发送请求的地址
+            async: true,//请求为异步请求
+            success: function (data) {//成功时调用的回调函数
                 // 返回操作是否成功
-                if(type == 'get'){
-                    if(data.code == 100){
+                if (type == 'get') {
+                    if (data.code == 100) {
                         alert("操作成功!");
                         location.href = "/";
-                    } else{
-                        showMsg(data.msg);					}
-                }else if(type == 'post'){
-                    if(data.code == 100){
+                    } else {
+                        showMsg(data.msg);
+                    }
+                } else if (type == 'post') {
+                    if (data.code == 100) {
                         alert("操作成功!");
                         location.href = "/personal.html";
-                    } else{
-                        showMsg(data.msg);					}
+                    } else {
+                        showMsg(data.msg);
+                    }
                 }
 
             },
-            error : function() {//失败时被调用的函数
+            error: function () {//失败时被调用的函数
                 alert("网络异常");
             }
         });
     }
+
     function showMsg(message) {
         alert(message);
     }

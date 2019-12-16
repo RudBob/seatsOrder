@@ -1,6 +1,7 @@
 package com.example.demo.bean;
 
 import com.example.demo.menu.FeedbackStatusEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.sql.Timestamp;
 
@@ -53,7 +54,7 @@ public class FeedBack implements Serializable {
         this.context = context;
         this.feedbackTime = Timestamp.valueOf(LocalDateTime.now());
     }
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Timestamp getFeedbackTime() {
         return feedbackTime;
     }

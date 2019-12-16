@@ -21,12 +21,12 @@
         from feedback
         where mid = #{mid,jdbcType=INTEGER}
     </select>
-    <select id="selectAll" resultType="com.example.demo.bean.FeedBack">
+    <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from feedback
     </select>
-    <select id="selectBySid" resultType="com.example.demo.bean.FeedBack">
+    <select id="selectBySid" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from feedback
