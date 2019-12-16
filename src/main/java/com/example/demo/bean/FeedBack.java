@@ -1,13 +1,41 @@
 package com.example.demo.bean;
 
-import java.io.Serializable;
+import com.example.demo.menu.FeedbackStatusEnum;
 
+import java.sql.Timestamp;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+/**
+ * @author ry
+ * 用户反馈
+ */
 public class FeedBack implements Serializable {
+    /**
+     * 消息id
+     */
     private Integer mid;
 
+    /**
+     * 学生反馈的具体内容
+     */
     private String context;
 
+    /**
+     * 反馈学生的id
+     */
     private String sid;
+
+    /**
+     * 反馈时间
+     */
+    private Timestamp feedbackTime;
+
+    /**
+     * 反馈的状态
+     */
+    private FeedbackStatusEnum statusEnum;
 
     public FeedBack() {
     }
@@ -23,7 +51,19 @@ public class FeedBack implements Serializable {
     public FeedBack(String sid, String context) {
         this.sid = sid;
         this.context = context;
+        this.feedbackTime = Timestamp.valueOf(LocalDateTime.now());
+    }
 
+    public Timestamp getFeedbackTime() {
+        return feedbackTime;
+    }
+
+    public void setFeedbackTime(Timestamp feedbackTime) {
+        this.feedbackTime = feedbackTime;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getMid() {

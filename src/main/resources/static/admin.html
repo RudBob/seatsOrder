@@ -174,10 +174,10 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
+<script type="text/javascript" src="/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
         //显示管理座位的模态框
@@ -216,10 +216,10 @@
             statuss = $("#statuss").val();
             var url;
             if(statuss == "维修"){
-                url = "/seatsOrder/adminSeat/seatNeedRepair";
+                url = "/adminSeat/seatNeedRepair";
             }
             else if(statuss == "正常"){
-                url = "/seatsOrder/adminSeat/seatRepaired";
+                url = "/adminSeat/seatRepaired";
             }
             var param = "tid=" + tid;
             //发送ajax
@@ -230,14 +230,14 @@
             var sid;
             $("#sid_ok").click(function () {
                 sid = $("#get_sid").val();
-                var url = "/seatsOrder/adminStudent/getStudentById";
+                var url = "/adminStudent/getStudentById";
                 var param = "sid=" + sid;
                 selectPageData_adminStu(url, param);
             });
         });
         //退出登录
         $("#logout").click(function () {
-            var url = "/seatsOrder/login/logout";
+            var url = "/login/logout";
             var param = "sid=" + User.user.name;
             selectPageData_logout(url, param, 'get');
             User.logout();
@@ -253,7 +253,7 @@
                 // 返回操作是否成功
                 if(data.code == 100){
                     alert("操作成功!");
-                    location.href = "/seatsOrder/admin.html"
+                    location.href = "/admin.html"
                 } else{
                     showMsg(data.message);					}
             },
@@ -308,7 +308,7 @@
                 // 返回操作是否成功
                 if(data.code == 100){
                     alert("操作成功!");
-                    location.href = "/seatsOrder/"
+                    location.href = "/"
                 } else{
                     showMsg(data.message);					}
             },

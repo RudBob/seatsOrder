@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/bootstraps/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
     <style type="text/css">
         body {
             margin: 0;
             padding: 0;
-            background-image: url(/seatsOrder/static/img/bg.jpg);
+            background-image: url(/static/img/bg.jpg);
         }
 
         h1 {
@@ -51,13 +51,13 @@
         <li><i class="icon-envelope">投诉X号楼X自习室X座位号同学</i></li>
     </ul>
 </div>
-<script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
         var sid = User.user.sid;
-        var url = "/seatsOrder/student/getStuHistory";
+        var url = "/student/getStuHistory";
         var param = "sid=" + sid;
 
         //发送ajax

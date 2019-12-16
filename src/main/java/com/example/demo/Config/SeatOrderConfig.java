@@ -12,31 +12,31 @@ import org.springframework.web.servlet.config.annotation.*;
  * @ClassName: SeatOrderConfig
  * @date 2018/10/13 18:25
  */
-//@Configuration
+@Configuration
 //@EnableWebMvc // 1开启默认配置
 //@EnableScheduling
-//extends WebMvcConfigurerAdapter
-public class SeatOrderConfig {
-
-//    /**
-//     * Description: 对一些静态资源的再次配置, 似乎是由于 spring boot 2.0 以后导致的一些关于资源访问的问题
-//     *
-//     * @param registry
-//     * @Title: addResourceHandlers
-//     */
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        // 静态资源配置
-//        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 //
+public class SeatOrderConfig extends WebMvcConfigurerAdapter{
+
+    /**
+     * Description: 对一些静态资源的再次配置, 似乎是由于 spring boot 2.0 以后导致的一些关于资源访问的问题
+     *
+     * @param registry
+     * @Title: addResourceHandlers
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 静态资源配置
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+
 //        // 解决 swagger 无法访问的错误
 //        registry.addResourceHandler("swagger-ui.html")
 //                .addResourceLocations("classpath:/META-INF/resources/");
 //
 //        registry.addResourceHandler("/webjars/**")
 //                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-//
-//    }
+
+    }
 
 
 //    /**

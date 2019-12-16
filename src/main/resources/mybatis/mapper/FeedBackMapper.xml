@@ -5,10 +5,14 @@
         <id column="mid" jdbcType="INTEGER" property="mid"/>
         <result column="context" jdbcType="VARCHAR" property="context"/>
         <result column="sid" jdbcType="VARCHAR" property="sid"/>
+        <result column="feedback_time" jdbcType="TIMESTAMP" property="feedbackTime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        mid, context, sid
+        mid,
+        context,
+        sid,
+        feedback_time
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -34,8 +38,9 @@
         where mid = #{mid,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.example.demo.bean.FeedBack">
-        insert into feedback (mid, context, sid)
-        values (#{mid,jdbcType=INTEGER}, #{context,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR})
+        insert into feedback (mid, context, sid, feedback_time)
+        values (#{mid,jdbcType=INTEGER}, #{context,jdbcType=VARCHAR},
+                #{sid,jdbcType=VARCHAR}, #{feedbackTime})
     </insert>
     <insert id="insertSelective" parameterType="com.example.demo.bean.FeedBack">
         insert into feedback

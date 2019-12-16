@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/seatsOrder/static/bootstraps/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/seatsOrder/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/bootstraps/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
     <style type="text/css">
         body {
             margin: 0;
             padding: 0;
-            background-image: url(/seatsOrder/static/img/bg.jpg);
+            background-image: url(/static/img/bg.jpg);
         }
 
         h1 {
@@ -168,14 +168,14 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/seatsOrder/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/bootstraps/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/layer/layer.js"></script>
-<script type="text/javascript" src="/seatsOrder/static/js/base.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/bootstraps/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
+<script type="text/javascript" src="/static/js/base.js"></script>
 <script type="text/javascript">
     //返回主页面
     $("#return_homePage").click(function(){
-        location.href = "/seatsOrder/home_page.html";
+        location.href = "/home_page.html";
     });
     //修改密码
     $("#pwd_ok").click(function () {
@@ -189,7 +189,7 @@
         if(new_pwd != re_pwd){
             alert("两次密码的输入不一致，请重新输入！");}
         else{
-            var url = "/seatsOrder/student/updatePassword"
+            var url = "/student/updatePassword"
             var param = "sid=" + User.user.sid + "&oldPwd=" + old_pwd + "&newPwd=" + new_pwd;
             //发送ajax验证
             selectPageData(url, param, "post");
@@ -201,9 +201,9 @@
         var msg_length = msg.length;
         if(msg_length < 5 || msg.length > 255){
             alert("请重新输入！");
-            location.href = '/seatsOrder/personal.html';
+            location.href = '/personal.html';
         }
-        var url = "/seatsOrder/student/feedback";
+        var url = "/feedback";
         var param = "sid=" + User.user.sid + "&context=" + msg;
         selectPageData(url, param, "post");
     })
@@ -211,7 +211,7 @@
     $("#over").click(function () {
         var sid = User.user.sid;
         //发送ajax账号退出
-        var url = "/seatsOrder/login/logout";
+        var url = "/login/logout";
         var param = "sid=" + sid;
         selectPageData(url, param, 'get');
         User.logout();
@@ -227,13 +227,13 @@
                 if(type == 'get'){
                     if(data.code == 100){
                         alert("操作成功!");
-                        location.href = "/seatsOrder/";
+                        location.href = "/";
                     } else{
                         showMsg(data.msg);					}
                 }else if(type == 'post'){
                     if(data.code == 100){
                         alert("操作成功!");
-                        location.href = "/seatsOrder/personal.html";
+                        location.href = "/personal.html";
                     } else{
                         showMsg(data.msg);					}
                 }

@@ -2,12 +2,12 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title></title>
     <link rel="stylesheet" href="bootstraps/css/bootstrap.min.css" />
     <link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css"/>
-    <!--<link rel="stylesheet" href="/seatsOrder/static/layui-v2.4.4/layui/css/layui.css" />
-    <link rel="stylesheet" href="/seatsOrder/static/layui-v2.4.4/layui/css/modules/laydate/default/laydate.css" />-->
+    <!--<link rel="stylesheet" href="/static/layui-v2.4.4/layui/css/layui.css" />
+    <link rel="stylesheet" href="/static/layui-v2.4.4/layui/css/modules/laydate/default/laydate.css" />-->
     <style type="text/css">
         body {
             margin: 0;
@@ -225,12 +225,12 @@
         }
         //个人中心
         $("#personal").click(function () {
-            location.href = "/seatsOrder/personal.html";
+            location.href = " /personal.html";
         });
         //预约座位
         $("#order_seat").click(function () {
             if (User.user.statuss == 0) {
-                location.href = '/seatsOrder/order_seat.html';
+                location.href = ' /order_seat.html';
             } else {
                 alert("用户只有在预约座位之前，才能预约座位！");
             }
@@ -241,8 +241,8 @@
                 //发送ajax
                 var sid = User.user.sid;
                 var tid = User.user.tid;
-                var url = "/seatsOrder/seat/cancelOrder";
-                var param = "sid=" + sid + "&tid=" + tid;
+                var url = " /seat/cancelOrder";
+                var param = "sid=" + sid + "&amp;tid=" + tid;
                 selectPageData(url, param, "post");
             }else {
                 alert("用户在预约座位状态时，才可以取消预约!");
@@ -255,8 +255,8 @@
                 //发送ajax
                 var sid = User.user.sid;
                 var tid = User.user.tid;
-                var url = "/seatsOrder/seat/tempOut";
-                var param = "sid=" + sid + "&tid=" + tid + "&outTimeMinutes=15";
+                var url = " /seat/tempOut";
+                var param = "sid=" + sid + "&amp;tid=" + tid + "&amp;outTimeMinutes=15";
                 selectPageData(url, param, "post");
                 afterthirtym();
             } else {
@@ -269,8 +269,8 @@
                 //发送ajax
                 var sid = User.user.sid;
                 var tid = User.user.tid;
-                var url = "/seatsOrder/seat/cancelTempOut";
-                var param = "sid=" + sid + "&tid=" + tid;
+                var url = " /seat/cancelTempOut";
+                var param = "sid=" + sid + "&amp;tid=" + tid;
                 selectPageData(url, param, "post");
             } else {
                 alert("用户只有在暂离座位后，才能取消暂离！");
@@ -287,8 +287,8 @@
                     var reover=$("#reover").val();
                     var addHours=reover[0]*10+reover[1]*1;
                     var addMinutes=reover[3]*10+reover[4]*1;
-                    var url = "/seatsOrder/seat/addTime";
-                    var param = "sid=" + sid + "&tid=" + tid + "&addHours=" + addHours + "&addMinutes=" + addMinutes;
+                    var url = " /seat/addTime";
+                    var param = "sid=" + sid + "&amp;tid=" + tid + "&amp;addHours=" + addHours + "&amp;addMinutes=" + addMinutes;
                     selectPageData(url, param, "post");
                 });
             }else{
@@ -313,8 +313,8 @@
                     var useHours=time_interval[0]*10+time_interval[1]*1;
                     alert(useHours);
                     var useMinutes=time_interval[3]*10+time_interval[4]*1;
-                    var url = "/seatsOrder/seat/getSeat";
-                    var param = "sid=" + sid + "&tid=" + tid + "&useHours=" + useHours + "&useMinutes=" + useMinutes;
+                    var url = " /seat/getSeat";
+                    var param = "sid=" + sid + "&amp;tid=" + tid + "&amp;useHours=" + useHours + "&amp;useMinutes=" + useMinutes;
                     selectPageData(url, param, "post");
                 });
             } else {
@@ -333,8 +333,8 @@
             if (User.user.statuss === 1) {
                 var sid = User.user.sid;
                 //发送ajax将座位释放
-                var url = "/seatsOrder/seat/outSeat";
-                var param = "sid=" + sid + "&tid=" + User.user.tid;
+                var url = " /seat/outSeat";
+                var param = "sid=" + sid + "&amp;tid=" + User.user.tid;
                 selectPageData(url, param, "post");
             } else {
                 alert("请确保用户正在使用座位，然后才可以正常结束使用！");
@@ -352,8 +352,8 @@
                 // 返回操作是否成功
                 if (data.code === 100) {
                     alert("操作成功!");
-                    var url = "/seatsOrder/login/login";
-                    var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
+                    var url = " /login/login";
+                    var param = "username=" + User.user.name + "&amp;pwd=" + User.user.pwd;
                     //发送ajax
                     updateSession(url, param);
                 } else {
@@ -393,7 +393,7 @@
                 // 返回操作是否成功,操作成功
                 User.user.statuss = data.data.student.statuss;
                 User.login(data.data.student);
-                location.href = "/seatsOrder/home_page.html";
+                location.href = " /home_page.html";
             },
             error: function () {//失败时被调用的函数
                 alert("网络异常");
@@ -403,13 +403,13 @@
     function getFormatDate(){
         var year = ""+new Date().getFullYear();
         var month;
-        if((new Date().getMonth()+1)<10){
+        if((new Date().getMonth()+1) < 10){
             month = "0" + (new Date().getMonth()+1);
         }else{
             month = "" + (new Date().getMonth()+1);
         }
         var day;
-        if(new Date().getDate()<10){
+        if(new Date().getDate() < 10){
             day = "0"+new Date().getDate();
         }else{
             day = ""+new Date().getDate();

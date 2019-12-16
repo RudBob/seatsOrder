@@ -24,8 +24,7 @@ import java.util.List;
 public class StudentService {
     @Autowired
     private StudentMapper studentMapper;
-    @Autowired
-    private FeedBackMapper feedBackMapper;
+
 
     @Autowired
     private StudentSeatMapper studentSeatMapper;
@@ -57,16 +56,9 @@ public class StudentService {
         return true;
     }
 
-    public boolean feedback(String sid, String context) {
-        FeedBack feedBack = new FeedBack(sid, context);
-        feedBackMapper.insert(feedBack);
-        return false;
-    }
 
-    public List<FeedBack> getStuFeedBack(String sid) {
-        List<FeedBack> feedBacks = feedBackMapper.selectBySid(sid);
-        return feedBacks;
-    }
+
+
 
     public Student getStudent(String sid) {
 

@@ -77,7 +77,7 @@
     $(function () {
         //发送ajax
         var tid;
-        var url = "/seatsOrder/adminSeat/seatNeedRepair";
+        var url = "/adminSeat/seatNeedRepair";
         var param = "tid=" + tid;
         //发送ajax
         get_selectPageData(url, param);
@@ -86,7 +86,7 @@
             //获取用座时间区间
             interval_time(Stime, index);
             //发送ajax
-            var url = "/seatsOrder/adminSeat/seatNeedRepair";
+            var url = "/adminSeat/seatNeedRepair";
             var param = "tid=" + tid;
             //发送ajax
             put_selectPageData(url, param);
@@ -106,7 +106,7 @@
             var Etime = hour + ":" + minute;
             alert("您已预约" + Stime + "到" + Etime + "");
             //发送ajax
-            var url = "/seatsOrder/adminSeat/seatNeedRepair";
+            var url = "/adminSeat/seatNeedRepair";
             var param = "tid=" + tid;
             //发送ajax
             selectPageData(url, param);
