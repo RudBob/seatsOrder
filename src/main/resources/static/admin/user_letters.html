@@ -9,7 +9,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url(/static/img/bg.jpg);
+            /*background-image: url(/static/img/bg.jpg);*/
         }
 
         h1 {
@@ -41,14 +41,10 @@
     </style>
 </head>
 <body>
-<h1>座位预约管理系统</h1>
 <div id="middle">
     <p>用户来信</p>
     <ul>
-        <li><i class="icon-envelope">投诉X号楼X自习室X座位号同学</i></li>
-        <li><i class="icon-envelope">X号楼X自习室X座位号需要维修</i></li>
-        <li><i class="icon-envelope">投诉X号楼X自习室X座位号同学</i></li>
-        <li><i class="icon-envelope">投诉X号楼X自习室X座位号同学</i></li>
+        <li><i class="icon-envelope">硬编码，之后会删除</i></li>
     </ul>
 </div>
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
@@ -56,11 +52,9 @@
 <script type="text/javascript" src="/static/js/base.js"></script>
 <script type="text/javascript">
     $(function () {
-        var sid = User.user.sid;
         var url = " /admin/showFeedBacks";
         //发送ajax
         selectPageData(url);
-
     })
 
     //调用ajax函数
@@ -76,8 +70,7 @@
                     var feedBacks = data.data.feedBacks;
                     var feedBacks_length = feedBacks.length;
                     Page.TODO(feedBacks_length, feedBacks);
-                }
-                else{
+                } else {
                     showMsg(data.message);
                 }
             },
@@ -93,7 +86,7 @@
 
     var Page = {
         TODO: function (n, stringarr) {
-            if(n > 5)
+            if (n > 5)
                 n = 5;
             for (var i = 0; i < n; i++) {
                 var li = $("ul").prepend("<li><i class=\"icon-envelope\"></i></li>");
