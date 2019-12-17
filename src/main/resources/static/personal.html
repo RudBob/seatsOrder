@@ -132,7 +132,7 @@
 
                 <!-- 模态框主体 -->
                 <div class="modal-body" style="font-size: 20px;">
-                    <p><input id="sname" type="text" placeholder="请输入您的账号"/></p>
+                    <!--<p><input id="sname" type="text" placeholder="请输入您的账号"/></p>-->
                     <p><input id="old_pwd" type="password" placeholder="请输入您的原始密码"/></p>
                     <p><input id="new_pwd" type="password" placeholder="请输入您的新密码"/></p>
                     <p><input id="re_pwd" type="password" placeholder="请再次输入您的新密码"/></p>
@@ -159,7 +159,6 @@
 
                 <!--模态框主体-->
                 <div class="modal-body" style="font-size: 20px;">
-                    <!--<p><input type="text" placeholder="可对用户和座位进行投诉或建议"/></p>-->
                     <!--展示历史投诉-->
                     <!--<textarea placeholder="可对用户和座位进行投诉或建议,字数应在5~255之间" cols="30" rows="6"/>-->
                     <table id="msg_history_table">
@@ -255,7 +254,6 @@
                 }
             }
         });
-
     }
 
     // 返回主页面
@@ -264,13 +262,9 @@
     });
     //修改密码
     $("#pwd_ok").click(function () {
-        var name = $("#sname").val();
         var old_pwd = $("#old_pwd").val();
         var new_pwd = $("#new_pwd").val();
         var re_pwd = $("#re_pwd").val();
-        if (name != User.user.name) {
-            alert("您输入的账户名错误，请重新输入！");
-        }
         if (new_pwd != re_pwd) {
             alert("两次密码的输入不一致，请重新输入！");
         } else {
