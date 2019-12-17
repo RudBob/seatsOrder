@@ -36,8 +36,7 @@ public class SeatService {
      * @return
      */
     public Seat getSeatId() {
-        Seat seat = seatMapper.getEmptySeat();
-        return seat;
+        return seatMapper.getUnusingSeat();
     }
 
     /**
@@ -50,33 +49,45 @@ public class SeatService {
         // 得到学生和座位的详情.
         Seat seat = seatMapper.selectByPrimaryKey(tid);
         Student stu = studentMapper.selectByPrimaryKey(sid);
-        LocalDateTime startDatetime = LocalDateTime.now();
-        // 预约保留时长:@see BaseData.ORDER_TIME
-        LocalDateTime endDatetime = startDatetime.plusMinutes(BaseData.ORDER_TIME);
 
         // 合法的学生，并且座位可以使用.
         if (stu.getStatuss() == BaseData.STU_NORMAL && BaseData.SEAT_NORMAL == seat.getStatuss()) {
-            // 得到预约的状态码.
-            int status = BaseData.STU_SEAT_ORDERING;
-            // 生成一个多对多对象
-            StudentSeat studentSeat = new StudentSeat(sid, tid, startDatetime, endDatetime, status);
-            // 插入数据，并改变seat和stu的状态码
-            studentSeatMapper.insert(studentSeat);
-            // 更改学生和座位对应的状态
-            seat.setStatuss(BaseData.SEAT_ORDERING);
-            seat.setSid(stu.getSid());
-            // 学生状态码改为预约中
-            stu.setStatuss(BaseData.STU_ORDERING);
-            stu.setTid(seat.getTid());
-            seatMapper.updateByPrimaryKey(seat);
-            studentMapper.updateByPrimaryKey(stu);
+            stuOrderSeat(seat, stu);
             return true;
         }
         return false;
     }
 
     /**
-     * 学生得到座位. 将这条记录插入到
+     * 学生预约位置
+     *
+     * @param seat 位置
+     * @param stu  学生
+     * @return
+     */
+    private void stuOrderSeat(Seat seat, Student stu) {
+        LocalDateTime startDatetime = LocalDateTime.now();
+        // 预约保留时长:@see BaseData.ORDER_TIME
+        LocalDateTime endDatetime = startDatetime.plusMinutes(BaseData.ORDER_TIME);
+
+        // 得到预约的状态码.
+        int status = BaseData.STU_SEAT_ORDERING;
+        // 生成一个多对多对象
+        StudentSeat studentSeat = new StudentSeat(stu.getSid(), seat.getTid(), startDatetime, endDatetime, status);
+        // 插入数据，并改变seat和stu的状态码
+        studentSeatMapper.insert(studentSeat);
+        // 更改学生和座位对应的状态
+        seat.setStatuss(BaseData.SEAT_ORDERING);
+        seat.setSid(stu.getSid());
+        // 学生状态码改为预约中
+        stu.setStatuss(BaseData.STU_ORDERING);
+        stu.setTid(seat.getTid());
+        seatMapper.updateByPrimaryKey(seat);
+        studentMapper.updateByPrimaryKey(stu);
+    }
+
+    /**
+     * 学生得到座位. 将这条记录插入到db中
      *
      * @param sid
      * @param tid
@@ -262,6 +273,7 @@ public class SeatService {
 
     /**
      * 得到用户对这个座位使用的结束时间
+     *
      * @param sid
      * @return
      */

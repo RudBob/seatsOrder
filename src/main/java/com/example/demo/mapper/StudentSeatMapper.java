@@ -36,7 +36,8 @@ public interface StudentSeatMapper {
 
     /**
      * 异常记录,当前时间 > 历史记录的结束时间且并无结果的话，得到所有异常的问题.
-     *
      */
-    List<StudentSeat> selectExcRecord();
+    List<StudentSeat> selectOutTimeRecord();
+
+
 }

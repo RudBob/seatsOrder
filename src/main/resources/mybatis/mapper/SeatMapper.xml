@@ -17,7 +17,7 @@
         from seat
         where tid = #{tid,jdbcType=INTEGER}
     </select>
-    <select id="getEmptySeat" resultType="com.example.demo.bean.Seat">
+    <select id="getUnusingSeat" resultType="com.example.demo.bean.Seat">
         select
         <include refid="Base_Column_List"/>
         from seat

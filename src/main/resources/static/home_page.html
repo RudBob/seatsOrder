@@ -243,7 +243,7 @@
                 var sid = User.user.sid;
                 var tid = User.user.tid;
                 var url = " /seat/cancelOrder";
-                var param = "sid=" + sid + "&amp;tid=" + tid;
+                var param = "sid=" + sid + "&tid=" + tid;
                 selectPageData(url, param, "post");
             }else {
                 alert("用户在预约座位状态时，才可以取消预约!");
@@ -257,7 +257,7 @@
                 var sid = User.user.sid;
                 var tid = User.user.tid;
                 var url = " /seat/tempOut";
-                var param = "sid=" + sid + "&amp;tid=" + tid + "&amp;outTimeMinutes=15";
+                var param = "sid=" + sid + "&tid=" + tid + "&outTimeMinutes=15";
                 selectPageData(url, param, "post");
                 afterthirtym();
             } else {
@@ -271,7 +271,7 @@
                 var sid = User.user.sid;
                 var tid = User.user.tid;
                 var url = " /seat/cancelTempOut";
-                var param = "sid=" + sid + "&amp;tid=" + tid;
+                var param = "sid=" + sid + "&tid=" + tid;
                 selectPageData(url, param, "post");
             } else {
                 alert("用户只有在暂离座位后，才能取消暂离！");
@@ -289,7 +289,7 @@
                     var addHours=reover[0]*10+reover[1]*1;
                     var addMinutes=reover[3]*10+reover[4]*1;
                     var url = " /seat/addTime";
-                    var param = "sid=" + sid + "&amp;tid=" + tid + "&amp;addHours=" + addHours + "&amp;addMinutes=" + addMinutes;
+                    var param = "sid=" + sid + "&tid=" + tid + "&addHours=" + addHours + "&addMinutes=" + addMinutes;
                     selectPageData(url, param, "post");
                 });
             }else{
@@ -315,7 +315,7 @@
                     alert(useHours);
                     var useMinutes=time_interval[3]*10+time_interval[4]*1;
                     var url = " /seat/getSeat";
-                    var param = "sid=" + sid + "&amp;tid=" + tid + "&amp;useHours=" + useHours + "&amp;useMinutes=" + useMinutes;
+                    var param = "sid=" + sid + "&tid=" + tid + "&useHours=" + useHours + "&useMinutes=" + useMinutes;
                     selectPageData(url, param, "post");
                 });
             } else {
@@ -335,7 +335,7 @@
                 var sid = User.user.sid;
                 //发送ajax将座位释放
                 var url = " /seat/outSeat";
-                var param = "sid=" + sid + "&amp;tid=" + User.user.tid;
+                var param = "sid=" + sid + "&tid=" + User.user.tid;
                 selectPageData(url, param, "post");
             } else {
                 alert("请确保用户正在使用座位，然后才可以正常结束使用！");
@@ -354,7 +354,7 @@
                 if (data.code === 100) {
                     alert("操作成功!");
                     var url = " /login/login";
-                    var param = "username=" + User.user.name + "&amp;pwd=" + User.user.pwd;
+                    var param = "username=" + User.user.name + "&pwd=" + User.user.pwd;
                     //发送ajax
                     updateSession(url, param);
                 } else {

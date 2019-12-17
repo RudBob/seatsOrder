@@ -18,9 +18,23 @@ public interface SeatMapper {
 
     Seat selectByPrimaryKey(Integer tid);
 
+    /**
+     * 部分更新
+     * @param record
+     * @return
+     */
     int updateByPrimaryKeySelective(Seat record);
 
+    /**
+     * 更新Seat
+     * @param record
+     * @return
+     */
     int updateByPrimaryKey(Seat record);
 
-    Seat getEmptySeat();
+    /**
+     * 得到无人使用的空座
+     * @return
+     */
+    Seat getUnusingSeat();
 }

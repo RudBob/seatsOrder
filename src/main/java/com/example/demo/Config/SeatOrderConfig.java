@@ -15,11 +15,11 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 //@EnableWebMvc // 1开启默认配置
 //@EnableScheduling
-//
-public class SeatOrderConfig extends WebMvcConfigurerAdapter{
+public class SeatOrderConfig extends WebMvcConfigurerAdapter {
 
     /**
-     * Description: 对一些静态资源的再次配置, 似乎是由于 spring boot 2.0 以后导致的一些关于资源访问的问题
+     * Description: 对一些静态资源的再次配置,
+     * 似乎是由于 spring boot 2.0 以后导致的一些关于资源访问的问题
      *
      * @param registry
      * @Title: addResourceHandlers
@@ -27,28 +27,10 @@ public class SeatOrderConfig extends WebMvcConfigurerAdapter{
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 静态资源配置
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-
-//        // 解决 swagger 无法访问的错误
-//        registry.addResourceHandler("swagger-ui.html")
-//                .addResourceLocations("classpath:/META-INF/resources/");
-//
-//        registry.addResourceHandler("/webjars/**")
-//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
     }
 
-
-//    /**
-//     * Description: 添加拦截器
-//     *
-//     * @param registry
-//     * @Title: addInterceptors
-//     */
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//
-//    }
 }
 
 
