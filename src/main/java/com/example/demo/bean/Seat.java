@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class Seat implements Serializable {
     private Integer tid;
 
-    private Integer rid;
 
     private Byte statuss;
 
@@ -22,14 +21,6 @@ public class Seat implements Serializable {
 
     public void setTid(Integer tid) {
         this.tid = tid;
-    }
-
-    public Integer getRid() {
-        return rid;
-    }
-
-    public void setRid(Integer rid) {
-        this.rid = rid;
     }
 
     public Byte getStatuss() {
@@ -55,7 +46,6 @@ public class Seat implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", tid=").append(tid);
-        sb.append(", rid=").append(rid);
         sb.append(", statuss=").append(statuss);
         sb.append(", sid=").append(sid);
         sb.append(", serialVersionUID=").append(serialVersionUID);

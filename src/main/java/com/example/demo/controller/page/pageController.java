@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * Description:
+ * Description: 算是某种过滤器fliter，管理跳转class
  *
  * @author 任耀
  * @ClassName: pageController
@@ -16,6 +16,16 @@ public class pageController {
     @GetMapping(value = "/admin")
     public String intoAdmin() {
         return "/admin";
+    }
+
+    @GetMapping(value = "/adminSeat")
+    public String intoAdminSeat() {
+        return "/adminSeat";
+    }
+
+    @GetMapping(value = "/adminStudent")
+    public String intoAdminStudent() {
+        return "/adminStudent";
     }
 
     @GetMapping(value = "/continue_seat")

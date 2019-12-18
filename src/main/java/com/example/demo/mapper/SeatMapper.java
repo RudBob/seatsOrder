@@ -37,4 +37,6 @@ public interface SeatMapper {
      * @return
      */
     Seat getUnusingSeat();
+
+    List<Seat> selectByParams(@Param(value = "tid") Integer tid, @Param(value = "status")Integer status);
 }

@@ -2,9 +2,14 @@ package com.example.demo.service.admin;
 
 import com.example.demo.bean.Seat;
 import com.example.demo.mapper.SeatMapper;
+import com.example.demo.util.PageInfoConstant;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * Description:
@@ -20,39 +25,20 @@ public class AdminSeatService {
 
 
     /**
-     * 座位报修.
+     * 座位报修.,TODO
      *
      * @param tid
      */
     public boolean seatNeedRepair(Integer tid) {
-        Seat seat = selectByPrimaryKey(tid);
-        if (seat != null) {
-            // 更改状态码
-//            Seats.waitRepair(seat);
-            // 直接调用update语句
-            seatMapper.updateByPrimaryKey(seat);
-            return true;
-        }
-        // 抛出异常,座位不存在
         return false;
     }
 
     /**
-     * 座位已经修好了
+     * 座位已经修好了,TODO
      *
      * @param tid
      */
-    @RequestMapping(value = "")
     public boolean hasRepaired(Integer tid) {
-        Seat seat = selectByPrimaryKey(tid);
-        if (seat != null) {
-            // 更改状态码
-//            Seats.waitingUse(seat);
-            // 直接调用update语句
-            seatMapper.updateByPrimaryKey(seat);
-            return true;
-        }
-        // 查不到
         return false;
     }
 
@@ -60,7 +46,9 @@ public class AdminSeatService {
         return seatMapper.deleteByPrimaryKey(tid);
     }
 
-    public int insertSelective(Seat record) {
+    public int insertSelective() {
+        Seat record = new Seat();
+        record.setStatuss((byte) 0);
         return seatMapper.insertSelective(record);
     }
 
@@ -72,4 +60,17 @@ public class AdminSeatService {
         return seatMapper.updateByPrimaryKeySelective(record);
     }
 
+    /**
+     * 通过参数获取对应的seat们
+     *
+     * @param pid
+     * @param tid
+     * @param status
+     * @return
+     */
+    public PageInfo<Seat> getSeatsByParam(int pid, Integer tid, Integer status) {
+        PageHelper.startPage(pid, PageInfoConstant.PAGE_MAXSIZE);
+        PageInfo<Seat> pageInfo = new PageInfo<>(seatMapper.selectByParams(tid, status));
+        return pageInfo;
+    }
 }

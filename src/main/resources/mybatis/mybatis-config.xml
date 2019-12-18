@@ -54,13 +54,12 @@
 		<!-- 使用log4j日志 -->
 		<setting name="logImpl" value="SLF4J" />
 	</settings>
-	<!-- 不使用自建类别名, 不方便 -->
-
 	<!-- 使用了分页插件 -->
 	<plugins>
 		<plugin interceptor="com.github.pagehelper.PageInterceptor">
 			<!--分页参数合理化 -->
 			<property name="reasonable" value="true" />
+			<!--<property name="dialect" value="mysql"/>-->
 		</plugin>
 	</plugins>
 </configuration>
