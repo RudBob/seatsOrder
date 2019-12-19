@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author ry
+ */
 @Mapper
 public interface FeedBackMapper {
     int deleteByPrimaryKey(Integer mid);
@@ -24,4 +27,6 @@ public interface FeedBackMapper {
     List<FeedBack> selectAll();
 
     List<FeedBack> selectBySid(@Param("sid") String sid);
+
+    List<FeedBack> getLettersByParam(@Param("mid") Integer mid);
 }

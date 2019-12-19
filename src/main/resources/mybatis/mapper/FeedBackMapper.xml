@@ -32,6 +32,16 @@
         from feedback
         where sid = #{sid,jdbcType=VARCHAR}
     </select>
+    <select id="getLettersByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from feedback
+        <where>
+            <if test="mid != null">
+                mid LIKE #{mid}
+            </if>
+        </where>
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from feedback

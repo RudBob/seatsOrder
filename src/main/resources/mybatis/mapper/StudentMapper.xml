@@ -9,7 +9,11 @@
         <result column="tid" jdbcType="INTEGER" property="tid"/>
     </resultMap>
     <sql id="Base_Column_List">
-        sid, name, pwd, statuss, tid
+        sid,
+        name,
+        pwd,
+        statuss,
+        tid
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -22,6 +26,19 @@
         <include refid="Base_Column_List"/>
         from student
         where name = #{name,jdbcType=VARCHAR} AND pwd = #{pwd,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        <where>
+            <if test="sid!=null">
+                AND sid LIKE #{sid}
+            </if>
+            <if test="status!=null">
+                AND statuss =#{status}
+            </if>
+        </where>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete

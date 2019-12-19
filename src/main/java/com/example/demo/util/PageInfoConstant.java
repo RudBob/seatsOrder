@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * 分页bean
  *
+ * @author ry
  * @param <T>
  */
 public class PageInfoConstant<T> {

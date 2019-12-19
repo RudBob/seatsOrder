@@ -28,6 +28,16 @@ public class pageController {
         return "/adminStudent";
     }
 
+    @GetMapping(value = "/adminUserLetter")
+    public String intoAdminUserLetter() {
+        return "/adminUserLetter";
+    }
+
+    @GetMapping(value = "/adminSeatHistory")
+    public String intoAdminSeatHistory() {
+        return "/adminSeatHistory";
+    }
+
     @GetMapping(value = "/continue_seat")
     public String intoContinueSeat() {
         return "/continue_seat";

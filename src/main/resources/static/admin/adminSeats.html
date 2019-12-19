@@ -11,6 +11,8 @@
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="/static/plugins/pagination/jq-paginator.js"></script>
+    <script src="/static/js/seatJs.js"></script>
+    <script src="/static/js/util/util.js"></script>
     <link href="/static/plugins/pagination/jp-paginator.css" rel="stylesheet"/>
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -49,9 +51,10 @@
                         totalPages: pages ? pages : 1
                     });
                     //显示汇总信息
-                    pagination_nick.next().html("总计" + seatsPage.total + " 条，共" + pages + " 页")
+                    pagination_nick.next().html("总计" + seatsPage.total
+                        + " 条，共" + pages + " 页")
                 } else {
-                    showMsg(data.message);
+                    util.showMsg(data.message);
                 }
             },
             error: function () {//失败时被调用的函数
@@ -65,31 +68,10 @@
         let tid = $("#tid").val();
         let status = $("#status").val();
         let param = "";
-        param += appendParam("tid", tid, param);
-        param += appendParam("status", status, param);
-        param += appendParam("pNum", pNum, param);
+        param += util.appendParam("tid", tid, param);
+        param += util.appendParam("status", status, param);
+        param += util.appendParam("pNum", pNum, param);
         getTableDataAndShow(url, param);
-    }
-
-    function appendParam(paramName, paramValue, params) {
-        let res = "";
-        if (paramValue != null && paramValue !== "") {
-            if (params !== "") {
-                res += "&";
-            }
-            res += paramName + "=" + paramValue;
-        }
-        return res;
-    }
-
-    // 复选框更新座位状态
-    function updateClick() {
-
-    }
-
-    // 复选框删除位置
-    function deleteClick() {
-
     }
 
     $(function () {
@@ -113,105 +95,24 @@
         getTableDataAndShow(url, param);
     });
 
-
-    /**
-     *  0代表可以使用
-     * 1代表有人使用
-     * 2代表已经预约
-     * 3代表暂离座位
-     * 4代表维修中.
-     * 5代表其他.
-     */
-    function statusToStr(status) {
-        if (status === 0) {
-            return "空闲状态";
-        } else if (status === 1) {
-            return "正在使用";
-        } else if (status === 2) {
-            return "已被预约";
-        } else if (status === 3) {
-            return "用户暂离";
-        } else if (status === 4) {
-            return "维修中";
-        } else if (status === 5) {
-            return "其他";
-        }
-    }
-
-    /**
-     * 在showData 中使用
-     * @param tid
-     */
-    function deleteById(tid) {
-        let url = "/adminSeat/removeSeat";
-        let param = "tid=" + tid;
-        $.ajax({
-            type: "post",//请求方式
-            url: url + "?" + param,//发送请求的地址
-            async: true,//请求为异步请求
-            success: function (data) {//成功时调用的回调函数
-                // 返回操作是否成功
-                if (data.code === 100) {
-                    //如果操作成功,返回发送过来的数据总条数n和包含n条信息的数组
-                    alert("删除成功")
-                } else {
-                    showMsg(data.message);
-                }
-            },
-            error: function () {//失败时被调用的函数
-                alert("网络异常");
-            }
-        });
-        searchClick(1);
-    }
-
-    function selectById(tid) {
-
-    }
-
     function showData(seatsPage) {
         let data = seatsPage.list;
-        $("#SeatsInfo").empty();
+        $("#SeatsTable").empty();
         for (let i = 0; i < data.length; i++) {
             let $tr = $("<tr></tr>");
             let $tid = $("<td>" + data[i].tid + "</td>");
             let $sid = $("<td>" + data[i].sid + "</td>");
-            let $status = $("<td>" + statusToStr(data[i].statuss) + "</td>");
-            let $opera = $("<td><a onclick='deleteById(" + data[i].tid + ")' href='#'>删除</a>/<a onclick='selectById(" + data[i].tid + ")'  href='#'>编辑</a></td>");
+            let $status = $("<td>" + seat.seatStatusToStr(data[i].statuss) + "</td>");
+            let $opera = $("<td><a onclick='deleteById(" + data[i].tid + ")' href='#'>删除</a>/" +
+                "<a onclick='selectById(" + data[i].tid + ")'  href='#'>编辑</a></td>");
             $tr.append($tid);
             $tr.append($sid);
             $tr.append($status);
             $tr.append($opera);
-            $("#SeatsInfo").append($tr);
+            $("#SeatsTable").append($tr);
         }
     }
 
-    function showMsg(message) {
-        alert(message);
-    }
-
-    function addSeatClick() {
-        let url = "/adminSeat/addSeat";
-        // let param = "tid=" + tid;
-        $.ajax({
-            type: "post",//请求方式
-            url: url,//发送请求的地址
-            async: true,//请求为异步请求
-            success: function (data) {//成功时调用的回调函数
-                // 返回操作是否成功
-                if (data.code === 100) {
-                    //如果操作成功,返回发送过来的数据总条数n和包含n条信息的数组
-                    alert("删除成功")
-                } else {
-                    showMsg(data.message);
-                }
-            },
-            error: function () {//失败时被调用的函数
-                alert("网络异常");
-            }
-        });
-        searchClick(1);
-    }
 
 </script>
 
@@ -256,7 +157,7 @@
             <th>操作</th>
         </tr>
         </thead>
-        <tbody id="SeatsInfo">
+        <tbody id="SeatsTable">
 
         </tbody>
     </table>

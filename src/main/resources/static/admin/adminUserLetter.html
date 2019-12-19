@@ -10,7 +10,7 @@
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <script src="/static/js/studentJs.js"></script>
+    <script src="/static/js/letterJs.js"></script>
     <script src="/static/js/util/util.js"></script>
     <script src="/static/plugins/pagination/jq-paginator.js"></script>
     <link href="/static/plugins/pagination/jp-paginator.css" rel="stylesheet"/>
@@ -29,17 +29,17 @@
                 // 返回操作是否成功
                 if (data.code === 100) {
                     //如果操作成功,返回发送过来的数据总条数n和包含n条信息的数组
-                    let stuPage = data.data.stuPage;
-                    showData(stuPage);
-                    let pages = stuPage.pages; 		//总页码
+                    let lettersPage = data.data.lettersPage;
+                    showData(lettersPage);
+                    let pages = lettersPage.pages; 		//总页码
                     //设置分页信息,从后台返回的数据获取当前页码和总页码
                     let pagination_nick = $('#pagination-nick');
                     pagination_nick.jqPaginator('option', {
-                        currentPage: stuPage.pageNum,
+                        currentPage: lettersPage.pageNum,
                         totalPages: pages ? pages : 1
                     });
                     //显示汇总信息
-                    pagination_nick.next().html("总计" + stuPage.total + " 条，共" + pages + " 页")
+                    pagination_nick.next().html("总计" + lettersPage.total + " 条，共" + pages + " 页")
                 } else {
                     util.showMsg(data.message);
                 }
@@ -51,12 +51,12 @@
     }
 
     function searchClick(pNum) {
-        let url = "/adminStudent/getStuPage";
-        let sid = $("#sid").val();
-        let status = $("#status").val();
+        let url = "/adminUserLetter/getLetters";
+        let sid = $("#mid").val();
+        // let status = $("#status").val();
         let param = "";
         param += util.appendParam("sid", sid, param);
-        param += util.appendParam("status", status, param);
+        // param += util.appendParam("status", status, param);
         param += util.appendParam("pNum", pNum, param);
         getTableDataAndShow(url, param);
     }
@@ -76,7 +76,7 @@
                 searchClick(num);
             }
         });
-        let url = "/adminStudent/getStuPage";
+        let url = "/adminUserLetter/getLetters";
         let param = "";
         // 得到并展示表格数据
         getTableDataAndShow(url, param);
@@ -86,20 +86,26 @@
 
     }
 
-    function showData(seatsPage) {
-        let data = seatsPage.list;
-        $("#studentInfo").empty();
+    function hasRead(sid) {
+
+    }
+
+    function showData(pageData) {
+        let data = pageData.list;
+        $("#lettersTable").empty();
         for (let i = 0; i < data.length; i++) {
             let $tr = $("<tr></tr>");
-            let $tid = $("<td>" + data[i].sid + "</td>");
-            let $sid = $("<td>" + data[i].name + "</td>");
-            let $status = $("<td>" + student.studentStatusToStr(data[i].statuss) + "</td>");
-            let $opera = $("<td><a onclick='student.deleteById(" + data[i].sid + ")' href='#'>删除</a>/<a onclick='student.selectById(" + data[i].sid + ")'  href='#'>编辑</a></td>");
+            let $tid = $("<td>" + data[i].mid + "</td>");
+            let $sid = $("<td>" + data[i].context + "</td>");
+            let $status = $("<td>" + data[i].sid + "</td>");
+            let $feedbackTime = $("<td>" + data[i].feedbackTime + "</td>");
+            let $opera = $("<td><a onclick='hasRead(" + data[i].mid + ")' href='#'>已读</a>/<a onclick='selectById(" + data[i].mid + ")'  href='#'>编辑</a></td>");
             $tr.append($tid);
             $tr.append($sid);
             $tr.append($status);
+            $tr.append($feedbackTime);
             $tr.append($opera);
-            $("#studentInfo").append($tr);
+            $("#lettersTable").append($tr);
         }
     }
 </script>
@@ -116,18 +122,10 @@
             添加
         </button>
         <div class="search">
+            反馈id:<input id="mid" type="text" name="mid_input" maxlength="11">
             学生id:<input id="sid" type="text" name="sid_input" maxlength="11">
             status:
-            <label>
-                <select id="status">
-                    <option value="0">正常</option>
-                    <option value="1">使用中</option>
-                    <option value="2">已经预约</option>
-                    <option value="3">暂离座位</option>
-                    <option value="4">维修中</option>
-                    <option value="5">其他</option>
-                </select>
-            </label>
+
             <button onclick="searchClick()" type="button" class="btn btn-default">
                 搜索
             </button>
@@ -139,13 +137,13 @@
     <table class="table table-striped table-bordered">
         <thead>
         <tr>
-            <th>学生编号</th>
-            <th>学生姓名</th>
-            <th>学生状态</th>
-            <th>最近使用的座位</th>
+            <th>反馈id</th>
+            <th>反馈内容</th>
+            <th>反馈学生id</th>
+            <th>反馈时间</th>
         </tr>
         </thead>
-        <tbody id="studentInfo">
+        <tbody id="lettersTable">
 
         </tbody>
     </table>

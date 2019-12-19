@@ -23,15 +23,8 @@ public class AdminService {
     @Autowired
     AdminMapper adminMapper;
 
-    @Autowired
-    FeedBackMapper feedBackMapper;
 
     public Admin login(String username, String password, HttpSession session) {
         return adminMapper.login(username, password);
-    }
-
-    public List<FeedBack> showFeedBacks() {
-        List<FeedBack> feedBacks = feedBackMapper.selectAll();
-        return feedBacks;
     }
 }

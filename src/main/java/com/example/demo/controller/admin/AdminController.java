@@ -27,12 +27,5 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @ApiOperation("展示所有反馈")
-    @RequestMapping(value = "showFeedBacks", method = RequestMethod.GET)
-    public Msg showFeedBacks() {
-        List<FeedBack> feedBacks = adminService.showFeedBacks();
-        return Msg.success().add("feedBacks", feedBacks);
-    }
-
 
 }

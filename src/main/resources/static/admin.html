@@ -6,8 +6,53 @@
     <link rel="stylesheet" href="/static/bootstraps/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/Font-Awesome-3.2.1/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/static/css/main.css"/>
-    <style type="text/css">
-    </style>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/util/util.js"></script>
+    <script type="text/javascript" src="/static/bootstraps/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/layer/layer.js"></script>
+    <script type="text/javascript" src="/static/js/base.js"></script>
+    <script type="text/javascript">
+        //退出登录
+        function logout() {
+            var sid = User.user.sid;
+            //发送ajax账号退出
+            var url = "/login/logout";
+            var param = "sid=" + sid;
+            selectPageData(url, param, 'get');
+            User.logout();
+        }
+
+        //调用ajax函数
+        function selectPageData(url, param, type) {
+            $.ajax({
+                type: type,//请求方式
+                url: url + "?" + param,//发送请求的地址
+                async: true,//请求为异步请求
+                success: function (data) {//成功时调用的回调函数
+                    // 返回操作是否成功
+                    if (type == 'get') {
+                        if (data.code == 100) {
+                            alert("操作成功!");
+                            location.href = "/";
+                        } else {
+                            showMsg(data.msg);
+                        }
+                    } else if (type == 'post') {
+                        if (data.code == 100) {
+                            alert("操作成功!");
+                            location.href = "/personal.html";
+                        } else {
+                            util.showMsg(data.msg);
+                        }
+                    }
+                },
+                error: function () {//失败时被调用的函数
+                    alert("网络异常");
+                }
+            });
+        }
+
+    </script>
     <title>座位预约管理系统</title>
 </head>
 
@@ -16,15 +61,15 @@
     <h1>座位预约管理系统</h1>
     <br>
     <div class="collapse navbar-collapse" id="top-navbar-1">
-        <ul class="nav navbar-nav navbar-right">
-            <a id="logout"><strong>登出</strong></a>
-        </ul>
+        <p class="p">
+            <button type="submit" id="logout" class="button" onclick="logout()">退出登录</button>
+        </p>
     </div>
 </div>
 <div id="main">
     <div id="left">
         <div class="menu">
-            <a href="/static/admin/user_letters.html" target="myFrame">管理投诉</a>
+            <a href="/static/admin/adminUserLetter.html" target="myFrame">管理投诉</a>
         </div>
         <div class="menu">
             <a href="/static/admin/adminSeats.html" target="myFrame">管理座位</a>
@@ -32,144 +77,10 @@
         <div class="menu">
             <a href="/static/admin/adminStuInfo.html" target="myFrame">管理学生信息</a>
         </div>
-
     </div>
-    <iframe src="/static/admin/user_letters.html" name="myFrame" id="myFrame" frameborder="0">
+    <iframe src="/static/admin/adminUserLetter.html" name="myFrame" id="myFrame" frameborder="0">
 
     </iframe>
 </div>
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/bootstraps/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/static/layer/layer.js"></script>
-<script type="text/javascript" src="/static/js/base.js"></script>
-<script type="text/javascript">
-    $(function () {
-        //显示管理座位的模态框
-        $("#manage_seats").click(function () {
-            $("#seat_no").show();
-            $("#class_no").show();
-            $("#floor_no").show();
-            $("#manage_seats").attr("data-target", "#modal_manage");
-        });
-        var tid = "";
-        var statuss = "";
-        $("#submit").click(function () {
-            //获取input中的值,拼成一个字符串即座位号tid
-            tid = $("#bno").val() + $("#fno").val() + $("#cno").val() + $("#sno").val();
-            statuss = $("#statuss").val();
-            var url;
-            if (statuss == "维修") {
-                url = "/adminSeat/seatNeedRepair";
-            } else if (statuss == "正常") {
-                url = "/adminSeat/seatRepaired";
-            }
-            var param = "tid=" + tid;
-            //发送ajax
-            selectPageData_adminSeat(url, param);
-        });
-        $("#watch_stuInfo").click(function () {
-            $("#watch_stuInfo").attr("data-target", "#modal_stuInfo");
-            var sid;
-            $("#sid_ok").click(function () {
-                sid = $("#get_sid").val();
-                var url = "/adminStudent/getStudentById";
-                var param = "sid=" + sid;
-                selectPageData_adminStu(url, param);
-            });
-        });
-        //退出登录
-        $("#logout").click(function () {
-            var url = "/login/logout";
-            var param = "sid=" + User.user.name;
-            selectPageData_logout(url, param, 'get');
-            User.logout();
-        })
-    })
-
-    //调用ajax函数
-    function selectPageData_adminSeat(url, param) {
-        $.ajax({
-            type: "post",//请求方式
-            url: url + "?" + param,//发送请求的地址
-            async: true,//请求为异步请求
-            success: function (data) {//成功时调用的回调函数
-                // 返回操作是否成功
-                if (data.code == 100) {
-                    alert("操作成功!");
-                    location.href = "/admin.html"
-                } else {
-                    showMsg(data.message);
-                }
-            },
-            error: function () {//失败时被调用的函数
-                alert("网络异常");
-            }
-        });
-    }
-
-    function selectPageData_adminStu(url, param) {
-        $.ajax({
-            type: "get",//请求方式
-            url: url + "?" + param,//发送请求的地址
-            async: true,//请求为异步请求
-            success: function (data) {//成功时调用的回调函数
-                // 返回操作是否成功
-                if (data) {
-                    alert("操作成功!");
-                    $("#sid").val(data.sid);
-                    $("#sname").val(data.name);
-                    $("#spwd").val(data.pwd);
-                    var status;
-                    /*学生的各种状态
-                     * 正常时的状态 = 0;
-                     * 学生正在使用座位的状态码 = 1;
-                     * 学生暂停使用的状态码 = 2;
-                     * 学生预约座位时的状态码 = 3;*/
-                    if (data.statuss == 0) {
-                        status = "正常状态"
-                    } else if (data.statuss == 1) {
-                        status = "学生正在使用座位";
-                    } else if (data.statuss == 2) {
-                        status = "学生暂停使用座位";
-                    } else if (data.statuss == 3) {
-                        status = "学生正在预约座位";
-                    }
-                    $("#sstatus").val(status);
-
-                } else {
-                    showMsg("该用户不存在！");
-                }
-            },
-            error: function () {//失败时被调用的函数
-                alert("网络异常");
-            }
-        });
-    }
-
-    function selectPageData_logout(url, param) {
-        $.ajax({
-            type: "get",//请求方式
-            url: url + "?" + param,//发送请求的地址
-            async: true,//请求为异步请求
-            success: function (data) {//成功时调用的回调函数
-                // 返回操作是否成功
-                if (data.code == 100) {
-                    alert("操作成功!");
-                    location.href = "/"
-                } else {
-                    showMsg(data.message);
-                }
-            },
-            error: function () {//失败时被调用的函数
-                alert("网络异常");
-            }
-        });
-    }
-
-    function showMsg(message) {
-        alert(message);
-    }
-</script>
 </body>
-
 </html>
