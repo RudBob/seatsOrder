@@ -68,4 +68,9 @@ public class pageController {
     public String intoPersonal() {
         return "/personal";
     }
+
+    @GetMapping(value = "/test")
+    public String intoTest() {
+        return "/test";
+    }
 }
