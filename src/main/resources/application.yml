@@ -1,8 +1,9 @@
 server:
   servlet-path: /
 logging:
+  file: seatsOrder.log
   level:
-    com.example.demo: trace
+    com.example.demo: debug
 spring:
   thymeleaf:
     cache: false

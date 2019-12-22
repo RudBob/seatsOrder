@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 /**
- * redis工具包
+ * redis操作的工具包
  *
  * @author ry
  */
