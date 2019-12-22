@@ -1,7 +1,14 @@
 package com.example.demo.bean;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
+@Data
+@NoArgsConstructor
 public class Student implements Serializable {
     private String sid;
 
@@ -15,59 +22,4 @@ public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getSid() {
-        return sid;
-    }
-
-    public void setSid(String sid) {
-        this.sid = sid == null ? null : sid.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd == null ? null : pwd.trim();
-    }
-
-    public Integer getStatuss() {
-        return statuss;
-    }
-
-    public void setStatuss(Integer statuss) {
-        this.statuss = statuss;
-    }
-
-    public Integer getTid() {
-        return tid;
-    }
-
-    public void setTid(Integer tid) {
-        this.tid = tid;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", sid=").append(sid);
-        sb.append(", name=").append(name);
-        sb.append(", pwd=").append(pwd);
-        sb.append(", statuss=").append(statuss);
-        sb.append(", tid=").append(tid);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }
