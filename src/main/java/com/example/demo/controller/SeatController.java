@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,7 +25,6 @@ import java.time.LocalTime;
 @RestController
 @Transactional
 @RequestMapping("/seat")
-@Api(description = "座位相关操作-----任耀")
 public class SeatController {
     @Autowired
     SeatService seatService;
@@ -38,8 +38,8 @@ public class SeatController {
      */
     @ApiOperation("预约座位，默认该预约保留15分钟")
     @RequestMapping(value = "orderSeat", method = RequestMethod.POST)
-    public Msg orderSeat(@RequestParam(value = "sid", required = true) String sid,
-                         @RequestParam(value = "tid", required = true) Integer tid) {
+    public Msg orderSeat(@RequestParam(value = "sid") String sid,
+                         @RequestParam(value = "tid") Integer tid) {
         boolean res = seatService.orderSeat(sid, tid);
         if (res) {
             return Msg.success();
@@ -119,9 +119,8 @@ public class SeatController {
                        @RequestParam(value = "useMinutes", required = true) Integer minutes) {
         LocalDateTime startDatetime = LocalDateTime.now();
         LocalDate endDate = startDatetime.toLocalDate();
-
         LocalTime endTime = startDatetime.toLocalTime().plusHours(hours).plusMinutes(minutes);
-        LocalDateTime endDatetime = LocalDateTime.of(endDate,endTime);
+        LocalDateTime endDatetime = LocalDateTime.of(endDate, endTime);
         boolean res = seatService.getSeat(sid, tid, startDatetime, endDatetime);
         if (res) {
             return Msg.success();

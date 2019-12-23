@@ -1,5 +1,6 @@
 package com.example.demo.bean;
 
+import com.example.demo.util.SessionUtil;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,13 @@ public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 在这里更新session
+     *
+     * @param status 状态码
+     */
+    public void setStatuss(Integer status) {
+        this.statuss = status;
+        SessionUtil.updateUserFromDB(this);
+    }
 }

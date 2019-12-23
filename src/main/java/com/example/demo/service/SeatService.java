@@ -7,9 +7,11 @@ import com.example.demo.mapper.SeatMapper;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.mapper.StudentSeatMapper;
 import com.example.demo.util.BaseData;
+import com.example.demo.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -33,15 +35,15 @@ public class SeatService {
     /**
      * 得到一个没有使用的座位
      *
-     * @return
+     * @return 返回作为详情
      */
     public Seat getSeatId() {
         return seatMapper.getUnusingSeat();
     }
 
     /**
-     * @param sid 学生id，用来得到并改变学生的状态码
-     * @param tid 座位id，用来得到并改变座位的状态码
+     * @param sid     学生id，用来得到并改变学生的状态码
+     * @param tid     座位id，用来得到并改变座位的状态码
      * @return Boolean      双id是否合法并是否更改成功
      * @despriction 预约座位.
      */
@@ -63,7 +65,6 @@ public class SeatService {
      *
      * @param seat 位置
      * @param stu  学生
-     * @return
      */
     private void stuOrderSeat(Seat seat, Student stu) {
         LocalDateTime startDatetime = LocalDateTime.now();
@@ -89,9 +90,6 @@ public class SeatService {
     /**
      * 学生得到座位. 将这条记录插入到db中
      *
-     * @param sid
-     * @param tid
-     * @return
      */
     public boolean getSeat(String sid, Integer tid, LocalDateTime startDatetime, LocalDateTime endDatetime) {
         // 得到学生和座位的详情.
@@ -132,9 +130,6 @@ public class SeatService {
     /**
      * 暂离座位.使用学生id和座位id得到数据后，改变数据的状态码
      * 以及结束以上的记录，开始一条新的暂离记录
-     * TODO debug
-     *
-     * @param sid
      */
     public boolean tempOut(String sid, Integer tid, Integer minutes) {
         // 得到一组数据:学生，座位，记录
