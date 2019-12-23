@@ -29,7 +29,7 @@ public class StudentService {
     @Autowired
     private StudentSeatMapper studentSeatMapper;
 
-    public Student login(String username, String password, HttpSession session) {
+    public Student login(String username, String password) {
         // 使用密码和用户账号查询用户.
 
         return studentMapper.login(username, password);

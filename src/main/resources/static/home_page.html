@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title></title>
-    <link rel="stylesheet" href="bootstraps/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bootstraps/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="Font-Awesome-3.2.1/css/font-awesome.min.css"/>
     <!--<link rel="stylesheet" href="/static/layui-v2.4.4/layui/css/layui.css" />
     <link rel="stylesheet" href="/static/layui-v2.4.4/layui/css/modules/laydate/default/laydate.css" />-->
@@ -182,6 +182,16 @@
 
 <script type="text/javascript">
     $(function () {
+        // 先全部隐藏起来
+        $("#p_order").hide();
+        $("#p_use").hide();
+        $("#start").hide();
+        $("#over").hide();
+        $("#p_temp").hide();
+        $("#temp").hide();
+        $("#return").hide();
+        $("#p_continue").hide();
+        $("#cancel_order").hide();
         /** 正常时的状态 = 0;
          * 学生正在使用座位的状态码 = 1;
          * 学生预约座位时的状态码 = 2;
@@ -191,38 +201,23 @@
         var ORDER = 2;
         var TEMP = 3;
         //学生正常状态
-        if(User.user.statuss === 0){
+        if (User.user.statuss === NORMAL) {
             $("#p_order").show();
             $("#order_seat").show();
-            $("#cancel_order").hide();
-            $("#p_use").hide();
-            $("#p_temp").hide();
-            $("#p_continue").hide();
-        }else if(User.user.statuss == 2){//学生预约状态
+        } else if (User.user.statuss === ORDER) {//学生预约状态
             $("#p_order").show();
-            $("#order_seat").hide();
             $("#cancel_order").show();
             $("#p_use").show();
             $("#start").show();
-            $("#over").hide();
-            $("#p_temp").hide();
-            $("#p_continue").hide();
-        }else if(User.user.statuss == 1){//学生使用座位状态状态
-            $("#p_order").hide();
+        } else if (User.user.statuss === USING) {//学生使用座位状态状态
             $("#p_use").show();
-            $("#start").hide();
             $("#over").show();
             $("#p_temp").show();
             $("#temp").show();
-            $("#return").hide();
             $("#p_continue").show();
-        } else if(User.user.statuss == 3){//学生暂停使用座位状态状态
-            $("#p_order").hide();
-            $("#p_use").hide();
+        } else if (User.user.statuss === TEMP) {//学生暂停使用座位状态状态
             $("#p_temp").show();
-            $("#temp").hide();
             $("#return").show();
-            $("#p_continue").hide();
         }
         //个人中心
         $("#personal").click(function () {
@@ -238,14 +233,14 @@
         });
         //取消预约
         $("#cancel_order").click(function () {
-            if(User.user.statuss === 2){
+            if (User.user.statuss === 2) {
                 //发送ajax
                 var sid = User.user.sid;
                 var tid = User.user.tid;
                 var url = " /seat/cancelOrder";
                 var param = "sid=" + sid + "&tid=" + tid;
                 selectPageData(url, param, "post");
-            }else {
+            } else {
                 alert("用户在预约座位状态时，才可以取消预约!");
             }
         })
@@ -285,35 +280,35 @@
                     var sid = User.user.sid;
                     var tid = User.user.tid;
                     //发送ajax开始使用座位
-                    var reover=$("#reover").val();
-                    var addHours=reover[0]*10+reover[1]*1;
-                    var addMinutes=reover[3]*10+reover[4]*1;
+                    var reover = $("#reover").val();
+                    var addHours = reover[0] * 10 + reover[1] * 1;
+                    var addMinutes = reover[3] * 10 + reover[4] * 1;
                     var url = " /seat/addTime";
                     var param = "sid=" + sid + "&tid=" + tid + "&addHours=" + addHours + "&addMinutes=" + addMinutes;
                     selectPageData(url, param, "post");
                 });
-            }else{
+            } else {
                 alert("请确保用户正在使用座位，然后才可以正常续座！");
             }
         });
         //续座的日期框
         laydate.render({
             elem: '#reover'
-            ,type: 'time'
-            ,format: 'HH:mm'
-            ,btns: [ 'confirm','clear']
+            , type: 'time'
+            , format: 'HH:mm'
+            , btns: ['confirm', 'clear']
         });
         //开始使用
         $("#start").click(function () {
             if (User.user.statuss === 2) {
-                    $("#btn_ok").click(function () {
+                $("#btn_ok").click(function () {
                     var sid = User.user.sid;
                     var tid = User.user.tid;
                     //发送ajax开始使用座位
-                    var time_interval=$("#time_interval").val();
-                    var useHours=time_interval[0]*10+time_interval[1]*1;
+                    var time_interval = $("#time_interval").val();
+                    var useHours = time_interval[0] * 10 + time_interval[1] * 1;
                     alert(useHours);
-                    var useMinutes=time_interval[3]*10+time_interval[4]*1;
+                    var useMinutes = time_interval[3] * 10 + time_interval[4] * 1;
                     var url = " /seat/getSeat";
                     var param = "sid=" + sid + "&tid=" + tid + "&useHours=" + useHours + "&useMinutes=" + useMinutes;
                     selectPageData(url, param, "post");
@@ -325,9 +320,9 @@
         //使用时长的日期框
         laydate.render({
             elem: '#time_interval'
-            ,type: 'time'
-            ,format: 'HH:mm'
-            ,btns: [ 'confirm','clear']
+            , type: 'time'
+            , format: 'HH:mm'
+            , btns: ['confirm', 'clear']
         });
         //结束使用
         $("#over").click(function () {
@@ -401,21 +396,22 @@
             }
         });
     }
-    function getFormatDate(){
-        var year = ""+new Date().getFullYear();
+
+    function getFormatDate() {
+        var year = "" + new Date().getFullYear();
         var month;
-        if((new Date().getMonth()+1) < 10){
-            month = "0" + (new Date().getMonth()+1);
-        }else{
-            month = "" + (new Date().getMonth()+1);
+        if ((new Date().getMonth() + 1) < 10) {
+            month = "0" + (new Date().getMonth() + 1);
+        } else {
+            month = "" + (new Date().getMonth() + 1);
         }
         var day;
-        if(new Date().getDate() < 10){
-            day = "0"+new Date().getDate();
-        }else{
-            day = ""+new Date().getDate();
+        if (new Date().getDate() < 10) {
+            day = "0" + new Date().getDate();
+        } else {
+            day = "" + new Date().getDate();
         }
-        return year+"-"+month+"-"+day;
+        return year + "-" + month + "-" + day;
     }
 </script>
 </body>

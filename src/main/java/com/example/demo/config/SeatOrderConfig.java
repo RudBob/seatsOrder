@@ -11,8 +11,6 @@ import org.springframework.web.servlet.config.annotation.*;
  * @date 2018/10/13 18:25
  */
 @Configuration
-//@EnableWebMvc // 1开启默认配置
-//@EnableScheduling
 public class SeatOrderConfig extends WebMvcConfigurerAdapter {
 
     /**
@@ -28,6 +26,7 @@ public class SeatOrderConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
     }
+
 
 }
 

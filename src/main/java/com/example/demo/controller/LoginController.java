@@ -7,6 +7,7 @@ import com.example.demo.service.StudentService;
 import com.example.demo.util.Msg;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 import java.util.Enumeration;
@@ -44,97 +46,12 @@ public class LoginController {
     @ApiOperation("用户登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public Msg login(@RequestParam(value = "username", required = true) String username,
-                          @RequestParam(value = "pwd", required = true) String password,
-                          HttpSession session) {
-        Student student = studentService.login(username, password, session);
-        if(session == null){
-            session = new HttpSession() {
-                @Override
-                public long getCreationTime() {
-                    return 0;
-                }
+                     @RequestParam(value = "pwd", required = true) String password,
+                     HttpServletRequest request) {
 
-                @Override
-                public String getId() {
-                    return null;
-                }
+        Student student = studentService.login(username, password);
+        HttpSession session = request.getSession();
 
-                @Override
-                public long getLastAccessedTime() {
-                    return 0;
-                }
-
-                @Override
-                public ServletContext getServletContext() {
-                    return null;
-                }
-
-                @Override
-                public void setMaxInactiveInterval(int i) {
-
-                }
-
-                @Override
-                public int getMaxInactiveInterval() {
-                    return 0;
-                }
-
-                @Override
-                public HttpSessionContext getSessionContext() {
-                    return null;
-                }
-
-                @Override
-                public Object getAttribute(String s) {
-                    return null;
-                }
-
-                @Override
-                public Object getValue(String s) {
-                    return null;
-                }
-
-                @Override
-                public Enumeration<String> getAttributeNames() {
-                    return null;
-                }
-
-                @Override
-                public String[] getValueNames() {
-                    return new String[0];
-                }
-
-                @Override
-                public void setAttribute(String s, Object o) {
-
-                }
-
-                @Override
-                public void putValue(String s, Object o) {
-
-                }
-
-                @Override
-                public void removeAttribute(String s) {
-
-                }
-
-                @Override
-                public void removeValue(String s) {
-
-                }
-
-                @Override
-                public void invalidate() {
-
-                }
-
-                @Override
-                public boolean isNew() {
-                    return false;
-                }
-            };
-        }
         if (student != null) {
             //加到session中
             session.setAttribute("user", student);
@@ -149,6 +66,18 @@ public class LoginController {
         return Msg.fail().setMsg("账号或密码错误");
     }
 
+    @ApiOperation("用户登录后，前端获取后端session中的内容")
+    @RequestMapping(value = "getUserFromSession", method = RequestMethod.POST)
+    public Msg getUserFromSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("user");
+        if (user == null) {
+            return Msg.fail().setMsg("用户未登录");
+        } else {
+            return Msg.success().add("user", user);
+        }
+    }
+
     /**
      * 学生登出
      *
@@ -158,7 +87,7 @@ public class LoginController {
     @ApiOperation("用户登出")
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public Msg logout(@RequestParam(value = "sid", required = true) String sid,
-                           HttpSession session) {
+                      HttpSession session) {
         session.removeAttribute("user");
         return Msg.success();
     }
