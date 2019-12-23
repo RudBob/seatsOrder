@@ -13,4 +13,9 @@ public class SessionUtil {
         HttpSession session = request.getSession();
         session.setAttribute("user", stu);
     }
+
+    public static HttpSession getSession() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return request.getSession();
+    }
 }
