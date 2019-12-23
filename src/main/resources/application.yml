@@ -1,7 +1,6 @@
 server:
   servlet-path: /
-logging:
-  file: seatsOrder.log
+logging:  
   level:
     com.example.demo: debug
 spring:

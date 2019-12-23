@@ -18,7 +18,7 @@ import java.util.List;
  * @ClassName: StudentController
  * @date 2018/9/19 19:12
  */
-@Api(description = "学生相关操作---任耀")
+@Api( "学生相关操作---任耀")
 @RestController
 @Transactional
 @RequestMapping("/student")
@@ -31,9 +31,9 @@ public class StudentController {
      */
     @ApiOperation("修改学生密码")
     @RequestMapping(value = "updatePassword", method = RequestMethod.POST)
-    public Msg updatePassword(@RequestParam(value = "sid", required = true) String sid,
-                              @RequestParam(value = "oldPwd", required = true) String oldPassword,
-                              @RequestParam(value = "newPwd", required = true) String newPassword) {
+    public Msg updatePassword(@RequestParam(value = "sid" ) String sid,
+                              @RequestParam(value = "oldPwd" ) String oldPassword,
+                              @RequestParam(value = "newPwd" ) String newPassword) {
         if (studentService.updatePassword(sid, oldPassword, newPassword)) {
             return Msg.success();
         } else {
@@ -46,7 +46,7 @@ public class StudentController {
      */
     @ApiOperation("学生信息查看")
     @RequestMapping(value = "getStuInfo", method = RequestMethod.POST)
-    public Msg getStuInfo(@RequestParam(value = "sid", required = true) String sid) {
+    public Msg getStuInfo(@RequestParam(value = "sid" ) String sid) {
         // 得到学生对象
         Student student = studentService.getStudent(sid);
         if (student != null) {
@@ -61,7 +61,7 @@ public class StudentController {
      */
     @ApiOperation("学生的历史记录查看")
     @RequestMapping(value = "getStuHistory", method = RequestMethod.POST)
-    public Msg getStuHistory(@RequestParam(value = "sid", required = true) String sid) {
+    public Msg getStuHistory(@RequestParam(value = "sid" ) String sid) {
         List<StudentSeat> studentHistory = studentService.getHistory(sid);
         if (studentHistory.size() == 0) {
             return Msg.success().setMsg("暂无历史记录");

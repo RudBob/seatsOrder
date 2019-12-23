@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
-import java.util.Enumeration;
 
 /**
  * Description:
@@ -45,8 +42,8 @@ public class LoginController {
      */
     @ApiOperation("用户登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public Msg login(@RequestParam(value = "username", required = true) String username,
-                     @RequestParam(value = "pwd", required = true) String password,
+    public Msg login(@RequestParam(value = "username" ) String username,
+                     @RequestParam(value = "pwd" ) String password,
                      HttpServletRequest request) {
 
         Student student = studentService.login(username, password);
@@ -81,12 +78,10 @@ public class LoginController {
     /**
      * 学生登出
      *
-     * @param sid
-     * @return
      */
     @ApiOperation("用户登出")
     @RequestMapping(value = "logout", method = RequestMethod.GET)
-    public Msg logout(@RequestParam(value = "sid", required = true) String sid,
+    public Msg logout(@RequestParam(value = "sid" ) String sid,
                       HttpSession session) {
         session.removeAttribute("user");
         return Msg.success();

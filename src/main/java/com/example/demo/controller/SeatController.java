@@ -65,8 +65,8 @@ public class SeatController {
      */
     @ApiOperation("取消预约")
     @RequestMapping(value = "cancelOrder", method = RequestMethod.POST)
-    public Msg cancelOrder(@RequestParam(value = "sid", required = true) String sid,
-                           @RequestParam(value = "tid", required = true) Integer tid) {
+    public Msg cancelOrder(@RequestParam(value = "sid" ) String sid,
+                           @RequestParam(value = "tid" ) Integer tid) {
         boolean res = seatService.cancelOrder(sid, tid);
         if (res) {
             return Msg.success();
@@ -77,7 +77,7 @@ public class SeatController {
     /**
      * 得到用户的结束时间
      */
-    public Msg getEndTime(@RequestParam(value = "sid", required = true) String sid) {
+    public Msg getEndTime(@RequestParam(value = "sid" ) String sid) {
         LocalDateTime endDateTime = seatService.getEndTime(sid);
         return Msg.success().add("endDateTime", endDateTime);
     }
@@ -85,15 +85,12 @@ public class SeatController {
     /**
      * 续坐
      *
-     * @param sid
-     * @param tid
-     * @return
      */
     @ApiOperation("续坐")
     @RequestMapping(value = "addTime", method = RequestMethod.POST)
-    public Msg addTime(@RequestParam(value = "sid", required = true) String sid,
-                       @RequestParam(value = "tid", required = true) Integer tid,
-                       @RequestParam(value = "addHours", required = true) Integer addHours,
+    public Msg addTime(@RequestParam(value = "sid") String sid,
+                       @RequestParam(value = "tid") Integer tid,
+                       @RequestParam(value = "addHours") Integer addHours,
                        @RequestParam(value = "addMinutes", required = false, defaultValue = "0") Integer addMinutes) {
         LocalDateTime oldEndDateTime = seatService.getEndTime(sid);
         LocalDateTime newEndDateTime = oldEndDateTime.plusHours(addHours).plusMinutes(addMinutes);
@@ -107,16 +104,15 @@ public class SeatController {
     /**
      * 学生占座.
      *
-     * @return
      * @Param sid 学生id。
      * @Param tid 座位id
      */
     @ApiOperation("开始使用座位")
     @RequestMapping(value = "getSeat", method = RequestMethod.POST)
-    public Msg getSeat(@RequestParam(value = "sid", required = true) String sid,
-                       @RequestParam(value = "tid", required = true) Integer tid,
-                       @RequestParam(value = "useHours", required = true) Integer hours,
-                       @RequestParam(value = "useMinutes", required = true) Integer minutes) {
+    public Msg getSeat(@RequestParam(value = "sid") String sid,
+                       @RequestParam(value = "tid") Integer tid,
+                       @RequestParam(value = "useHours") Integer hours,
+                       @RequestParam(value = "useMinutes") Integer minutes) {
         LocalDateTime startDatetime = LocalDateTime.now();
         LocalDate endDate = startDatetime.toLocalDate();
         LocalTime endTime = startDatetime.toLocalTime().plusHours(hours).plusMinutes(minutes);
@@ -131,14 +127,13 @@ public class SeatController {
     /**
      * 学生还座.
      *
-     * @return
      * @Param sid 学生id。
      * @Param tid 座位id
      */
     @ApiOperation("离开座位")
     @RequestMapping(value = "outSeat", method = RequestMethod.POST)
-    public Msg outSeat(@RequestParam(value = "sid", required = true) String sid,
-                       @RequestParam(value = "tid", required = true) Integer tid) {
+    public Msg outSeat(@RequestParam(value = "sid") String sid,
+                       @RequestParam(value = "tid") Integer tid) {
         boolean res = seatService.outSeat(sid, tid);
         if (res) {
             return Msg.success();
@@ -149,14 +144,13 @@ public class SeatController {
     /**
      * 暂离座位.
      *
-     * @return
      * @Param sid 学生id。
      * @Param tid 座位id
      */
     @ApiOperation("暂离座位")
     @RequestMapping(value = "tempOut", method = RequestMethod.POST)
-    public Msg tempOut(@RequestParam(value = "sid", required = true) String sid,
-                       @RequestParam(value = "tid", required = true) Integer tid,
+    public Msg tempOut(@RequestParam(value = "sid") String sid,
+                       @RequestParam(value = "tid") Integer tid,
                        @RequestParam(value = "outTimeMinutes", required = false, defaultValue = "15") Integer outTimeMinutes) {
         boolean res = seatService.tempOut(sid, tid, outTimeMinutes);
         if (res) {
@@ -168,14 +162,13 @@ public class SeatController {
     /**
      * 暂离座位.
      *
-     * @return
      * @Param sid 学生id。
      * @Param tid 座位id
      */
     @ApiOperation("结束暂离座位")
     @RequestMapping(value = "cancelTempOut", method = RequestMethod.POST)
-    public Msg cancelTempOut(@RequestParam(value = "sid", required = true) String sid,
-                             @RequestParam(value = "tid", required = true) Integer tid) {
+    public Msg cancelTempOut(@RequestParam(value = "sid") String sid,
+                             @RequestParam(value = "tid") Integer tid) {
         boolean res = seatService.cancelTempOut(sid, tid);
         if (res) {
             return Msg.success();

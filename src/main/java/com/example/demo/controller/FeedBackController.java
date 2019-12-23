@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Api(description = "反馈的相关操作---任耀")
+@Api( "反馈的相关操作---任耀")
 @RestController
 @Transactional
 public class FeedBackController {
@@ -26,8 +26,8 @@ public class FeedBackController {
      */
     @ApiOperation("学生反馈")
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
-    public Msg feedback(@RequestParam(value = "sid", required = true) String sid,
-                        @RequestParam(value = "context", required = true) String context) {
+    public Msg feedback(@RequestParam(value = "sid") String sid,
+                        @RequestParam(value = "context") String context) {
         if (feedBackService.feedback(sid, context)) {
             return Msg.success();
         } else {
@@ -40,7 +40,7 @@ public class FeedBackController {
      */
     @ApiOperation("学生查看自己的反馈")
     @RequestMapping(value = "/getStuFeedBack", method = RequestMethod.GET)
-    public Msg getStuFeedBack(@RequestParam(value = "sid", required = true) String sid) {
+    public Msg getStuFeedBack(@RequestParam(value = "sid" ) String sid) {
         List<FeedBack> feedBacks = feedBackService.getStuFeedBack(sid);
         return Msg.success().add("stuFeedBack", feedBacks);
     }
