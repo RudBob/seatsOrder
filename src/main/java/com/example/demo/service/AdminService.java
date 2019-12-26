@@ -1,15 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.bean.Admin;
-import com.example.demo.bean.FeedBack;
 import com.example.demo.mapper.AdminMapper;
-import com.example.demo.mapper.FeedBackMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Description:
@@ -24,7 +18,7 @@ public class AdminService {
     AdminMapper adminMapper;
 
 
-    public Admin login(String username, String password, HttpSession session) {
+    public Admin login(String username, String password) {
         return adminMapper.login(username, password);
     }
 }

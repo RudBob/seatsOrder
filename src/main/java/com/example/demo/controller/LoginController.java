@@ -40,20 +40,21 @@ public class LoginController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public Msg login(@RequestParam(value = "username") String username,
                      @RequestParam(value = "pwd") String password) {
-        Student student = studentService.login(username, password);
         HttpSession session = SessionUtil.getSession();
 
+        Student student = studentService.login(username, password);
         if (student != null) {
             //加到session中
             session.setAttribute("user", student);
             return Msg.success().add("student", student);
-        } else {
-            Admin admin = adminService.login(username, password, session);
-            if (admin != null) {
-                session.setAttribute("user", admin);
-                return Msg.success().add("admin", admin);
-            }
         }
+
+        Admin admin = adminService.login(username, password);
+        if (admin != null) {
+            session.setAttribute("user", admin);
+            return Msg.success().add("admin", admin);
+        }
+
         return Msg.fail().setMsg("账号或密码错误");
     }
 
