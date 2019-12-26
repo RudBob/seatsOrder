@@ -3,14 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.bean.Seat;
 import com.example.demo.service.SeatService;
 import com.example.demo.util.Msg;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -19,7 +16,6 @@ import java.time.LocalTime;
  * Description:
  *
  * @author 任耀
- * @ClassName: SeatController
  * @date 2018/9/19 19:12
  */
 @RestController
@@ -65,26 +61,14 @@ public class SeatController {
      */
     @ApiOperation("取消预约")
     @RequestMapping(value = "cancelOrder", method = RequestMethod.POST)
-    public Msg cancelOrder(@RequestParam(value = "sid" ) String sid,
-                           @RequestParam(value = "tid" ) Integer tid) {
-        boolean res = seatService.cancelOrder(sid, tid);
-        if (res) {
-            return Msg.success();
-        }
-        return Msg.fail().setMsg("出现未知错误，请尽快联系管理员查看");
-    }
-
-    /**
-     * 得到用户的结束时间
-     */
-    public Msg getEndTime(@RequestParam(value = "sid" ) String sid) {
-        LocalDateTime endDateTime = seatService.getEndTime(sid);
-        return Msg.success().add("endDateTime", endDateTime);
+    public Msg cancelOrder(@RequestParam(value = "sid") String sid,
+                           @RequestParam(value = "tid") Integer tid) {
+        seatService.cancelOrder(sid, tid);
+        return Msg.success();
     }
 
     /**
      * 续坐
-     *
      */
     @ApiOperation("续坐")
     @RequestMapping(value = "addTime", method = RequestMethod.POST)
@@ -92,9 +76,8 @@ public class SeatController {
                        @RequestParam(value = "tid") Integer tid,
                        @RequestParam(value = "addHours") Integer addHours,
                        @RequestParam(value = "addMinutes", required = false, defaultValue = "0") Integer addMinutes) {
-        LocalDateTime oldEndDateTime = seatService.getEndTime(sid);
-        LocalDateTime newEndDateTime = oldEndDateTime.plusHours(addHours).plusMinutes(addMinutes);
-        boolean res = seatService.addTime(sid, tid, newEndDateTime);
+
+        boolean res = seatService.addTime(sid, tid,addHours,addMinutes);
         if (res) {
             return Msg.success();
         }

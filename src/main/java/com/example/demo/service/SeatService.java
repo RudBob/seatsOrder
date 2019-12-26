@@ -7,11 +7,9 @@ import com.example.demo.mapper.SeatMapper;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.mapper.StudentSeatMapper;
 import com.example.demo.util.BaseData;
-import com.example.demo.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -19,7 +17,6 @@ import java.time.LocalDateTime;
  * Description:
  *
  * @author 任耀
- * @ClassName: SeatService
  * @date 2018/9/19 19:17
  */
 @Service
@@ -42,8 +39,8 @@ public class SeatService {
     }
 
     /**
-     * @param sid     学生id，用来得到并改变学生的状态码
-     * @param tid     座位id，用来得到并改变座位的状态码
+     * @param sid 学生id，用来得到并改变学生的状态码
+     * @param tid 座位id，用来得到并改变座位的状态码
      * @return Boolean      双id是否合法并是否更改成功
      * @despriction 预约座位.
      */
@@ -89,7 +86,6 @@ public class SeatService {
 
     /**
      * 学生得到座位. 将这条记录插入到db中
-     *
      */
     public boolean getSeat(String sid, Integer tid, LocalDateTime startDatetime, LocalDateTime endDatetime) {
         // 得到学生和座位的详情.
@@ -125,7 +121,6 @@ public class SeatService {
         return true;
 
     }
-
 
     /**
      * 暂离座位.使用学生id和座位id得到数据后，改变数据的状态码
@@ -170,9 +165,9 @@ public class SeatService {
     /**
      * 学生结束暂离，成功结束上一条记录，并且生成一条新的记录
      *
-     * @param sid
-     * @param tid
-     * @return
+     * @param sid 学生id
+     * @param tid 座位id
+     * @return 成功与否
      */
     public boolean cancelTempOut(String sid, Integer tid) {
         // 得到一组数据:学生，座位，记录
@@ -209,8 +204,8 @@ public class SeatService {
     /**
      * 学生还座
      *
-     * @param sid
-     * @return
+     * @param sid 学生id
+     * @return 成功与否
      */
     public boolean outSeat(String sid, Integer tid) {
         // 得到数据
@@ -231,15 +226,17 @@ public class SeatService {
     }
 
     /**
-     * 续坐
+     * 续坐几小时几分钟。
      *
-     * @param sid         学生id，
-     * @param tid         座位id，
-     *                    以上是为了取出对应的记录，并且改变结束时间即可
-     * @param endDatetime 待改变的结束时间.
-     * @return 操作成功与否
+     * @param sid        学生id
+     * @param tid        座位id
+     * @param addHours   增加小时
+     * @param addMinutes 增加分钟
+     * @return
      */
-    public boolean addTime(String sid, Integer tid, LocalDateTime endDatetime) {
+    public boolean addTime(String sid, Integer tid, Integer addHours, Integer addMinutes) {
+        LocalDateTime oldEndDateTime = getEndTime(sid);
+        LocalDateTime endDatetime = oldEndDateTime.plusHours(addHours).plusMinutes(addMinutes);
         StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
         studentSeat.setEndDatetime(endDatetime);
         studentSeatMapper.updateByPrimaryKey(studentSeat);
@@ -249,11 +246,11 @@ public class SeatService {
     /**
      * 取消预约
      *
-     * @param sid
-     * @param tid
-     * @return
+     * @param sid 学生id
+     * @param tid 座位id
+     * @return 操作成功
      */
-    public boolean cancelOrder(String sid, Integer tid) {
+    public void cancelOrder(String sid, Integer tid) {
         Student stu = studentMapper.selectByPrimaryKey(sid);
         Seat seat = seatMapper.selectByPrimaryKey(tid);
         StudentSeat studentSeat = studentSeatMapper.selectBySidTid(sid, tid);
@@ -263,7 +260,6 @@ public class SeatService {
         studentSeat.setRes(true);
         // 更新数据库
         update(stu, seat, studentSeat);
-        return true;
     }
 
     /**
@@ -272,7 +268,7 @@ public class SeatService {
      * @param sid
      * @return
      */
-    public LocalDateTime getEndTime(String sid) {
+    private LocalDateTime getEndTime(String sid) {
         Student stu = studentMapper.selectByPrimaryKey(sid);
         int tid = stu.getTid();
         Seat seat = seatMapper.selectByPrimaryKey(tid);
@@ -280,24 +276,13 @@ public class SeatService {
         return studentSeat.getEndDatetime();
     }
 
-    private void update(Student student, StudentSeat studentSeat) {
-        if (student != null) {
-            studentMapper.updateByPrimaryKey(student);
-        }
-        if (studentSeat != null) {
-            studentSeatMapper.updateByPrimaryKey(studentSeat);
-        }
-    }
-
-    private void update(Seat seat, StudentSeat studentSeat) {
-        if (seat != null) {
-            seatMapper.updateByPrimaryKey(seat);
-        }
-        if (studentSeat != null) {
-            studentSeatMapper.updateByPrimaryKey(studentSeat);
-        }
-    }
-
+    /**
+     * 更新三个对象在数据库中的值
+     *
+     * @param student     学生
+     * @param seat        座位
+     * @param studentSeat 记录
+     */
     private void update(Student student, Seat seat, StudentSeat studentSeat) {
         if (studentSeat != null) {
             studentSeatMapper.updateByPrimaryKey(studentSeat);
@@ -309,6 +294,4 @@ public class SeatService {
             studentMapper.updateByPrimaryKey(student);
         }
     }
-
-
 }

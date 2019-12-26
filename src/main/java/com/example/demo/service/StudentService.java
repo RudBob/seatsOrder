@@ -1,22 +1,18 @@
 package com.example.demo.service;
 
-import com.example.demo.bean.FeedBack;
 import com.example.demo.bean.Student;
 import com.example.demo.bean.StudentSeat;
-import com.example.demo.mapper.FeedBackMapper;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.mapper.StudentSeatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  * Description:
  *
  * @author 任耀
- * @ClassName: StudentService
  * @date 2018/9/19 19:17
  */
 
@@ -29,9 +25,14 @@ public class StudentService {
     @Autowired
     private StudentSeatMapper studentSeatMapper;
 
+    /**
+     * 使用密码和用户账号查询用户.
+     *
+     * @param username 账号
+     * @param password 密码
+     * @return 学生详情
+     */
     public Student login(String username, String password) {
-        // 使用密码和用户账号查询用户.
-
         return studentMapper.login(username, password);
     }
 
@@ -57,16 +58,23 @@ public class StudentService {
     }
 
 
-
-
-
+    /**
+     * 通过id查找学生
+     *
+     * @param sid 学生id
+     * @return 学生
+     */
     public Student getStudent(String sid) {
-
         return studentMapper.selectByPrimaryKey(sid);
     }
 
+    /**
+     * 得到学生所有历史
+     *
+     * @param sid 学生id
+     * @return 历史记录
+     */
     public List<StudentSeat> getHistory(String sid) {
-        List<StudentSeat> history = studentSeatMapper.selectHistoryBySid(sid);
-        return history;
+        return studentSeatMapper.selectHistoryBySid(sid);
     }
 }
