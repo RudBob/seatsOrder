@@ -7,9 +7,11 @@ import com.example.demo.mapper.SeatMapper;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.mapper.StudentSeatMapper;
 import com.example.demo.util.BaseData;
+import com.example.demo.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -39,12 +41,14 @@ public class SeatService {
     }
 
     /**
-     * @param sid 学生id，用来得到并改变学生的状态码
-     * @param tid 座位id，用来得到并改变座位的状态码
+     * @param tid 座位id
      * @return Boolean      双id是否合法并是否更改成功
      * @despriction 预约座位.
      */
-    public Boolean orderSeat(String sid, Integer tid) {
+    public Boolean orderSeat(Integer tid) {
+        HttpSession session = SessionUtil.getSession();
+        Student stuInSession = (Student) session.getAttribute("user");
+        String sid = stuInSession.getSid();
         // 得到学生和座位的详情.
         Seat seat = seatMapper.selectByPrimaryKey(tid);
         Student stu = studentMapper.selectByPrimaryKey(sid);

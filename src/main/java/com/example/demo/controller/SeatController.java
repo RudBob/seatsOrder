@@ -1,13 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.bean.Seat;
+import com.example.demo.bean.Student;
 import com.example.demo.service.SeatService;
 import com.example.demo.util.Msg;
+import com.example.demo.util.SessionUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -34,9 +37,8 @@ public class SeatController {
      */
     @ApiOperation("预约座位，默认该预约保留15分钟")
     @RequestMapping(value = "orderSeat", method = RequestMethod.POST)
-    public Msg orderSeat(@RequestParam(value = "sid") String sid,
-                         @RequestParam(value = "tid") Integer tid) {
-        boolean res = seatService.orderSeat(sid, tid);
+    public Msg orderSeat(@RequestParam(value = "tid") Integer tid) {
+        boolean res = seatService.orderSeat( tid);
         if (res) {
             return Msg.success();
         }
@@ -77,7 +79,7 @@ public class SeatController {
                        @RequestParam(value = "addHours") Integer addHours,
                        @RequestParam(value = "addMinutes", required = false, defaultValue = "0") Integer addMinutes) {
 
-        boolean res = seatService.addTime(sid, tid,addHours,addMinutes);
+        boolean res = seatService.addTime(sid, tid, addHours, addMinutes);
         if (res) {
             return Msg.success();
         }
