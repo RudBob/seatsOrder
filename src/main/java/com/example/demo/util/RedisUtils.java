@@ -1,6 +1,7 @@
 package com.example.demo.util;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -136,8 +137,8 @@ public class RedisUtils {
     /**
      * 列表添加集合
      */
-    public void listPushList(String k, List<Seat> unusingSeat) {
-        ListOperations<String, Object> list = redisTemplate.opsForList();
+    public void listPushList(String k, Collection<Seat> unusingSeat) {
+        ListOperations<String, Seat> list = redisTemplate.opsForList();
         list.rightPushAll(k, unusingSeat);
     }
 
