@@ -266,8 +266,6 @@ public class SeatService {
 
     /**
      * 取消预约
-     *
-     * @return 操作成功
      */
     public void cancelOrder() {
         String sid = SessionUtil.getStuFromSession().getSid();
@@ -284,7 +282,6 @@ public class SeatService {
 
     /**
      * 得到用户对这个座位使用的结束时间
-     *
      */
     private LocalDateTime getEndTime(String sid) {
         Student stu = studentMapper.selectByPrimaryKey(sid);
