@@ -38,7 +38,7 @@ public class UpdateStatussTimer {
      * 每分钟扫描一次studentSeat,将所有过期的扫描出来并改变.
      * fixedRate 单位是毫秒，设为1分钟查一次
      */
-    @Scheduled(fixedRate = 60 * 1000)
+    @Scheduled(fixedRate = 15 * 60 * 1000)
     public void updateOutTimeRecords() {
         // 得到超时预约
         List<StudentSeat> studentSeats = studentSeatMapper.selectOutTimeRecord();

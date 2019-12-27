@@ -29,7 +29,6 @@ public class SeatController {
     @Autowired
     SeatService seatService;
 
-
     /**
      * 学生预约座位.
      *
@@ -40,11 +39,11 @@ public class SeatController {
     @RequestMapping(value = "orderSeat", method = RequestMethod.POST)
     public Msg orderSeat(@RequestParam(value = "sid") String sid,
                          @RequestParam(value = "tid") Integer tid) {
-        boolean res = seatService.orderSeat(sid, tid);
-        if (res) {
+        String res = seatService.orderSeat(sid, tid);
+        if (res == null) {
             return Msg.success();
         }
-        return Msg.fail();
+        return Msg.fail().setMsg(res);
     }
 
     /**
@@ -65,8 +64,8 @@ public class SeatController {
      */
     @ApiOperation("取消预约")
     @RequestMapping(value = "cancelOrder", method = RequestMethod.POST)
-    public Msg cancelOrder(@RequestParam(value = "sid" ) String sid,
-                           @RequestParam(value = "tid" ) Integer tid) {
+    public Msg cancelOrder(@RequestParam(value = "sid") String sid,
+                           @RequestParam(value = "tid") Integer tid) {
         boolean res = seatService.cancelOrder(sid, tid);
         if (res) {
             return Msg.success();
@@ -77,14 +76,13 @@ public class SeatController {
     /**
      * 得到用户的结束时间
      */
-    public Msg getEndTime(@RequestParam(value = "sid" ) String sid) {
+    public Msg getEndTime(@RequestParam(value = "sid") String sid) {
         LocalDateTime endDateTime = seatService.getEndTime(sid);
         return Msg.success().add("endDateTime", endDateTime);
     }
 
     /**
      * 续坐
-     *
      */
     @ApiOperation("续坐")
     @RequestMapping(value = "addTime", method = RequestMethod.POST)

@@ -7,11 +7,10 @@ import com.example.demo.mapper.SeatMapper;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.mapper.StudentSeatMapper;
 import com.example.demo.util.BaseData;
-import com.example.demo.util.SessionUtil;
+import com.example.demo.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -32,32 +31,44 @@ public class SeatService {
     @Autowired
     StudentSeatMapper studentSeatMapper;
 
+    @Autowired
+    RedisUtils redisUtils;
+    static final String LIST_CACHE_KEY = "unusingSeatsId";
+
     /**
      * 得到一个没有使用的座位
+     * 这里应该优化：随机在redis里找到一个座位，尽可能减少数据库访问量.
      *
      * @return 返回作为详情
      */
     public Seat getSeatId() {
-        return seatMapper.getUnusingSeat();
+        if (redisUtils.isEmpty(LIST_CACHE_KEY)) {
+            redisUtils.listPushList(LIST_CACHE_KEY, seatMapper.getUnusingSeat());
+        }
+        return (Seat) redisUtils.listPop(LIST_CACHE_KEY);
     }
 
     /**
-     * @param sid     学生id，用来得到并改变学生的状态码
-     * @param tid     座位id，用来得到并改变座位的状态码
+     * @param sid 学生id，用来得到并改变学生的状态码
+     * @param tid 座位id，用来得到并改变座位的状态码
      * @return Boolean      双id是否合法并是否更改成功
      * @despriction 预约座位.
      */
-    public Boolean orderSeat(String sid, Integer tid) {
+    public String orderSeat(String sid, Integer tid) {
         // 得到学生和座位的详情.
         Seat seat = seatMapper.selectByPrimaryKey(tid);
         Student stu = studentMapper.selectByPrimaryKey(sid);
 
         // 合法的学生，并且座位可以使用.
-        if (stu.getStatuss() == BaseData.STU_NORMAL && BaseData.SEAT_NORMAL == seat.getStatuss()) {
-            stuOrderSeat(seat, stu);
-            return true;
+        if (stu.getStatuss() != BaseData.STU_NORMAL) {
+            return "您似乎有未完成的预约，确认处理后仍失败，可以联系管理员处理";
         }
-        return false;
+
+        if (BaseData.SEAT_NORMAL != seat.getStatuss()) {
+            return "座位已被占用，请重新选择座位";
+        }
+        stuOrderSeat(seat, stu);
+        return null;
     }
 
     /**
@@ -89,7 +100,6 @@ public class SeatService {
 
     /**
      * 学生得到座位. 将这条记录插入到db中
-     *
      */
     public boolean getSeat(String sid, Integer tid, LocalDateTime startDatetime, LocalDateTime endDatetime) {
         // 得到学生和座位的详情.
@@ -170,9 +180,6 @@ public class SeatService {
     /**
      * 学生结束暂离，成功结束上一条记录，并且生成一条新的记录
      *
-     * @param sid
-     * @param tid
-     * @return
      */
     public boolean cancelTempOut(String sid, Integer tid) {
         // 得到一组数据:学生，座位，记录
@@ -209,8 +216,6 @@ public class SeatService {
     /**
      * 学生还座
      *
-     * @param sid
-     * @return
      */
     public boolean outSeat(String sid, Integer tid) {
         // 得到数据
@@ -249,9 +254,6 @@ public class SeatService {
     /**
      * 取消预约
      *
-     * @param sid
-     * @param tid
-     * @return
      */
     public boolean cancelOrder(String sid, Integer tid) {
         Student stu = studentMapper.selectByPrimaryKey(sid);

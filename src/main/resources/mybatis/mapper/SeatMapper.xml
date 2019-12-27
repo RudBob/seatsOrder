@@ -20,9 +20,9 @@
     </select>
     <select id="getUnusingSeat" resultType="com.example.demo.bean.Seat">
         select
-        <include refid="Base_Column_List"/>
+        tid
         from seat
-        where statuss = 0 limit 1;
+        where statuss = 0 ORDER BY RAND();
     </select>
     <select id="selectByParams" resultType="com.example.demo.bean.Seat">
         select

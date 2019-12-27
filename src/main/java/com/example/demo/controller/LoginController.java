@@ -42,7 +42,6 @@ public class LoginController {
                      @RequestParam(value = "pwd") String password) {
         Student student = studentService.login(username, password);
         HttpSession session = SessionUtil.getSession();
-
         if (student != null) {
             //加到session中
             session.setAttribute("user", student);

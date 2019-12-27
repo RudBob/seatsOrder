@@ -1,5 +1,9 @@
 package com.example.demo.util;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +15,8 @@ import java.util.Map;
  * @ClassName: FeedBack
  * @date 2017年11月21日下午7:38:11
  */
+@ToString
+@Getter
 public class Msg {
     /**
      * 状态码 0 - 未知   100-成功 200-失败
@@ -58,26 +64,14 @@ public class Msg {
         return this;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public Msg setCode(int code) {
         this.code = code;
         return this;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
     public Msg setMsg(String msg) {
         this.msg = msg;
         return this;
-    }
-
-    public Map<String, Object> getData() {
-        return data;
     }
 
     public Msg setData(Map<String, Object> data) {
