@@ -152,7 +152,7 @@ public class RedisUtils {
     /**
      * 取出列表第一个元素
      */
-    public boolean isEmpty(String k) {
+    public boolean listIsEmpty(String k) {
         ListOperations<String, Object> list = redisTemplate.opsForList();
         return list.size(k) == 0;
     }
