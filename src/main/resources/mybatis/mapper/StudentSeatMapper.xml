@@ -52,8 +52,14 @@
         select
         <include refid="Base_Column_List"/>
         from student_seat
-        WHERE now()  >= end_time
-        AND res IS NULL;
+        WHERE now() >= end_time
+        AND res IS NULL
+    </select>
+    <select id="selectBySidStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student_seat
+        WHERE sid=#{sid} AND statuss = #{status} AND res IS NULL
     </select>
 
 

@@ -13,26 +13,20 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface SeatMapper {
     /**
-     * @param tid
-     * @return
      */
     int deleteByPrimaryKey(Integer tid);
 
     /**
-     * @param record
-     * @return
      */
     int insert(Seat record);
 
     /**
-     * @param record
-     * @return
+
      */
     int insertSelective(Seat record);
 
     /**
-     * @param tid
-     * @return
+
      */
 
     Seat selectByPrimaryKey(Integer tid);
@@ -55,5 +49,6 @@ public interface SeatMapper {
     /**
      * 通过传入的参数选择状态
      */
-    List<Seat> selectByParams(@Param(value = "tid") Integer tid, @Param(value = "status") Integer status);
+    List<Seat> selectByParams(@Param(value = "tid") Integer tid, @Param(value = "status") int status);
+
 }

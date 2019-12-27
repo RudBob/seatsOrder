@@ -1,5 +1,6 @@
 package com.example.demo.util;
 
+import com.example.demo.bean.Admin;
 import com.example.demo.bean.Student;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -17,5 +18,13 @@ public class SessionUtil {
     public static HttpSession getSession() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return request.getSession();
+    }
+
+    public static Student getStuFromSession() {
+        return (Student) getSession().getAttribute("user");
+    }
+
+    public static Admin getAdminFromSession() {
+        return (Admin) getSession().getAttribute("user");
     }
 }

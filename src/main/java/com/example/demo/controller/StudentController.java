@@ -18,7 +18,7 @@ import java.util.List;
  * @ClassName: StudentController
  * @date 2018/9/19 19:12
  */
-@Api( "学生相关操作---任耀")
+@Api("学生相关操作---任耀")
 @RestController
 @Transactional
 @RequestMapping("/student")
@@ -31,10 +31,9 @@ public class StudentController {
      */
     @ApiOperation("修改学生密码")
     @RequestMapping(value = "updatePassword", method = RequestMethod.POST)
-    public Msg updatePassword(@RequestParam(value = "sid" ) String sid,
-                              @RequestParam(value = "oldPwd" ) String oldPassword,
-                              @RequestParam(value = "newPwd" ) String newPassword) {
-        if (studentService.updatePassword(sid, oldPassword, newPassword)) {
+    public Msg updatePassword(@RequestParam(value = "oldPwd") String oldPassword,
+                              @RequestParam(value = "newPwd") String newPassword) {
+        if (studentService.updatePassword(oldPassword, newPassword)) {
             return Msg.success();
         } else {
             return Msg.fail();
@@ -46,9 +45,9 @@ public class StudentController {
      */
     @ApiOperation("学生信息查看")
     @RequestMapping(value = "getStuInfo", method = RequestMethod.POST)
-    public Msg getStuInfo(@RequestParam(value = "sid" ) String sid) {
+    public Msg getStuInfo() {
         // 得到学生对象
-        Student student = studentService.getStudent(sid);
+        Student student = studentService.getStuDetail();
         if (student != null) {
             return Msg.success().add("stuInfo", student);
         } else {
@@ -61,8 +60,8 @@ public class StudentController {
      */
     @ApiOperation("学生的历史记录查看")
     @RequestMapping(value = "getStuHistory", method = RequestMethod.POST)
-    public Msg getStuHistory(@RequestParam(value = "sid" ) String sid) {
-        List<StudentSeat> studentHistory = studentService.getHistory(sid);
+    public Msg getStuHistory() {
+        List<StudentSeat> studentHistory = studentService.getHistory();
         if (studentHistory.size() == 0) {
             return Msg.success().setMsg("暂无历史记录");
         }

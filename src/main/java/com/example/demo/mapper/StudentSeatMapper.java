@@ -40,4 +40,5 @@ public interface StudentSeatMapper {
     List<StudentSeat> selectOutTimeRecord();
 
 
+    StudentSeat selectBySidStatus(@Param("sid") String sid, @Param("status") int status);
 }
